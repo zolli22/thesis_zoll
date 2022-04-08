@@ -250,14 +250,6 @@ Second paragraph of abstract starts here.
 \mainmatter % here the regular arabic numbering starts
 \pagestyle{fancyplain} % turns page numbering back on
 
-\hypertarget{introduction}{%
-\chapter*{Introduction}\label{introduction}}
-\addcontentsline{toc}{chapter}{Introduction}
-
-Welcome to the \emph{R Markdown} thesis template. This template is based on (and in many places copied directly from) the Reed College LaTeX template, but hopefully it will provide a nicer interface for those that have never used TeX or LaTeX before. Using \emph{R Markdown} will also allow you to easily keep track of your analyses in \textbf{R} chunks of code, with the resulting plots and output included as well. The hope is this \emph{R Markdown} template gets you in the habit of doing reproducible research, which benefits you long-term as a researcher, but also will greatly help anyone that is trying to reproduce or build onto your results down the road.
-
-Hopefully, you won't have much of a learning period to go through and you will reap the benefits of a nicely formatted thesis. The use of LaTeX in combination with \emph{Markdown} is more consistent than the output of a word processor, much less prone to corruption or crashing, and the resulting file is smaller than a Word file. While you may have never had problems using Word in the past, your thesis is likely going to be about twice as large and complex as anything you've written before, taxing Word's capabilities. After working with \emph{Markdown} and \textbf{R} together for a few weeks, we are confident this will be your reporting style of choice going forward.
-
 \textbf{Why use it?}
 
 \emph{R Markdown} creates a simple and straightforward way to interface with the beauty of LaTeX. Packages have been written in \textbf{R} to work directly with LaTeX to produce nicely formatting tables and paragraphs. In addition to creating a user friendly interface to LaTeX, \emph{R Markdown} also allows you to read in your data, to analyze it and to visualize it using \textbf{R} functions, and also to provide the documentation and commentary on the results of your project. Further, it allows for \textbf{R} results to be passed inline to the commentary of your results. You'll see more on this later.
@@ -270,293 +262,70 @@ Anyone who needs to use data analysis, math, tables, a lot of figures, complex c
 
 Please visit \href{https://bookdown.org/yihui/bookdown/}{the free online bookdown reference guide}.
 
-\hypertarget{rmd-basics}{%
-\chapter{R Markdown Basics}\label{rmd-basics}}
+\hypertarget{intro}{%
+\chapter{Introduction}\label{intro}}
 
-Here is a brief introduction into using \emph{R Markdown}. \emph{Markdown} is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. \emph{R Markdown} provides the flexibility of \emph{Markdown} with the implementation of \textbf{R} input and output. For more details on using \emph{R Markdown} see \url{https://rmarkdown.rstudio.com}.
+\hypertarget{urban-forests-and-urbanization}{%
+\section{Urban Forests and Urbanization}\label{urban-forests-and-urbanization}}
 
-Be careful with your spacing in \emph{Markdown} documents. While whitespace largely is ignored, it does at times give \emph{Markdown} signals as to how to proceed. As a habit, try to keep everything left aligned whenever possible, especially as you type a new paragraph. In other words, there is no need to indent basic text in the Rmd document (in fact, it might cause your text to do funny things if you do).
+An urban forest is the total population of trees in an urban area. Urban forests are comprised of parks, street trees, landscaped boulevards, green spaces, and any other location where trees can be found in urban spaces. Urban forests are in close proximity to large or dense human populations, have a relatively high diversity of species and forest patch structures as well as both public and private ownership, and their management is often geared toward sustaining tree health and maximizing the potential benefits that trees provide (Robertson \& Mason, 2016). In 2011, urban forests in the United States contained around 74.4 billion trees, which is about a quarter of the total tree population (USDA Forest Service, 2011). The US Census bureau reports that, in 2010, nearly 81\% of Americans lived in urban areas, up from 79\% 10 years earlier . The United Nations predicts that, by 2050, 68\% of the world population will live in urban areas (United Nations \& Affairs, 2018). As urbanization continues, it becomes increasingly important for both those working to manage urban forests and residents of urban areas to understand the dynamics and health of urban forests in order to retain and protect the numerous benefits they provide.
 
-\hypertarget{lists}{%
-\section{Lists}\label{lists}}
+\hypertarget{the-benefits-of-urban-forests}{%
+\section{The Benefits of Urban Forests}\label{the-benefits-of-urban-forests}}
 
-It's easy to create a list. It can be unordered like
-\begin{itemize}
-\tightlist
-\item
-  Item 1
-\item
-  Item 2
-\end{itemize}
-or it can be ordered like
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Item 1
-\item
-  Item 2
-\end{enumerate}
-Notice that I intentionally mislabeled Item 2 as number 4. \emph{Markdown} automatically figures this out! You can put any numbers in the list and it will create the list. Check it out below.
+Urban forests and urban trees have numerous benefits, which range from environmental to economic. The environmental benefits of urban trees include numerous forms of pollution removal from both water and air. In undeveloped areas, most of the precipitated water is absorbed into the earth. However, due to the high amount of impervious surfaces such as sidewalks, streets, and parking lots in urban areas, rain and snowmelt are unable to soak back into the earth and become stormwater runoff instead. This runoff flows over developed impervious surfaces and picks up trash, yard waste, dirt, and many other potentially harmful chemicals and pollutants. It is then deposited in streams, rivers, wetlands, and other bodies of water that are damaged by polluted runoff. Green infrastructure like urban trees help in reducing the volume and rate of runoff by allowing more precipitation to be soaked into the earth. Research has shown that the presence of street trees also has a positive impact in reducing stormwater runoff volume (US EPA, 2020). A 2021 study conducted in Fond du Lac, Wisconsin, showed that the removal of street trees increased the volume of stormwater runoff by 4\% (Selbig et al., 2021). The study calculated that on a per-tree basis for each square meter of canopy that was removed, 66 liters of rainfall could have been intercepted and stored by the street trees. This results in an annual runoff volume reduction estimated at 6,376 liters per tree.
 
-To create a sublist, just indent the values a bit (at least four spaces or a tab). (Here's one case where indentation is key!)
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Item 1
-\item
-  Item 2
-\item
-  Item 3
-  \begin{itemize}
-  \tightlist
-  \item
-    Item 3a
-  \item
-    Item 3b
-  \end{itemize}
-\end{enumerate}
-\hypertarget{line-breaks}{%
-\section{Line breaks}\label{line-breaks}}
+Urban trees also remove pollutants from the air. Numerous studies have shown that trees can remove many different pollutants (O3, PM10, NO2, SO2, CO) by uptake via leaf stomata. Pollutant particles can also be collected and stored on a tree's surface. Urban trees provide a total annual air pollution removal of 711,000 tons, which is valued at \$3.8 billion (David J. Nowak, Crane, \& Stevens, 2006). Cities with higher levels of tree canopy cover have higher rates of pollution removal by trees, and longer on-leaf growing periods of trees lead to more pollution removal as well. While the removal of air pollution by urban trees results in the improvement of air quality, trees also help mitigate climate change, improve atmospheric conditions and air quality through carbon sequestration.
 
-Make sure to add white space between lines if you'd like to start a new paragraph. Look at what happens below in the outputted document if you don't:
+The increase of atmospheric carbon dioxide from human sources is one of the primary drivers of global climate change. In 2019, U.S. greenhouse gas emissions totaled 6,558 million metric tons of carbon dioxide equivalents. In the same year, the city of Portland's carbon emissions totaled around 55,000 metric tons of carbon dioxide equivalents (City of Portland, n.d.). Rural and urban forests, as well as other natural and nature based carbon sinks have been suggested as a method of mitigating greenhouse gas emissions of cities in order to reduce the impacts of global climate change (Lazarus, Chandler, \& Erickson, 2013). These natural carbon sinks capture atmospheric carbon dioxide during photosynthesis and store the carbon as biomass, releasing oxygen back into the atmosphere.
 
-Here is the first sentence. Here is another sentence. Here is the last sentence to end the paragraph.
-This should be a new paragraph.
+Multiple scholars estimate that urban trees in the United States currently store over 708 million tons of carbon, and capture another 28.2 million tons of carbon per year, which is approximately 0.05\% of annual carbon dioxide emissions in the United States (David J. Nowak \& Crane, 2002; David J. Nowak, Greenfield, Hoehn, \& Lapoint, 2013; Safford, Larry, McPherson, Nowak, \& Westphal, 2013). The current carbon storage of urban trees is valued at more than \$50 billion, with carbon sequestration valued at an additional \$2 billion per year (David J. Nowak et al., 2013). The environmental benefits of urban trees can result in economic advantages under future carbon trading schemas, but there are other unique economic and social benefits that urban trees provide.
 
-\emph{Now for the correct way:}
+Residents of urban areas experience the benefits of urban trees most immediately through the beauty and visual stimulation they provide. Aesthetics alone are a large driver in the plantings of urban trees. Studies have found that trees are one of the main contributors to positive visual aesthetic quality of residential areas, and that large trees contribute more to perceived beauty than smaller trees (Herbert W. Schroeder, 2011; Herbert W. Schroeder \& Cannon, 1987; H. Schroeder \& Cannon, 1983).
 
-Here is the first sentence. Here is another sentence. Here is the last sentence to end the paragraph.
+The positive impacts of urban trees goes far beyond their visual contributions. Numerous studies have shown that people living near urban forests live longer, experience better mental health, and self-rate their overall health higher than people who do not live near urban forests (James, Banay, Hart, \& Laden, 2015). Residents of two different towns in Germany visited urban forests and green spaces more frequently after the beginning of the COVID-19 pandemic, which contributed significantly to the residents' well-being (Beckmann-Wübbelt et al., 2021). Research into the psychological benefits of urban trees shows that teenage girls who spend more time around trees and other sources of nature and vegetation have higher levels of self-discipline, and children with diagnosed attention deficit disorder show improved focus and ability to learn after spending time outside (Andrea Faber Taylor, Kuo, \& Sullivan, 2001; ANDREA FABER Taylor, Kuo, \& Sullivan, 2002).
 
-This should be a new paragraph.
+Additionally, urban trees provide numerous economic benefits on both a nation wide scale, and an individual scale. Urban tree canopy cover positively impacts residential property values. In Athens, Georgia, landscaping with trees results in a 3.5\%--4.5\% increase in home sale price (Anderson \& Cordell, 1988). In Ramsey and Dakota Counties, Minnesota, researchers found that a 10\% increase in tree cover within 100m of a house increases the average home price by 0.5\% (Sander, Polasky, \& Haight, 2010). Both summer cooling and winter heating demands can be reduced through shading and wind speed reduction by urban trees, which lowers energy costs (David J. Nowak et al., 2010). A 2009 study of 460 single-family homes in Sacramento, California showed that tree cover on the south and west sides of houses reduced summer electricity use by 5.2\%, whereas trees on the north side of a house increased electricity use by 1.5\% (Donovan \& Butry, 2009). A more recent study conducted in the city of Thessaloniki in northern Greece found that the cooling potential of street trees is directly related to the foliage density and the shade provided can lower temperatures up to 5 degrees C, leading to energy savings of up to 54\% (Tsoka, Leduc, \& Rodler, 2021).
 
-\hypertarget{r-chunks}{%
-\section{R chunks}\label{r-chunks}}
+\hypertarget{environmental-challenges-for-urban-trees}{%
+\section{Environmental Challenges for Urban Trees}\label{environmental-challenges-for-urban-trees}}
 
-When you click the \textbf{Knit} button above a document will be generated that includes both content as well as the output of any embedded \textbf{R} code chunks within the document. You can embed an \textbf{R} code chunk like this (\texttt{cars} is a built-in \textbf{R} dataset):
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(cars)}
-\end{Highlighting}
-\end{Shaded}
-\begin{verbatim}
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-\end{verbatim}
-\hypertarget{inline-code}{%
-\section{Inline code}\label{inline-code}}
+The multiple economic, environmental and quality of life, health benefits that are provided by urban trees are dependent on tree health. Urban trees are generally more stressed than those in rural areas due to the adverse growing conditions they face. This includes higher temperatures, additional soil compaction, root zone restrictions, and extreme variations in environmental conditions such as wind speed and sunlight level (Flint, 1985; Ward \& Johnson, 2007).
 
-If you'd like to put the results of your analysis directly into your discussion, add inline code like this:
-\begin{quote}
-The \texttt{cos} of \(2 \pi\) is 1.
-\end{quote}
-Another example would be the direct calculation of the standard deviation:
-\begin{quote}
-The standard deviation of \texttt{speed} in \texttt{cars} is 5.2876444.
-\end{quote}
-One last neat feature is the use of the \texttt{ifelse} conditional statement which can be used to output text depending on the result of an \textbf{R} calculation:
-\begin{quote}
-The standard deviation is less than 6.
-\end{quote}
-Note the use of \texttt{\textgreater{}} here, which signifies a quotation environment that will be indented.
+Extreme weather events that can harm trees, such as the ice storm and heat dome events that Portland, OR experienced in 2021, are occurring with increasing frequency and intensity.
 
-As you see with \texttt{\$2\ \textbackslash{}pi\$} above, mathematics can be added by surrounding the mathematical text with dollar signs. More examples of this are in \protect\hyperlink{math-sci}{Mathematics and Science} if you uncomment the code in \protect\hyperlink{math}{Math}.
+\hypertarget{urban-forestry-in-portland-oregon}{%
+\section{Urban Forestry in Portland, Oregon}\label{urban-forestry-in-portland-oregon}}
 
-\hypertarget{including-plots}{%
-\section{Including plots}\label{including-plots}}
+Portland is one of many cities to create tree inventories in the last 25 years, with the goal of better understanding the urban forest. Over a period of 9 years, 2,000 volunteers along with members of Portland's Urban Forestry team inventoried Portland's 245,000 park and street trees (DiSalvo, Fukuda, Ramsey, \& Parks, 2017; Portland Urban Forestry, 2019). In addition to basic physical and environmental variables such as tree height, diameter, and location, volunteers also visually assessed the health condition of each tree, and categorized it as good, fair, poor, or dead. Portland inventoried the 218,602 street trees between 2010 and 2016, and 25,740 park trees between 2017 and 2019. Portland Urban Forestry estimates that Portland's parks contain upwards of 1.2 million trees, but the tree inventory project only inventoried trees in developed portions of parks. Portland Urban Forestry estimates that Portland's street trees produce an estimated \$28.6 million annually in environmental and aesthetic benefits, with a full replacement value of \$753 million (DiSalvo et al., 2017). Portland's inventoried park trees have an estimated worth of \$128 million (Portland Urban Forestry, 2019). While Portland's tree inventories are spectacular resources which help shed light on the urban tree population in Portland and the benefits it can provide, there are limitations to the information available through the inventories.
 
-You can also embed plots. For example, here is a way to use the base \textbf{R} graphics package to produce a plot using the built-in \texttt{pressure} dataset:
+One drawback of the inventories is that volunteers were only able to inventory trees on public land, which excluded any trees growing in yards or other privately owned areas. Since only developed portions of parks were inventoried, roughly 98\% of Portland's park trees were not inventoried. Additionally, since the inventories were collected over a 9 year period, the collected health assessments for many trees are no longer reliable or representative of present day conditions. They represent data from a range of 9 years and in the 11 years since inventory collection began much has changed.
 
-\includegraphics{thesis_files/figure-latex/pressure-1.pdf}
+Measuring urban tree health through field surveys can be extremely time and labor intensive. It requires the collection of detailed data on numerous environmental variables, as well as extensive groundwork to conduct the field surveys. To collect Portland's tree inventories, more than 2,000 volunteers collectively spend upwards of 25,000 hours in the field. Additionally, in order to get a good picture of changes in tree health over time, trees need to be revisited numerous times over the study period. Remote sensing data from satellite imagery can be used to locate and map trees in both urban and rural areas, as well as monitor tree health.
 
-Note that the \texttt{echo=FALSE} parameter was added to the code chunk to prevent printing of the \textbf{R} code that generated the plot. There are plenty of other ways to add chunk options (like \texttt{fig.height} and \texttt{fig.width} in the chunk above). More information is available at \url{https://yihui.org/knitr/options/}.
+\hypertarget{remote-sensing}{%
+\section{Remote Sensing}\label{remote-sensing}}
 
-Another useful chunk option is the setting of \texttt{cache=TRUE} as you see here. If document rendering becomes time consuming due to long computations or plots that are expensive to generate you can use knitr caching to improve performance. Later in this file, you'll see a way to reference plots created in \textbf{R} or external figures.
+While the term ``remote sensing'' was first used in the 1960s, the first aerial images were taken in the 1850s from hot air balloons. Later, small cameras were attached to kites and even pigeons to capture aerial images. With the development of airplanes in the early 20th century, images were able to be taken from higher altitudes, providing aerial views of larger surface areas (MOORE, 1979). Aerial images taken from planes provided essential military reconnaissance during both World War I and II. The first environmental applications of aerial imagery began in the 1930s, when the Agriculture Department began to use aerial photography to map and catalog farmland in the United States. Soon after, aerial imagery became a tool for conservation and land planning purposes. Capturing aerial images from planes was the primary method of capturing images of the earth's surface until the early 1960s. Since the first satellite was launched in 1957, the technical capabilities of satellites has greatly increased, along with the types and applications of satellite-collected data (Khorram, 2012).
 
-\hypertarget{loading-and-exploring-data}{%
-\section{Loading and exploring data}\label{loading-and-exploring-data}}
+Within the field of forestry and ecology, remote sensing has numerous applications, from measuring the cover and structure of vegetation, to examining biodiversity and soil characteristics of specific areas. Additionally, remote sensing measurements can be used to calculate and monitor changes in forest density, which is critical for determining the fuel load and forest health in regards to fire risk. One of the most commonly used remote sensing metrics used to measure forest health is the Normalized Difference Vegetation Index (NDVI), which is calculated from the red and near infrared (NIR) bands from remote sensing imagery. Studies have shown that NDVI is highly correlated with chlorophyll content. Specifically, NDVI has a near-linear relationship to the chlorophyll content of soybean crops (Myneni, Hall, Sellers, \& Marshak, 1995; Tucker, 1979). Especially when the goal is monitoring tree health changes over time, remote sensing data eliminates the need for repeated sampling over long time periods, since satellite images are taken at regular intervals as the satellites continually orbit the earth. With the availability and accuracy of aerial imagery increasing as these technologies continue to advance, remote sensing is becoming an important and effective method for mapping, monitoring, and analyzing tree health on an individual tree scale (Xiao \& McPherson, 2005).
 
-Included in this template is a file called \texttt{flights.csv}. This file includes a subset of the larger dataset of information about all flights that departed from Seattle and Portland in 2014. More information about this dataset and its \textbf{R} package is available at \url{https://github.com/ismayc/pnwflights14}. This subset includes only Portland flights and only rows that were complete with no missing values. Merges were also done with the \texttt{airports} and \texttt{airlines} data sets in the \texttt{pnwflights14} package to get more descriptive airport and airline names.
+\hypertarget{previous-work}{%
+\section{Previous work}\label{previous-work}}
 
-We can load in this data set using the following commands:
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# flights.csv is in the data directory}
-\NormalTok{flights\_path }\OtherTok{\textless{}{-}}\NormalTok{ here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"flights.csv"}\NormalTok{)}
-\CommentTok{\# string columns will be read in as strings and not factors now}
-\NormalTok{flights }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(flights\_path, }\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-The data is now stored in the data frame called \texttt{flights} in \textbf{R}. To get a better feel for the variables included in this dataset we can use a variety of functions. Here we can see the dimensions (rows by columns) and also the names of the columns.
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{dim}\NormalTok{(flights)}
-\end{Highlighting}
-\end{Shaded}
-\begin{verbatim}
-[1] 12649    16
-\end{verbatim}
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{names}\NormalTok{(flights)}
-\end{Highlighting}
-\end{Shaded}
-\begin{verbatim}
- [1] "month"        "day"          "dep_time"     "dep_delay"   
- [5] "arr_time"     "arr_delay"    "carrier"      "tailnum"     
- [9] "flight"       "dest"         "air_time"     "distance"    
-[13] "hour"         "minute"       "carrier_name" "dest_name"   
-\end{verbatim}
-Another good idea is to take a look at the dataset in table form. With this dataset having more than 20,000 rows, we won't explicitly show the results of the command here. I recommend you enter the command into the Console \textbf{\emph{after}} you have run the \textbf{R} chunks above to load the data into \textbf{R}.
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{View}\NormalTok{(flights)}
-\end{Highlighting}
-\end{Shaded}
-While not required, it is highly recommended you use the \texttt{dplyr} package to manipulate and summarize your data set as needed. It uses a syntax that is easy to understand using chaining operations. Below I've created a few examples of using \texttt{dplyr} to get information about the Portland flights in 2014. You will also see the use of the \texttt{ggplot2} package, which produces beautiful, high-quality academic visuals.
+Xiao \& McPherson (2005) used multispectral remote sensing data paired with field collected tree health data with the goal of mapping tree health on the University of California Davis campus. Field data on 81 campus trees was collected in the summer of 2004, and the health of the trees was classified as ``healthy'' or ``unhealthy.'' Additionally, a second dataset of 1,186 trees was collected which included randomly selected trees to check the accuracy of the resulting tree health mapping. With high resolution multispectral remote sensing data collected in the summers of 2003 and 2004, NDVI was calculated and used to classify each pixel as vegetation or non-vegetation. The pixels representing trees and shrubs were manually selected and extracted, resulting in NDVI data just for trees and shrubs. The remaining data was split into 5 separate layers based on physiognomic tree type (broadleaf deciduous, broadleaf evergreen, conifer, palm, and mixed). Tree health was evaluated at both a pixel scale, and a tree scale, with the pixels or trees being mapped as either healthy or unhealthy. A tree was labeled as unhealthy if 30\% or more of the pixels within the manually delineated tree crown were mapped as unhealthy, and if the average NDVI of the pixels were less than the NDVI threshold for healthy trees. The accuracy of the tree health assessment was checked against the validation dataset of 1,186 trees. The field health assessment agreed with the remotely sensed health classification for 88\% of the trees.
 
-We begin by checking to ensure that needed packages are installed and then we load them into our current working environment:
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# List of packages required for this analysis}
-\NormalTok{pkg }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"bookdown"}\NormalTok{)}
-\CommentTok{\# Check if packages are not installed and assign the}
-\CommentTok{\# names of the packages not installed to the variable new.pkg}
-\NormalTok{new.pkg }\OtherTok{\textless{}{-}}\NormalTok{ pkg[}\SpecialCharTok{!}\NormalTok{(pkg }\SpecialCharTok{\%in\%} \FunctionTok{installed.packages}\NormalTok{())]}
-\CommentTok{\# If there are any packages in the list that aren\textquotesingle{}t installed,}
-\CommentTok{\# install them}
-\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(new.pkg)) \{}
-  \FunctionTok{install.packages}\NormalTok{(new.pkg, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
-\NormalTok{\}}
-\CommentTok{\# Load packages}
-\FunctionTok{library}\NormalTok{(thesisdown)}
-\FunctionTok{library}\NormalTok{(dplyr)}
-\FunctionTok{library}\NormalTok{(ggplot2)}
-\FunctionTok{library}\NormalTok{(knitr)}
-\end{Highlighting}
-\end{Shaded}
-\clearpage
+Fang, McNeil, Warner, Dahle, \& Eutsler (2020) used a similar approach to evaluate the health of street trees in Washington D.C. using multispectral remote sensing data and D.C.'s street tree inventory. The tree inventory contained 18,434 trees, each with a tree health classification of excellent, good, fair, poor, or dead. The researchers purchased remote sensing images for June 11, July 30, and August 30, 2017, to compare the sensitivity of tree health at different points in the trees' on-leaf period. To extract pixels belonging to tree crowns, a radial buffer based on tree crown diameter was used, and pixels with low NDVI values were masked. This paper tested 5 different vegetation indices (VIs), which included three different variations of NDVI. The different VIs were calculated for each pixel and averaged for each tree. They found that the VI values of trees in good, fair, and poor health conditions were highly statistically different, and traditional NDVI was the most sensitive VI for detecting tree health conditions. Additionally, it was determined that remote sensing imagery taken in the middle of the on-leaf period had the best potential to assess the health condition of trees.
 
-The example we show here does the following:
-\begin{itemize}
-\item
-  Selects only the \texttt{carrier\_name} and \texttt{arr\_delay} from the \texttt{flights} dataset and then assigns this subset to a new variable called \texttt{flights2}.
-\item
-  Using \texttt{flights2}, we determine the largest arrival delay for each of the carriers.
-\end{itemize}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{flights2 }\OtherTok{\textless{}{-}}\NormalTok{ flights }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(carrier\_name, arr\_delay)}
-\NormalTok{max\_delays }\OtherTok{\textless{}{-}}\NormalTok{ flights2 }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(carrier\_name) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{max\_arr\_delay =} \FunctionTok{max}\NormalTok{(arr\_delay, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-A useful function in the \texttt{knitr} package for making nice tables in \emph{R Markdown} is called \texttt{kable}. It is much easier to use than manually entering values into a table by copying and pasting values into Excel or LaTeX. This again goes to show how nice reproducible documents can be! (Note the use of \texttt{results="asis"}, which will produce the table instead of the code to create the table.) The \texttt{caption.short} argument is used to include a shorter title to appear in the List of Tables.
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{kable}\NormalTok{(max\_delays,}
-  \AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Airline"}\NormalTok{, }\StringTok{"Max Arrival Delay"}\NormalTok{),}
-  \AttributeTok{caption =} \StringTok{"Maximum Delays by Airline"}\NormalTok{,}
-  \AttributeTok{caption.short =} \StringTok{"Max Delays by Airline"}\NormalTok{,}
-  \AttributeTok{longtable =} \ConstantTok{TRUE}\NormalTok{,}
-  \AttributeTok{booktabs =} \ConstantTok{TRUE}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\begin{longtable}[t]{lr}
-\caption[Max Delays by Airline]{\label{tab:maxdelays}Maximum Delays by Airline}\\
-\toprule
-Airline & Max Arrival Delay\\
-\midrule
-Alaska Airlines Inc. & 338\\
-American Airlines Inc. & 1539\\
-Delta Air Lines Inc. & 371\\
-Frontier Airlines Inc. & 166\\
-Hawaiian Airlines Inc. & 116\\
-\addlinespace
-JetBlue Airways & 256\\
-SkyWest Airlines Inc. & 321\\
-Southwest Airlines Co. & 315\\
-United Air Lines Inc. & 319\\
-US Airways Inc. & 347\\
-\addlinespace
-Virgin America & 366\\
-\bottomrule
-\end{longtable}
-The last two options make the table a little easier-to-read.
+These two studies form the basis of the approach and methods for this thesis, but there are two main places where I believe I can add new insights and improve methodology. First, a frustrating drawback of both Fang et al. (2020) and Xiao \& McPherson (2005) is that a true replication of their process is inaccessible due to the sources of their data. Xiao \& McPherson (2005) used multispectral data that was specially collected just for the UC Davis campus, and Fang et al. (2020) purchased the high resolution multispectral data that was used in their study. Second, there is little consistency in the methods used to select image pixels for NDVI evaluation. Xiao \& McPherson (2005) manually detected and delineated tree crowns for health assessment, and any trees with overlapping crowns were removed from the analysis. Manual crown delineation is extremely time intensive and is an unrealistic method for large sample sizes. In Fang et al. (2020), a standardized radius based on the average DBH of all trees was used to select the tree crown area. However, this method will only use the center pixels of large trees eliminating the edges, and it is unclear how overlapping tree crowns were dealt with. The impact of these different methods on health analysis is unknown.
 
-We can further look into the properties of the largest value here for American Airlines Inc.~To do so, we can isolate the row corresponding to the arrival delay of 1539 minutes for American in our original \texttt{flights} dataset.
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{flights }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(}
-\NormalTok{    arr\_delay }\SpecialCharTok{==} \DecValTok{1539}\NormalTok{,}
-\NormalTok{    carrier\_name }\SpecialCharTok{==} \StringTok{"American Airlines Inc."}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}
-\NormalTok{    month, day, carrier, dest\_name, hour,}
-\NormalTok{    minute, carrier\_name, arr\_delay}
-\NormalTok{  ))}
-\end{Highlighting}
-\end{Shaded}
-\begin{verbatim}
-  dep_time dep_delay arr_time tailnum flight dest air_time distance
-1     1403      1553     1934  N595AA   1568  DFW      182     1616
-\end{verbatim}
-We see that the flight occurred on March 3rd and departed a little after 2 PM on its way to Dallas/Fort Worth. Lastly, we show how we can visualize the arrival delay of all departing flights from Portland on March 3rd against time of departure.
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{flights }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(month }\SpecialCharTok{==} \DecValTok{3}\NormalTok{, day }\SpecialCharTok{==} \DecValTok{3}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ dep\_time, }\AttributeTok{y =}\NormalTok{ arr\_delay)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/march3plot-1.pdf}
+\hypertarget{this-thesis}{%
+\section{This Thesis}\label{this-thesis}}
 
-\hypertarget{additional-resources}{%
-\section{Additional resources}\label{additional-resources}}
-\begin{itemize}
-\item
-  \emph{Markdown} Cheatsheet - \url{https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet}
-\item
-  \emph{R Markdown}
-  \begin{itemize}
-  \tightlist
-  \item
-    Reference Guide - \url{https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf}
-  \item
-    Cheatsheet - \url{https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf}
-  \end{itemize}
-\item
-  \emph{RStudio IDE}
-  \begin{itemize}
-  \tightlist
-  \item
-    Cheatsheet - \url{https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf}
-  \item
-    Official website - \url{https://rstudio.com/products/rstudio/}
-  \end{itemize}
-\item
-  Introduction to \texttt{dplyr} - \url{https://cran.rstudio.com/web/packages/dplyr/vignettes/dplyr.html}
-\item
-  \texttt{ggplot2}
-  \begin{itemize}
-  \tightlist
-  \item
-    Documentation - \url{https://ggplot2.tidyverse.org/}
-  \item
-    Cheatsheet - \url{https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf}
-  \end{itemize}
-\end{itemize}
+Based on the assumptions that tree health can be approximated using satellite spectral data, specifically NDVI, this thesis aims to replicate the process of Fang et al. (2020) and Xiao \& McPherson (2005). Additionally, I will investigate the questions of the impact of species differentiation when using NDVI to calculate tree health, and if different methods of tree crown delineation impact the health rating outcome. Based on these questions, I predict that differentiating health rating predictions by tree species will improve the accuracy of the model, and differentiating by tree type (conifer vs broadleaf) will also improve the accuracy, but less than species. Additionally, I predict that using more in-depth tree crown delineation approaches will allow for more trees to be analyzed, and will also improve the accuracy of the health rating.
+
+Finally, this thesis only uses data sources, tools, and processes that are either publicly accessible or free, in order to keep this type of research accessible to all.
+
 \hypertarget{math-sci}{%
 \chapter{Mathematics and Science}\label{math-sci}}
 
@@ -625,7 +394,7 @@ You will probably find the resources at \url{https://www.lecb.ncifcrf.gov/~toms/
 
 If your thesis has a lot of figures, \emph{R Markdown} might behave better for you than that other word processor. One perk is that it will automatically number the figures accordingly in each chapter. You'll also be able to create a label for each figure, add a caption, and then reference the figure in a way similar to what we saw with tables earlier. If you label your figures, you can move the figures around and \emph{R Markdown} will automatically adjust the numbering for you. No need for you to remember! So that you don't have to get too far into LaTeX to do this, a couple \textbf{R} functions have been created for you to assist. You'll see their use below.
 
-In the \textbf{R} chunk below, we will load in a picture stored as \texttt{reed.jpg} in our main directory. We then give it the caption of ``Reed logo,'' the label of ``reedlogo,'' and specify that this is a figure. Make note of the different \textbf{R} chunk options that are given in the R Markdown file (not shown in the knitted document).
+In the \textbf{R} chunk below, we will load in a picture stored as \texttt{reed.jpg} in our main directory. We then give it the caption of ``Reed logo'', the label of ``reedlogo'', and specify that this is a figure. Make note of the different \textbf{R} chunk options that are given in the R Markdown file (not shown in the knitted document).
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{include\_graphics}\NormalTok{(}\AttributeTok{path =} \StringTok{"figure/reed.jpg"}\NormalTok{)}
@@ -681,16 +450,16 @@ As another example, here is a reference: Figure \ref{fig:subd2}.
 \hypertarget{footnotes-and-endnotes}{%
 \section{Footnotes and Endnotes}\label{footnotes-and-endnotes}}
 
-You might want to footnote something.\footnote{footnote text} The footnote will be in a smaller font and placed appropriately. Endnotes work in much the same way. More information can be found about both on the CUS site or feel free to reach out to \href{mailto:data@reed.edu}{\nolinkurl{data@reed.edu}}.
+You might want to footnote something. \footnote{footnote text} The footnote will be in a smaller font and placed appropriately. Endnotes work in much the same way. More information can be found about both on the CUS site or feel free to reach out to \href{mailto:data@reed.edu}{\nolinkurl{data@reed.edu}}.
 
 \hypertarget{bibliographies}{%
 \section{Bibliographies}\label{bibliographies}}
 
 Of course you will need to cite things, and you will probably accumulate an armful of sources. There are a variety of tools available for creating a bibliography database (stored with the .bib extension). In addition to BibTeX suggested below, you may want to consider using the free and easy-to-use tool called Zotero. The Reed librarians have created Zotero documentation at \url{https://libguides.reed.edu/citation/zotero}. In addition, a tutorial is available from Middlebury College at \url{https://sites.middlebury.edu/zoteromiddlebury/}.
 
-\emph{R Markdown} uses \emph{pandoc} (\url{https://pandoc.org/}) to build its bibliographies. One nice caveat of this is that you won't have to do a second compile to load in references as standard LaTeX requires. To cite references in your thesis (after creating your bibliography database), place the reference name inside square brackets and precede it by the ``at'' symbol. For example, here's a reference to a book about worrying: (Molina \& Borkovec, 1994). This \texttt{Molina1994} entry appears in a file called \texttt{thesis.bib} in the \texttt{bib} folder. This bibliography database file was created by a program called BibTeX. You can call this file something else if you like (look at the YAML header in the main .Rmd file) and, by default, is to placed in the \texttt{bib} folder.
+\emph{R Markdown} uses \emph{pandoc} (\url{https://pandoc.org/}) to build its bibliographies. One nice caveat of this is that you won't have to do a second compile to load in references as standard LaTeX requires. To cite references in your thesis (after creating your bibliography database), place the reference name inside square brackets and precede it by the ``at'' symbol. For example, here's a reference to a book about worrying: (\textbf{Molina1994?}). This \texttt{Molina1994} entry appears in a file called \texttt{thesis.bib} in the \texttt{bib} folder. This bibliography database file was created by a program called BibTeX. You can call this file something else if you like (look at the YAML header in the main .Rmd file) and, by default, is to placed in the \texttt{bib} folder.
 
-For more information about BibTeX and bibliographies, see our CUS site (\url{https://web.reed.edu/cis/help/latex/index.html})\footnote{Reed~College (2007)}. There are three pages on this topic: \emph{bibtex} (which talks about using BibTeX, at \url{https://web.reed.edu/cis/help/latex/bibtex.html}), \emph{bibtexstyles} (about how to find and use the bibliography style that best suits your needs, at \url{https://web.reed.edu/cis/help/latex/bibtexstyles.html}) and \emph{bibman} (which covers how to make and maintain a bibliography by hand, without BibTeX, at \url{https://web.reed.edu/cis/help/latex/bibman.html}). The last page will not be useful unless you have only a few sources.
+For more information about BibTeX and bibliographies, see our CUS site (\url{https://web.reed.edu/cis/help/latex/index.html})\footnote{(\textbf{reedweb2007?})}. There are three pages on this topic: \emph{bibtex} (which talks about using BibTeX, at \url{https://web.reed.edu/cis/help/latex/bibtex.html}), \emph{bibtexstyles} (about how to find and use the bibliography style that best suits your needs, at \url{https://web.reed.edu/cis/help/latex/bibtexstyles.html}) and \emph{bibman} (which covers how to make and maintain a bibliography by hand, without BibTeX, at \url{https://web.reed.edu/cis/help/latex/bibman.html}). The last page will not be useful unless you have only a few sources.
 
 If you look at the YAML header at the top of the main .Rmd file you can see that we can specify the style of the bibliography by referencing the appropriate csl file. You can download a variety of different style files at \url{https://www.zotero.org/styles}. Make sure to download the file into the csl folder.
 
@@ -710,7 +479,7 @@ If you look at the YAML header at the top of the main .Rmd file you can see that
 \item
   To force capitalization in an article title or where all lowercase is generally used, bracket the capital letter in curly braces.
 \item
-  You can add a Reed Thesis citation\footnote{Noble (2002)} option. The best way to do this is to use the phdthesis type of citation, and use the optional ``type'' field to enter ``Reed thesis'' or ``Undergraduate thesis.''
+  You can add a Reed Thesis citation\footnote{(\textbf{noble2002?})} option. The best way to do this is to use the phdthesis type of citation, and use the optional ``type'' field to enter ``Reed thesis'' or ``Undergraduate thesis.''
 \end{itemize}
 \hypertarget{anything-else}{%
 \section{Anything else?}\label{anything-else}}
@@ -860,23 +629,104 @@ This first appendix includes all of the R chunks of code that were hidden throug
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\hypertarget{ref-angel2000}{}%
-Angel, E. (2000). \emph{Interactive computer graphics : A top-down approach with OpenGL}. Boston, MA: Addison Wesley Longman.
+\leavevmode\vadjust pre{\hypertarget{ref-anderson1988}{}}%
+Anderson, L. M., \& Cordell, H. K. (1988). Influence of trees on residential property values in Athens, Georgia (U.S.A.): A survey based on actual sales prices. \emph{Landscape and Urban Planning}, \emph{15}(1), 153--164. http://doi.org/\href{https://doi.org/10.1016/0169-2046(88)90023-0}{10.1016/0169-2046(88)90023-0}
 
-\leavevmode\hypertarget{ref-angel2001}{}%
-Angel, E. (2001a). \emph{Batch-file computer graphics : A bottom-up approach with QuickTime}. Boston, MA: Wesley Addison Longman.
+\leavevmode\vadjust pre{\hypertarget{ref-beckmann-wuxfcbbelt2021}{}}%
+Beckmann-Wübbelt, A., Fricke, A., Sebesvari, Z., Yakouchenkova, I. A., Fröhlich, K., \& Saha, S. (2021). High public appreciation for the cultural ecosystem services of urban and peri{\nobreakdash-}urban forests during the COVID-19 pandemic. \emph{Sustainable Cities and Society}, \emph{74}, 103240. http://doi.org/\href{https://doi.org/10.1016/j.scs.2021.103240}{10.1016/j.scs.2021.103240}
 
-\leavevmode\hypertarget{ref-angel2002a}{}%
-Angel, E. (2001b). \emph{Test second book by angel}. Boston, MA: Wesley Addison Longman.
+\leavevmode\vadjust pre{\hypertarget{ref-cityofportland}{}}%
+City of Portland. (n.d.). Carbon emissions. Retrieved from \url{https://www.portland.gov/bps/scg/scg-dashboard/carbon-emissions}
 
-\leavevmode\hypertarget{ref-Molina1994}{}%
-Molina, S. T., \& Borkovec, T. D. (1994). The {P}enn {S}tate worry questionnaire: Psychometric properties and associated characteristics. In G. C. L. Davey \& F. Tallis (Eds.), \emph{Worrying: Perspectives on theory, assessment and treatment} (pp. 265--283). New York: Wiley.
+\leavevmode\vadjust pre{\hypertarget{ref-disalvo2017}{}}%
+DiSalvo, A., Fukuda, J., Ramsey, J., \& Parks, P. (2017). \emph{Street Tree Inventory Report: City of Portland} (p. 48).
 
-\leavevmode\hypertarget{ref-noble2002}{}%
-Noble, S. G. (2002). \emph{Turning images into simple line-art} (Undergraduate thesis). Reed College.
+\leavevmode\vadjust pre{\hypertarget{ref-donovan2009}{}}%
+Donovan, G., \& Butry, D. (2009). The value of shade: Estimating the effect of urban trees on summertime electricity use. \emph{Energy and Buildings}, \emph{41}, 662--668. http://doi.org/\href{https://doi.org/10.1016/j.enbuild.2009.01.002}{10.1016/j.enbuild.2009.01.002}
 
-\leavevmode\hypertarget{ref-reedweb2007}{}%
-Reed~College. (2007). LaTeX your document. Retrieved from \url{https://web.reed.edu/cis/help/LaTeX/index.html}
+\leavevmode\vadjust pre{\hypertarget{ref-fang2020}{}}%
+Fang, F., McNeil, B., Warner, T., Dahle, G., \& Eutsler, E. (2020). Street tree health from space? An evaluation using WorldView-3 data and the Washington D.C. Street Tree Spatial Database. \emph{Urban forestry \& urban greening}, \emph{49}, 126634--. http://doi.org/\href{https://doi.org/10.1016/j.ufug.2020.126634}{10.1016/j.ufug.2020.126634}
+
+\leavevmode\vadjust pre{\hypertarget{ref-flint1985}{}}%
+Flint, H. L. (1985). Plants showing tolerance of urban stress. \emph{Journal of Environmental Horticulture}, \emph{3}(2), 85--89. http://doi.org/\href{https://doi.org/10.24266/0738-2898-3.2.85}{10.24266/0738-2898-3.2.85}
+
+\leavevmode\vadjust pre{\hypertarget{ref-james2015}{}}%
+James, P., Banay, R. F., Hart, J. E., \& Laden, F. (2015). A Review of the Health Benefits of Greenness. \emph{Current Epidemiology Reports}, \emph{2}(2), 131--142. http://doi.org/\href{https://doi.org/10.1007/s40471-015-0043-7}{10.1007/s40471-015-0043-7}
+
+\leavevmode\vadjust pre{\hypertarget{ref-khorram2012}{}}%
+Khorram, S. (2012). \emph{Remote Sensing} (1st ed. 2012.). New York, NY: Springer New York : Imprint: Springer.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lazarus2013}{}}%
+Lazarus, M., Chandler, C., \& Erickson, P. (2013). A core framework and scenario for deep GHG reductions at the city scale. \emph{Energy Policy}, \emph{57}, 563--574. http://doi.org/\href{https://doi.org/10.1016/j.enpol.2013.02.031}{10.1016/j.enpol.2013.02.031}
+
+\leavevmode\vadjust pre{\hypertarget{ref-moore1979}{}}%
+MOORE, G. K. (1979). What is a picture worth? A history of remote sensing / quelle est la valeur d'une image? Un tour d'horizon de télédétection. \emph{Hydrological Sciences Bulletin}, \emph{24}(4), 477--485. http://doi.org/\href{https://doi.org/10.1080/02626667909491887}{10.1080/02626667909491887}
+
+\leavevmode\vadjust pre{\hypertarget{ref-myneni1995}{}}%
+Myneni, R., Hall, F., Sellers, P., \& Marshak, A. (1995). The interpretation of spectral vegetation indexes. \emph{IEEE Transactions on Geoscience and Remote Sensing}. http://doi.org/\href{https://doi.org/10.1109/36.377948}{10.1109/36.377948}
+
+\leavevmode\vadjust pre{\hypertarget{ref-nowak2002}{}}%
+Nowak, David J., \& Crane, D. E. (2002). Carbon storage and sequestration by urban trees in the USA. \emph{Environmental Pollution}, \emph{116}(3), 381--389. http://doi.org/\href{https://doi.org/10.1016/S0269-7491(01)00214-7}{10.1016/S0269-7491(01)00214-7}
+
+\leavevmode\vadjust pre{\hypertarget{ref-nowak2006}{}}%
+Nowak, David J., Crane, D. E., \& Stevens, J. C. (2006). Air pollution removal by urban trees and shrubs in the United States. \emph{Urban Forestry \& Urban Greening}, \emph{4}(3), 115--123. http://doi.org/\href{https://doi.org/10.1016/j.ufug.2006.01.007}{10.1016/j.ufug.2006.01.007}
+
+\leavevmode\vadjust pre{\hypertarget{ref-nowak2013}{}}%
+Nowak, David J., Greenfield, E. J., Hoehn, R. E., \& Lapoint, E. (2013). Carbon storage and sequestration by trees in urban and community areas of the United States. \emph{Environmental Pollution}, \emph{178}, 229--236. http://doi.org/\href{https://doi.org/10.1016/j.envpol.2013.03.019}{10.1016/j.envpol.2013.03.019}
+
+\leavevmode\vadjust pre{\hypertarget{ref-nowak2010}{}}%
+Nowak, David J., Stein, S. M., Randler, P. B., Comas, S. J., Carr, M. A., \& Alig, R. J. (2010). \emph{Sustaining America{'}s Urban Trees and Forests} (p. 28).
+
+\leavevmode\vadjust pre{\hypertarget{ref-portlandurbanforestry2019}{}}%
+Portland Urban Forestry. (2019). Inventory findings 2019. Retrieved from \url{https://www.portland.gov/trees/get-involved/tree-summit}
+
+\leavevmode\vadjust pre{\hypertarget{ref-assessin2016}{}}%
+Robertson, G., \& Mason, A. (Eds.). (2016). Assessing the Sustainability of Agricultural and Urban Forests in the United States. \emph{USDA Forest Service FS-1067, 75 Pp.}, (FS-1067). Retrieved from \url{http://www.fs.usda.gov/treesearch/pubs/52278}
+
+\leavevmode\vadjust pre{\hypertarget{ref-safford2013}{}}%
+Safford, H., Larry, E., McPherson, E. G., Nowak, D. J., \& Westphal, L. M. (2013, August). Urban forests and climate change. Retrieved from \url{https://www.fs.usda.gov/ccrc/topics/urban-forests}
+
+\leavevmode\vadjust pre{\hypertarget{ref-sander2010}{}}%
+Sander, H., Polasky, S., \& Haight, R. G. (2010). The value of urban tree cover: A hedonic property price model in Ramsey and Dakota Counties, Minnesota, USA. \emph{Ecological Economics}, \emph{69}(8), 1646--1656. http://doi.org/\href{https://doi.org/10.1016/j.ecolecon.2010.03.011}{10.1016/j.ecolecon.2010.03.011}
+
+\leavevmode\vadjust pre{\hypertarget{ref-schroeder2011}{}}%
+Schroeder, Herbert W. (2011). Does beauty still matter? Experiential and utilitarian values of urban trees. \emph{In: Trees, People and the Built Environment. Proceedings of the Urban Trees Research Conference; 2011 April 13-14; Edgbaston, Birmingham, UK. Institute of Chartered Foresters: 159-165.}, 159--165. Retrieved from \url{http://www.fs.usda.gov/treesearch/pubs/41349}
+
+\leavevmode\vadjust pre{\hypertarget{ref-schroeder1987}{}}%
+Schroeder, Herbert W., \& Cannon, W. N. (1987). VISUAL QUALITY OF RESIDENTIAL STREETS: BOTH STREET AND YARD TREES MAKE A DIFFERENCE, 5.
+
+\leavevmode\vadjust pre{\hypertarget{ref-schroeder1983}{}}%
+Schroeder, H., \& Cannon, W. N. (1983). The esthetic contribution of trees to residential streets in Ohio towns. \emph{Undefined}. Retrieved from \url{https://www.semanticscholar.org/paper/The-esthetic-contribution-of-trees-to-residential-Schroeder-Cannon/76ab66281fa734ae7106cc7794310b5463cb8f77}
+
+\leavevmode\vadjust pre{\hypertarget{ref-selbig2021}{}}%
+Selbig, W. R., Loheide, S. P., Shuster, W., Scharenbroch, B. C., Coville, R. C., Kruegler, J., \ldots{} Nowak, D. (2021). Quantifying the stormwater runoff volume reduction benefits of urban street tree canopy. \emph{Science of The Total Environment}, 151296. http://doi.org/\href{https://doi.org/10.1016/j.scitotenv.2021.151296}{10.1016/j.scitotenv.2021.151296}
+
+\leavevmode\vadjust pre{\hypertarget{ref-taylor2001}{}}%
+Taylor, Andrea Faber, Kuo, F. E., \& Sullivan, W. C. (2001). Coping with ADD: The Surprising Connection to Green Play Settings. \emph{Environment and Behavior}, \emph{33}(1), 54--77. http://doi.org/\href{https://doi.org/10.1177/00139160121972864}{10.1177/00139160121972864}
+
+\leavevmode\vadjust pre{\hypertarget{ref-taylor2002}{}}%
+Taylor, ANDREA FABER, Kuo, F. E., \& Sullivan, W. C. (2002). VIEWS OF NATURE AND SELF-DISCIPLINE: EVIDENCE FROM INNER CITY CHILDREN. \emph{Journal of Environmental Psychology}, \emph{22}(1), 49--63. http://doi.org/\href{https://doi.org/10.1006/jevp.2001.0241}{10.1006/jevp.2001.0241}
+
+\leavevmode\vadjust pre{\hypertarget{ref-tsoka2021}{}}%
+Tsoka, S., Leduc, T., \& Rodler, A. (2021). Assessing the effects of urban street trees on building cooling energy needs: The role of foliage density and planting pattern. \emph{Sustainable Cities and Society}, \emph{65}, 102633. http://doi.org/\href{https://doi.org/10.1016/j.scs.2020.102633}{10.1016/j.scs.2020.102633}
+
+\leavevmode\vadjust pre{\hypertarget{ref-tucker1979}{}}%
+Tucker, C. J. (1979). Red and photographic infrared linear combinations for monitoring vegetation. \emph{Remote Sensing of Environment}, \emph{8}(2), 127--150. http://doi.org/\href{https://doi.org/10.1016/0034-4257(79)90013-0}{10.1016/0034-4257(79)90013-0}
+
+\leavevmode\vadjust pre{\hypertarget{ref-unitednations2018}{}}%
+United Nations, D. of E., \& Affairs, S. (2018, May 16). 68. Retrieved from \url{https://www.un.org/development/desa/en/news/population/2018-revision-of-world-urbanization-prospects.html}
+
+\leavevmode\vadjust pre{\hypertarget{ref-usepa2020}{}}%
+US EPA. (2020, January 27). Urbanization and Storm Water Runoff. Retrieved from \url{https://www.epa.gov/sourcewaterprotection/urbanization-and-storm-water-runoff}
+
+\leavevmode\vadjust pre{\hypertarget{ref-usdaforestservice2011}{}}%
+USDA Forest Service, N. R. S. (2011). Urban Tree Canopy Analysis Helps Urban Planners With Tree Planting Campaigns. \emph{NRS Research Review}, \emph{13}, 6.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ward2007}{}}%
+Ward, K. T., \& Johnson, G. R. (2007). Geospatial methods provide timely and comprehensive urban forest information. \emph{Urban Forestry \& Urban Greening}, \emph{6}(1), 15--22. http://doi.org/\href{https://doi.org/10.1016/j.ufug.2006.11.002}{10.1016/j.ufug.2006.11.002}
+
+\leavevmode\vadjust pre{\hypertarget{ref-xiao2005}{}}%
+Xiao, Q., \& McPherson, E. G. (2005). Tree health mapping with multispectral remote sensing data at UC Davis, California. \emph{Urban Ecosystems}, \emph{8}(3-4), 349--361. http://doi.org/\href{https://doi.org/10.1007/s11252-005-4867-7}{10.1007/s11252-005-4867-7}
 
 \end{CSLReferences}
 
