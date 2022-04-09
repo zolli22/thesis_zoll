@@ -1,0 +1,53 @@
+# Data Resources and Methods {#data-methods}
+
+<!-- Required to number equations in HTML files -->
+
+```{=html}
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+```
+Data Resources For my thesis, the data resources and processing components can be split into four main sections.
+
+First, there is the tree data. This includes the Portland park and street tree databases, and the subset of those trees that I sampled health data on prior to this thesis. Primarily, the tree data is used for tree location points, as well as basic tree metrics such as species, height, and crown width. In general, I will refer to these data sources as park trees (the Portland park tree dataset), street trees (the Portland street tree dataset), and CNH trees, which are the trees we collected data on in the summer of 2021. A majority of the processing with the tree points involved tidying and wrangling the data, subsetting it and transforming it into usable data products. Additionally, due to the inconsistency in the types of variables measured for each tree data product, I created a model to predict tree crown width and tree height based on DBH and species.
+
+The second aspect of my data and processing is the retrieval and processing of Planetscope satellite imagery products to produce usable NDVI data files. Third, are the different tree delineation methods I examine in this thesis, which include point value, radius, and LiDAR methods. This involved the processing of LiDAR and tree crown radius data, as well as obtaining and computing associated NDVI values.
+
+Lastly, with the combined data from the previous three parts, I created a predictive model for predicting tree health rating based on NDVI values.
+
+Previously Collected Field Data
+
+We collected data on biotic and abiotic factors related to tree health during the summer of 2021 as part of a larger collaborative interdisciplinary project examining the relationship between various socioeconomic variables and urban tree health. For the purposes of the larger project, we selected trees from eight different neighborhoods in Portland, with four different categorizations of historic and current investment or disinvestment. The four chosen species are Pseudotsuga menziesii (PSME, Douglas fir), Thuja plicata (THPL, Western Red Cedar), Acer Macrophyllum (ACMA, Bigleaf Maple), and Acer platanoides (ACPL, Norway Maple). They are some of the most abundant tree species in Portland, and make up a large proportion of Portland's urban forest. PSME, THPL, and ACMA are all native to the area, whereas Norway Maple is a nonnative tree species that was frequently planted in residential areas, and is now the most common street tree in Portland. Individual trees for sampling were selected from the Portland tree inventories, with the goal of sampling an equal proportion of street trees and park trees of each species in each neighborhood. Sampling was also focused on mature trees, so the inventories were filtered to only include individuals above 25 feet in height. 4 trees of each species were randomly selected per neighborhood, with an attempt to maintain equal proportions of park and street trees. However, due to varying field conditions, some trees were not able to be sampled, so the nearest tree of the same species that met all criteria was substituted. In total, 128 trees were surveyed. Fieldwork was conducted between July 7 and August 19, 2021. Each tree was sampled in a single visit between 10am and 3pm. For each tree, a GPS point was collected to mark its location. Both biotic and abiotic variables were measured, and health attributes, physiology, and growth were assessed. TABLE OF VARIABLES HERE Portland Tree Inventory The Portland Tree Inventory Project, managed by the City of Portland's Parks & Recreation Urban Forestry Department, cataloged nearly 245,000 street and park trees in Portland between 2010 to 2019. The street tree inventory, which was collected from 2010 to 2016, contains information on 216,750 street trees of 145 genera. The park tree inventory, collected from 2017 to 2019, contains data on 25,740 park trees of 116 genera. While many of the collected variables differ between the two inventories, they both include data on location, tree identification, diameter at breast height (DBH) and a visual assessment of the trees health which was rated as good, fair, poor, or dead. Four tree species were chosen for the purpose of this project.
+
+| Species code | Common name      | Scientific name | Street count | Park count | Total |
+|------------|------------|------------|------------|------------|------------|
+| ACMA         | Bigleaf maple    |                 |              |            |       |
+| ACPL         | Norway maple     |                 |              |            |       |
+| PSME         | Douglas fir      |                 |              |            |       |
+| THPL         | Western redcedar |                 |              |            |       |
+
+To reduce the variability in data due to the timespan of data collection, I filtered the street and park tree datasets to trees that were sampled in 2016 and 2019, respectively. For each dataset, the selected year was the year with the highest count of trees sampled.
+
+Canopy width and tree height model The park tree dataset contains measurements for tree height, canopy width, and DBH, but the street tree dataset only contains measurements for DBH. Canopy width and tree height are both important factors for tree selection and canopy delineation. I created a statistical model to predict tree height and crown width based on tree DBH and species, in order to be able to use the same pixel selection methods for both the park and street tree datasets. \*\* write about this here \*\* \*\* add figures and such? \*\* or does that go in results??\*\*
+
+Satellite Imagery Planetscope satellite imagery (Planet Labs, 3m resolution, 4-band RGB-NIR) was used for vegetation index calculation. PlanetScope, also known as the Flock, is a constellation of approximately 130 satellites. The first 28 PlanetScope satellites were launched in July 2014, and the newest batch of satellites were launched in January 2022. PlanetScope, operated by Planet, is a constellation of approximately 130 satellites, able to image the entire land surface of the Earth every day (a daily collection capacity of 200 million km²/day). PlanetScope images are approximately 3 meters per pixel resolution. I downloaded satellite images corresponding to the summers of when the data was collected (2016, 2019, and 2021). Images were first filtered for those captured in July of each year, since images taken during the middle of the on-leaf period have been shown to be most sensitive in detecting a statistical difference in tree health measured by NDVI (Fang et al. 2020). The remaining images were then filtered for minimal cloud cover and maximum coverage of the area of study. The final selected images were taken between 6:30 and 7pm on 6 July 2016, 31 July 2019, and 26 July 2021.
+
+| Date collected | Collection time | Number of scene products | Satellite ID |
+|----------------|-----------------|--------------------------|--------------|
+| 2016-07-06     | 18:55           | 5                        | 0c22         |
+| 2019-07-31     | 18:42           | 4                        | 0f42         |
+| 2021-07-26     | 18:40           | 4                        | 1003         |
+
+For each of the chosen dates, I downloaded the available analytic product from Planet. The analytic multispectral imagery products are orthorectified, calibrated, corrected for terrain distortions, and transformed to Top of Atmosphere radiance to ensure accurate geolocation and cartographic projection. As a 4 band satellite product,
+
+Tree Crown Delineation Crown Delineation with Crown Width Measurements. The goal of tree crown delineation is to understand where the foliage of a tree is located. This is extremely important because we want to ensure that the satellite pixels used for health analysis have measurements that belong to the given tree. Previous papers (EXAMPLE HERE) have used manual tree crown delineation, or chosen a standardized radius for all trees in their sample. Manual tree crown delineation would be extremely time consuming, especially when trying to examine data on a city-wide level. Additionally, with a standardized radius, there will be many trees that have crowns either larger or smaller than the standardized radius. If the true crown is smaller than that of the radius, pixels that correspond to things like grass or pavement will be included in the measurement analysis. Conversely, if the true crown is larger than the chosen radius, the edges of the tree will be ignored, and valuable data will be lost. With both of these methods, any overlapping tree crowns were removed from the final analysis, even further reducing the sample size.
+
+Point Method: For the point method, I extracted the NDVI value from the pixel directly underneath the tree location point. This is the simplest of the three methods.
+
+The first method of tree crown delineation I used is based on the individual crown width for each selected tree.
+
+For each selected tree point, I created a buffer with the same radius as the measured tree canopy. The canopy measurement for the street and park trees are based on data from 2016 and 2019, respectively, and it is to be expected that the size of a tree crown would change in the time between the measurement and my analysis. However, since I am using satellite scenes from the year of tree measurement, any large margin of error that could be introduced by the time difference will be minimized.
+
+Canopy Height Data A canopy height model for the Portland metro area was developed using LiDAR and satellite spectral imagery collected in the summer of 2014. The purpose of this data is to monitor natural areas in the Portland metro area, specifically change over time analysis and the examination of the potential loss of habitat in riparian areas. The canopy was detected using both NDVI values and LiDAR feature heights. Errors and noise in the data, such as electrical lines above tree tops, were cleaned using geometric post-processing. The canopy height model was clipped to remove anything below ten feet to eliminate any understory shrubs or grasses that were included in the raw data. Tree Crown Delineation: LiDAR
