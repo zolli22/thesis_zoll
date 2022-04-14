@@ -303,18 +303,10 @@ knitr::include_graphics("figure/selected_lidar.png")
 ```
 
 
-These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figures \@ref(fig:clip-extent), \@ref(fig:random-sample-park), \@ref(fig:random-sample-street)).
+These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figure \@ref(fig:clip-extent)).
 
-```{r clip-extent, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="Geographic extent for random sampling", fig.align='center', echo = FALSE}
-knitr::include_graphics("figure/pdx_extent.png")
-```
-
-```{r random-sample-park, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="Random sample of 100 park trees", fig.align='center', echo = FALSE}
-knitr::include_graphics("figure/random_park_trees.png")
-```
-
-```{r random-sample-street, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="Random sample of 100 street trees", fig.align='center', echo = FALSE}
-knitr::include_graphics("figure/random_street_trees.png")
+```{r clip-extent, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="Geographic extent and random sampling", fig.align='center', echo = FALSE}
+knitr::include_graphics("figure/extent_and_samples.png")
 ```
 
 ## Modeling Tree Health

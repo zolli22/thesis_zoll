@@ -17,7 +17,6 @@ cnh_all <- read_csv("data/2021_zonal_stats_cnh.csv") %>%
 species_pal <- c("#219EBC", "#023047", "#FFB703", "#FB8500", "#586f7c")
 
 
-
 health_pal <- c("#1a005c", "#c80050", "#ffa600", "#586f7c")
 
 ggplot(cnh_all, aes(x = species.x, fill = health_rat))+
@@ -96,6 +95,8 @@ p_width_model + s_width_preds
 ```
 
 ## NDVI Calculation
+
+
 
 ## Point Method
 
