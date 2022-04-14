@@ -94,10 +94,32 @@ if (!require(thesisdown)) {
     )
   }
 }
+
+# general packages
 library(thesisdown)
+library(knitr)
+library(tidyverse)
+
+# wrangling packages
+library(lubridate)
+
+# data packages
+library(pdxTrees)
+
+# processing and analysis packages
+library(ForestTools)
+
+# visualization packages
+library(scales)
+library(patchwork)
+
 # Set how wide the R output will go
 options(width = 70)
+
+theme_set(theme_light())
 ```
+
+
 
 <!--
 The acknowledgments, preface, dedication, and abstract are added into the PDF

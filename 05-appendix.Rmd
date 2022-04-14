@@ -1,24 +1,35 @@
 `r if(knitr:::is_latex_output()) '\\appendix'`
 
-`r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'` 
+`r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'`
+
+# Additional Tables and Figures
 
 
-# The First Appendix
+# Code
 
+```{=html}
 <!--
 If you feel it necessary to include an appendix, it goes here.
 -->
-
-This first appendix includes all of the R chunks of code that were hidden throughout the document (using the `include = FALSE` chunk tag) to help with readibility and/or setup.
-
-**In the main Rmd file**
-
-```{r ref.label='include_packages', results='hide', echo = TRUE}
 ```
 
-**In Chapter \@ref(ref-labels):**
+This second appendix includes all of the R chunks of code that were hidden throughout the document to help with readability and/or setup.
 
-```{r ref.label='include_packages_2', results='hide', echo = TRUE}
+## **In Chapter** \@ref(data-methods)**:**
+
+### Portland Tree Inventory counts and calculations
+
+```{r ref.label='counttables', results='hide', echo = TRUE}
 ```
 
-# The Second Appendix, for Fun
+### Calculating NDVI from satellite imagery
+
+```{r ref.label='ndvi-calc', results='hide', echo = TRUE, eval = F}
+```
+
+### LiDAR canopy delineation
+
+```{r ref.label='lidar-calc', results='hide', echo = TRUE, eval = F}
+```
+
+

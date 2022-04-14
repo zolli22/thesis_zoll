@@ -1,0 +1,179 @@
+---
+title: "Untitled"
+author: "Ingrid Zoll"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r count_tables2, results="asis", echo=FALSE}
+kable(park_counts,
+  col.names = c("Species code", "Scientific name", "Collected in 2019", "Total in inventory"),
+  caption = "Canary species frequency in the Portland Park Trees Database",
+  caption.short = "Species counts in Park Trees Database",
+  longtable = TRUE,
+  booktabs = TRUE
+)
+
+kable(street_counts,
+  col.names = c("Species code", "Scientific name", "Collected in 2016", "Total in inventory"),
+  caption = "Canary species frequency in the Portland Street Trees Database",
+  caption.short = "Species counts in Street Trees Database",
+  longtable = TRUE,
+  booktabs = TRUE
+)
+```
+
+
+\begin{equation}
+  \mathrm{NDVI} = \frac{(NIR - Red)}{(NIR + Red)}
+\end{equation}
+
+
+\begin{equation}
+  \mathrm{C_6H_{12}O_6  + 6O_2} \longrightarrow \mathrm{6CO_2 + 6H_2O}
+  (\#eq:reaction)
+\end{equation}
+
+
+**In the main Rmd file**
+
+
+```{r count_tables2, results="asis", echo=FALSE}
+kable(park_counts,
+  col.names = c("Species code", "Scientific name", "Collected in 2019", "Total in inventory"),
+  caption = "TEST CAPTION",
+  caption.short = "Species counts in Park Trees Database",
+  longtable = TRUE,
+  booktabs = TRUE
+)
+```
+
+
+```{r test_chunk, echo=FALSE}
+kable(park_counts,
+      caption = "Test", 
+      caption.short = "test2",
+      longtable = TRUE,
+      booktabs = TRUE)
+```
+
+
+# Graphics, References, and Labels {#ref-labels}
+
+
+## Figures
+
+If your thesis has a lot of figures, _R Markdown_ might behave better for you than that other word processor.  One perk is that it will automatically number the figures accordingly in each chapter.    You'll also be able to create a label for each figure, add a caption, and then reference the figure in a way similar to what we saw with tables earlier.  If you label your figures, you can move the figures around and _R Markdown_ will automatically adjust the numbering for you.  No need for you to remember!  So that you don't have to get too far into LaTeX to do this, a couple **R** functions have been created for you to assist.  You'll see their use below.
+
+<!--
+One thing that may be annoying is the way _R Markdown_ handles "floats" like tables and figures (it's really \LaTeX's fault). \LaTeX\ will try to find the best place to put your object based on the text around it and until you're really, truly done writing you should just leave it where it lies. There are some optional arguments specified in the options parameter of the `label` function.  If you need to shift your figure around, it might be good to look here on tweaking the options argument:  <https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions>
+
+If you need a graphic or tabular material to be part of the text, you can just put it inline. If you need it to appear in the list of figures or tables, it should be placed in a code chunk.
+-->
+
+
+In the **R** chunk below, we will load in a picture stored as `reed.jpg` in our main directory.  We then give it the caption of "Reed logo", the label of "reedlogo", and specify that this is a figure.  Make note of the different **R** chunk options that are given in the R Markdown file (not shown in the knitted document).
+
+```{r reedlogo, fig.cap="Reed logo", out.width="0.2\\linewidth", fig.align="center"}
+include_graphics(path = "figure/reed.jpg")
+```
+
+<!-- Note the use of `out.width` as a chunk option here. The resulting
+image is 20% of what the linewidth is in LaTeX. You can also center
+the image using `fig.align="center"` as shown.-->
+
+Here is a reference to the Reed logo: Figure \@ref(fig:reedlogo).  Note the use of the `fig:` code here.  By naming the **R** chunk that contains the figure, we can then reference that figure later as done in the first sentence here.  We can also specify the caption for the figure via the R chunk option `fig.cap`.
+
+\clearpage
+
+<!-- clearpage ends the page, and also dumps out all floats.
+  Floats are things like tables and figures. -->
+  
+Below we will investigate how to save the output of an **R** plot and label it in a way similar to that done above.  Recall the `flights` dataset from Chapter \@ref(rmd-basics).  (Note that we've shown a different way to reference a section or chapter here.)  We will next explore a bar graph with the mean flight departure delays by airline from Portland for 2014.
+
+```{r delaysboxplot, warnings=FALSE, messages=FALSE, fig.cap="Mean Delays by Airline", fig.width=6, fig.height=5}
+mean_delay_by_carrier <- flights %>%
+  group_by(carrier) %>%
+  summarize(mean_dep_delay = mean(dep_delay))
+ggplot(mean_delay_by_carrier, aes(x = carrier, y = mean_dep_delay)) +
+  geom_bar(position = "identity", stat = "identity", fill = "red")
+```
+
+Here is a reference to this image: Figure \@ref(fig:delaysboxplot).
+
+A table linking these carrier codes to airline names is available at <https://github.com/ismayc/pnwflights14/blob/master/data/airlines.csv>.
+
+\clearpage
+
+Next, we will explore the use of the `out.extra` chunk option, which can be used to shrink or expand an image loaded from a file by specifying `"scale= "`. Here we use the mathematical graph stored in the "subdivision.pdf" file.
+
+```{r subd, results="asis", echo=FALSE, fig.cap="Subdiv. graph", out.extra="scale=0.75"}
+include_graphics("figure/subdivision.pdf")
+```
+
+Here is a reference to this image: Figure \@ref(fig:subd).  Note that `echo=FALSE` is specified so that the **R** code is hidden in the document.
+
+**More Figure Stuff**
+
+Lastly, we will explore how to rotate and enlarge figures using the `out.extra` chunk option.  (Currently this only works in the PDF version of the book.)
+
+```{r subd2, results="asis", echo=FALSE, out.extra="angle=180, scale=1.1", fig.cap="A Larger Figure, Flipped Upside Down"}
+include_graphics("figure/subdivision.pdf")
+```
+
+As another example, here is a reference: Figure \@ref(fig:subd2).  
+
+## Footnotes and Endnotes
+
+You might want to footnote something. ^[footnote text] The footnote will be in a smaller font and placed appropriately. Endnotes work in much the same way. More information can be found about both on the CUS site or feel free to reach out to <data@reed.edu>.
+
+
+```{=html}
+<!--
+This is for including Chapter 1.  Notice that it's also good practice to name your chunk.  This will help you debug potential issues as you knit.  The chunk above is called intro and the one below is called chapter1.  Feel free to change the name of the Rmd file as you wish, but don't forget to change it here from chap1.Rmd.
+-->
+```
+
+```{=html}
+<!--
+The {#rmd-basics} text after the chapter declaration will allow us to link throughout the document back to the beginning of Chapter 1.  These labels will automatically be generated (if not specified) by changing the spaces to hyphens and capital letters to lowercase.  Look for the reference to this label at the beginning of Chapter 2.
+-->
+```
+
+
+
+```{r}
+## resampling LiDAR raster to 3m
+EML_CHM_RESAMP <- aggregate(EML_CHM, fact=3)
+
+
+## Define a function that will allow for dynamic window size.  
+## Essentially, this function should take a CHM cell value (i.e.: the height of the canopy above ground at that location) 
+#### returns the radius of the search window. 
+
+# function is based on Brieger et al. 2019 (https://doi.org/10.3390/rs11121447) for tall trees (see table 2)
+lin_brieger <- function(x){y <- x * 0.02 + 0.4
+y[x < 30] <- 1
+y[x > 125] <- 3
+return(y)}
+
+
+# calculate treetop locations based on equation above
+EML_ttops <- vwf(CHM = EML_CHM_RESAMP, winFun = lin_brieger, minHeight = 20)
+
+# export file
+writeOGR(EML_ttops, "~/Desktop/thesis stuff/thesis qgis files/LiDAR_2", "2019_ttops", driver = "ESRI Shapefile")
+
+
+```
+
+knitr::write_bib(c(.packages(), "ForestTools"), "packages.bib")
+
+\vfill
+
+**Tips for Bibliographies**

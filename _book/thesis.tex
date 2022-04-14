@@ -314,165 +314,314 @@ Based on the assumptions that tree health can be approximated using satellite sp
 
 Finally, this thesis only uses data sources, tools, and processes that are either publicly accessible or free, in order to keep this type of research accessible to all.
 
-\hypertarget{math-sci}{%
-\chapter{Mathematics and Science}\label{math-sci}}
+\hypertarget{data-methods}{%
+\chapter{Data Resources and Methods}\label{data-methods}}
 
-\hypertarget{math}{%
-\section{Math}\label{math}}
+\hypertarget{overview}{%
+\section{Overview}\label{overview}}
 
-\TeX~is the best way to typeset mathematics. Donald Knuth designed \TeX~when he got frustrated at how long it was taking the typesetters to finish his book, which contained a lot of mathematics. One nice feature of \emph{R Markdown} is its ability to read LaTeX code directly.
+For my thesis, the data resources and processing components can be split into four main sections.
 
-If you are doing a thesis that will involve lots of math, you will want to read the following section which has been commented out. If you're not going to use math, skip over or delete this next commented section.
+First, there is the tree data. This includes the Portland park and street tree databases, and the subset of those trees that I sampled health data on prior to this thesis. Primarily, the tree data is used for tree location points, as well as basic tree metrics such as species, height, and crown width. In general, I will refer to these data sources as park trees (the Portland park tree dataset), street trees (the Portland street tree dataset), and CNH trees, which are the trees we collected data on in the summer of 2021. A majority of the processing with the tree points involved tidying and wrangling the data, subsetting it and transforming it into usable data products. Additionally, due to the inconsistency in the types of variables measured for each tree data product, I created a model to predict tree crown width and tree height based on DBH and species.
 
-\hypertarget{chemistry-101-symbols}{%
-\section{Chemistry 101: Symbols}\label{chemistry-101-symbols}}
+The second aspect of my data and processing is the retrieval and processing of Planetscope satellite imagery products to produce usable NDVI data files, which was done in Python. Third, are the different tree delineation methods I examine in this thesis, which include point value, radius, and LiDAR methods. This involved the processing of LiDAR and tree crown radius data, as well as obtaining and computing associated NDVI values.
 
-Chemical formulas will look best if they are not italicized. Get around math mode's automatic italicizing in LaTeX by using the argument \texttt{\$\textbackslash{}mathrm\{formula\ here\}\$}, with your formula inside the curly brackets. (Notice the use of the backticks here which enclose text that acts as code.)
+Lastly, with the combined data from the previous three parts, I created a predictive model for predicting tree health rating based on NDVI values.
 
-So, \(\mathrm{Fe_2^{2+}Cr_2O_4}\) is written \texttt{\$\textbackslash{}mathrm\{Fe\_2\^{}\{2+\}Cr\_2O\_4\}\$}.
+\hypertarget{previously-collected-field-data}{%
+\section{Previously Collected Field Data}\label{previously-collected-field-data}}
 
-\noindent Exponent or Superscript: \(\mathrm{O^-}\)
+We collected data tree health during the summer of 2021 as part of a larger collaborative interdisciplinary project examining the relationship between various socioeconomic variables and urban tree health. For the purposes of the larger project, we selected trees from eight different neighborhoods in Portland, with four different categorizations of historic and current investment or disinvestment. The four chosen species are \emph{Pseudotsuga menziesii, Pinaceae} (PSME), \emph{Thuja plicata, Cupressaceae} (THPL), \emph{Acer macrophyllum, Sapindaceae} (ACMA), and \emph{Acer platanoides, Sapindaceae} (ACPL). They are some of the most abundant tree species in Portland, and make up a large proportion of Portland's urban forest. PSME, THPL, and ACMA are all native to the area, whereas Norway Maple is a nonnative tree species that was frequently planted in residential areas, and is now the most common street tree in Portland.
 
-\noindent Subscript: \(\mathrm{CH_4}\)
+Individual trees for sampling were selected from the Portland tree inventories, with the goal of sampling an equal proportion of street trees and park trees of each species in each neighborhood. Sampling was also focused on mature trees, so the inventories were filtered to only include individuals above 25 feet in height. 4 trees of each species were randomly selected per neighborhood, with an attempt to maintain equal proportions of park and street trees. However, due to varying field conditions, some trees were not able to be sampled, so the nearest tree of the same species that met all criteria was substituted. In total, 128 trees were surveyed. Fieldwork was conducted between July 7 and August 19, 2021 (Figure \ref{fig:cnh-trees}). Each tree was sampled in a single visit between 10am and 3pm. Biotic and abiotic variables were measured, as well as health attributes and physiology of the trees. For each tree, a GPS point was collected to mark its location using ArcGIS Explorer on IOS. Due to the uncertainty of the GPS points, during post-processing, each collected tree was matched with the tree location point in the Portland Park and Street Tree inventories. Any sampled tree points that did not match up with an inventoried tree point in a margin of 20 feet, it was removed from further analysis. Any tree individual that did not contain a health categorization was also removed. The final CNH dataset for my analysis contained 112 trees (Table \ref{tab:cnh-tree-counts}).
+\begin{table}
 
-To stack numbers or letters as in \(\mathrm{Fe_2^{2+}}\), the subscript is defined first, and then the superscript is defined.
-
-\noindent Bullet: CuCl \(\bullet\) \(\mathrm{7H_{2}O}\)
-
-\noindent Delta: \(\Delta\)
-
-\noindent Reaction Arrows: \(\longrightarrow\) or \(\xrightarrow{solution}\)
-
-\noindent Resonance Arrows: \(\leftrightarrow\)
-
-\noindent Reversible Reaction Arrows: \(\rightleftharpoons\)
-
-\hypertarget{typesetting-reactions}{%
-\subsection{Typesetting reactions}\label{typesetting-reactions}}
-
-You may wish to put your reaction in an equation environment, which means that LaTeX will place the reaction where it fits and will number the equations for you.
-\begin{equation}
-  \mathrm{C_6H_{12}O_6  + 6O_2} \longrightarrow \mathrm{6CO_2 + 6H_2O}
-  \label{eq:reaction}
-\end{equation}
-We can reference this combustion of glucose reaction via Equation \eqref{eq:reaction}.
-
-\hypertarget{other-examples-of-reactions}{%
-\subsection{Other examples of reactions}\label{other-examples-of-reactions}}
-
-\(\mathrm{NH_4Cl_{(s)}}\) \(\rightleftharpoons\) \(\mathrm{NH_{3(g)}+HCl_{(g)}}\)
-
-\noindent \(\mathrm{MeCH_2Br + Mg}\) \(\xrightarrow[below]{above}\) \(\mathrm{MeCH_2\bullet Mg \bullet Br}\)
-
-\hypertarget{physics}{%
-\section{Physics}\label{physics}}
-
-Many of the symbols you will need can be found on the math page \url{https://web.reed.edu/cis/help/latex/math.html} and the Comprehensive LaTeX Symbol Guide (\url{https://mirror.utexas.edu/ctan/info/symbols/comprehensive/symbols-letter.pdf}).
-
-\hypertarget{biology}{%
-\section{Biology}\label{biology}}
-
-You will probably find the resources at \url{https://www.lecb.ncifcrf.gov/~toms/latex.html} helpful, particularly the links to bsts for various journals. You may also be interested in TeXShade for nucleotide typesetting (\url{https://homepages.uni-tuebingen.de/beitz/txe.html}). Be sure to read the proceeding chapter on graphics and tables.
-
-\hypertarget{ref-labels}{%
-\chapter{Graphics, References, and Labels}\label{ref-labels}}
-
-\hypertarget{figures}{%
-\section{Figures}\label{figures}}
-
-If your thesis has a lot of figures, \emph{R Markdown} might behave better for you than that other word processor. One perk is that it will automatically number the figures accordingly in each chapter. You'll also be able to create a label for each figure, add a caption, and then reference the figure in a way similar to what we saw with tables earlier. If you label your figures, you can move the figures around and \emph{R Markdown} will automatically adjust the numbering for you. No need for you to remember! So that you don't have to get too far into LaTeX to do this, a couple \textbf{R} functions have been created for you to assist. You'll see their use below.
-
-In the \textbf{R} chunk below, we will load in a picture stored as \texttt{reed.jpg} in our main directory. We then give it the caption of ``Reed logo'', the label of ``reedlogo'', and specify that this is a figure. Make note of the different \textbf{R} chunk options that are given in the R Markdown file (not shown in the knitted document).
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{include\_graphics}\NormalTok{(}\AttributeTok{path =} \StringTok{"figure/reed.jpg"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+\caption[Final CNH Tree counts]{\label{tab:cnh-tree-counts}Founts of species for final CNH tree dataset}
+\centering
+\begin{tabular}[t]{lr}
+\toprule
+Species code & Number collected\\
+\midrule
+ACMA & 29\\
+ACPL & 30\\
+PSME & 25\\
+THPL & 28\\
+\bottomrule
+\end{tabular}
+\end{table}
 \begin{figure}
 
-{\centering \includegraphics[width=0.2\linewidth]{figure/reed} 
+{\centering \includegraphics[width=1\linewidth]{figure/cnh_trees} 
 
 }
 
-\caption{Reed logo}\label{fig:reedlogo}
+\caption{Sampled CNH Trees}\label{fig:cnh-trees}
 \end{figure}
-Here is a reference to the Reed logo: Figure \ref{fig:reedlogo}. Note the use of the \texttt{fig:} code here. By naming the \textbf{R} chunk that contains the figure, we can then reference that figure later as done in the first sentence here. We can also specify the caption for the figure via the R chunk option \texttt{fig.cap}.
+\hypertarget{portland-tree-inventory}{%
+\section{Portland Tree Inventory}\label{portland-tree-inventory}}
 
-\clearpage
+The Portland Tree Inventory Project, managed by the City of Portland's Parks \& Recreation Urban Forestry Department, cataloged nearly 245,000 street and park trees in Portland between 2010 to 2019. The street tree inventory, which was collected from 2010 to 2016, contains information on 216,750 street trees of 145 genera. The park tree inventory, collected from 2017 to 2019, contains data on 25,740 park trees of 116 genera. While many of the collected variables differ between the two inventories, they both include data on location, tree identification, DBH, and a visual assessment of the trees health which was rated as good, fair, poor, or dead.
 
-Below we will investigate how to save the output of an \textbf{R} plot and label it in a way similar to that done above. Recall the \texttt{flights} dataset from Chapter \ref{rmd-basics}. (Note that we've shown a different way to reference a section or chapter here.) We will next explore a bar graph with the mean flight departure delays by airline from Portland for 2014.
+To reduce the variability in data due to the time span of data collection, I filtered the street and park tree inventories to trees that were sampled in 2016 and 2019, respectively. For each dataset, the selected year was the year with the highest count of trees sampled (Tables \ref{tab:streettable} and \ref{tab:parktable}).
+\begin{table}
+
+\caption[Species counts in Street Trees Database]{\label{tab:streettable}Species counts in the Portland Street Trees Database}
+\centering
+\begin{tabular}[t]{llrr}
+\toprule
+Species code & Scientific name & Collected in 2016 & Total in inventory\\
+\midrule
+ACPL & Acer platanoides & 4373 & 19209\\
+THPL & Thuja plicata & 578 & 1341\\
+ACMA & Acer macrophyllum & 1306 & 2609\\
+PSME & Pseudotsuga menziesii & 1254 & 3141\\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{table}
+
+\caption[Species counts in Park Trees Database]{\label{tab:parktable}Species counts in the Portland Park Trees Database}
+\centering
+\begin{tabular}[t]{llrr}
+\toprule
+Species code & Scientific name & Collected in 2019 & Total in inventory\\
+\midrule
+ACPL & Acer platanoides & 411 & 1502\\
+THPL & Thuja plicata & 331 & 964\\
+PSME & Pseudotsuga menziesii & 3237 & 6783\\
+ACMA & Acer macrophyllum & 256 & 490\\
+\bottomrule
+\end{tabular}
+\end{table}
+\hypertarget{canopy-width-and-tree-height-model}{%
+\section{Canopy width and tree height model}\label{canopy-width-and-tree-height-model}}
+
+The park tree dataset contains measurements for tree height, canopy width, and DBH, but the street tree dataset only contains measurements for DBH. Canopy width and tree height are both important factors for tree selection and canopy delineation. Using RStudio, I created a statistical model to predict tree height and crown width based on tree DBH and species, in order to be able to use the same pixel selection methods for both the park and street tree inventories.
+
+\hypertarget{satellite-imagery}{%
+\section{Satellite Imagery}\label{satellite-imagery}}
+
+PlanetScope satellite imagery (Planet Labs, 3m resolution, 4-band RGB-NIR) was used for vegetation index calculation. PlanetScope, also known as the Flock, is a constellation of approximately 130 satellites . The first 28 PlanetScope satellites were launched in July 2014, and the newest batch of satellites were launched in January 2022. PlanetScope, operated by Planet, is a constellation of approximately 130 satellites, able to image the entire land surface of the Earth every day (a daily collection capacity of 200 million km\(^2\)/day). PlanetScope images are approximately 3 meters per pixel resolution ({``Planet imagery product specifications,''} 2022).
+
+I downloaded satellite images corresponding to the summers of when the data was collected (2016, 2019, and 2021). Images were first filtered for those captured in July of each year, since images taken during the middle of the on-leaf period have been shown to be most sensitive in detecting a statistical difference in tree health measured by NDVI (Fang et al., 2020). The remaining images were then filtered for minimal cloud cover and maximum coverage of the area of study. The final selected images were taken between 6:30 and 7pm on 6 July 2016, 31 July 2019, and 26 July 2021 (Table \ref{tab:sat-products}).
+\begin{longtable}[t]{llrl}
+\caption{\label{tab:sat-products}Satellite product specifications}\\
+\toprule
+Collection date & Collection time & Number of scene products & Satellite ID\\
+\midrule
+2016-07-06 & 18:55 & 5 & 0c22\\
+2019-07-31 & 18:42 & 4 & 0f42\\
+2021-07-26 & 18:40 & 4 & 1003\\
+\bottomrule
+\end{longtable}
+For each of the chosen dates, I downloaded the available analytic product from Planet. The analytic multispectral imagery products are orthorectified, calibrated, corrected for terrain distortions, and transformed to Top of Atmosphere radiance to ensure accurate geolocation and cartographic projection.
+
+The bands in a saptellite product refer to the reflectance wavelength that is picked up by the satellite. For a 4-band satellite product, the wavelengths are split into red, green, blue, and near-infrared (NIR) bands (Table \ref{tab:wavelength}). In the raw PlanetScope product, these 4 bands come compressed in one .tif image. In order to extract NDVI data from the imagery products, the data requires further processing.
+\begin{longtable}[t]{ll}
+\caption[4-band satellite wavelength ranges]{\label{tab:wavelength}Wavelength ranges for 4-band Planetscope satellite bands}\\
+\toprule
+Band name & Wavelength range\\
+\midrule
+Blue & 455 - 515 nm\\
+Green & 500 - 590 nm\\
+Red & 590 - 670 nm\\
+NIR & 780 - 860 nm\\
+\bottomrule
+\end{longtable}
+\hypertarget{ndvi-calculation}{%
+\section{NDVI calculation}\label{ndvi-calculation}}
+
+The NDVI calculations were done using Python in PyCharm. Besides minor alterations, the processing code came from Planet's instructions on calculating NDVI from 4-band PlanetScope data (Planet, n.d.). NDVI is calculated from the red and NIR satellite bands (Equation \eqref{eq:ndvi-eq})
+\begin{equation}
+  \mathrm{NDVI} = \frac{(NIR - Red)}{(NIR + Red)} 
+  \label{eq:ndvi-eq}
+\end{equation}
+\begin{figure}
+
+{\centering \includegraphics[width=0.32\linewidth]{figure/2016_ndvi} \includegraphics[width=0.32\linewidth]{figure/2019_ndvi} \includegraphics[width=0.32\linewidth]{figure/2021_ndvi} 
+
+}
+
+\caption{Product areas for 2016, 2019, and 2021 satellite scenes}\label{fig:areafigs}
+\end{figure}
+\hypertarget{chm}{%
+\section{Canopy Height Model}\label{chm}}
+
+A canopy height model for the Portland metro area was developed using LiDAR and satellite spectral imagery collected in the summer of 2014 ({``Canopy 2014,''} 2016). The purpose of this data is to monitor natural areas in the Portland metro area, specifically change over time analysis and the examination of the potential loss of habitat in riparian areas. The canopy was detected using both NDVI values and LiDAR feature heights. Errors and noise in the data, such as electrical lines above tree tops, were cleaned using geometric post-processing. The canopy height model was clipped to remove anything below ten feet to eliminate any understory shrubs or grasses that were included in the raw data ({``Canopy 2014,''} 2016).
+
+\hypertarget{tree-crown-delineation-and-pixel-selection}{%
+\section{Tree Crown Delineation and Pixel Selection}\label{tree-crown-delineation-and-pixel-selection}}
+
+The goal of tree crown delineation is to understand where the foliage of a tree is located. This is extremely important because we want to ensure that the satellite pixels used for health analysis have measurements that belong to the given tree. Previous papers such as have used manual tree crown delineation (Xiao \& McPherson, 2005), or chosen a standardized radius for all trees in their sample (Fang et al., 2020). Manual tree crown delineation would be extremely time consuming, especially when trying to examine data on a city-wide level. Additionally, with a standardized radius, there will be many trees that have crowns either larger or smaller than the standardized radius. If the true crown is smaller than that of the radius, pixels that correspond to things like grass or pavement will be included in the measurement analysis. Conversely, if the true crown is larger than the chosen radius, the edges of the tree will be ignored, and valuable data will be lost. With both of these methods, any overlapping tree crowns were removed from the final analysis, even further reducing the sample size.
+
+In this thesis, I test three different methods of pixel selection for NDVI analysis. First, I test a ``point method'' which uses the NDVI value directly below an inventoried trees location point. Second, I use crown width measurements and predictions to create a variable radius method, and average the NDVI pixels within the created circle. Lastly, I use a LiDAR created canopy height model for Portland's urban canopy with \texttt{ForestTools} canopy delineation algorithm to create canopy polygons for NDVI analysis.
+
+For the following examples, I use Berkeley Park, located in SE Portland, to demonstrate the different delineation techniques. We sampled 6 CNH trees in Berkeley Park: 2 Bigleaf Maple, 1 Norway Maple, 2 Douglas Fir, and 1 Western Redcedar (Figure \ref{fig:berkeley-park}).
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/berkeley_park} 
+
+}
+
+\caption{Berkeley Park and CNH trees}\label{fig:berkeley-park}
+\end{figure}
+\hypertarget{point-method}{%
+\subsection{Point method}\label{point-method}}
+
+Point Method: For the point method, I extracted the NDVI value from the pixel directly underneath the tree location point. This is the simplest of the three methods. The tree location points were sourced from the street and park tree inventories and processed in QGIS (Figure \ref{fig:point-method}).
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/points} 
+
+}
+
+\caption{CNH trees sampled in Berkeley Park}\label{fig:point-method}
+\end{figure}
+\hypertarget{radius-method}{%
+\subsection{Radius method}\label{radius-method}}
+
+The first method of tree crown delineation I used is based on the individual crown width for each selected tree. In the Portland park tree inventory, crown width is measured as an east to west diameter, and a north to south diameter. To get the radius for the buffer, I took the average of both measurements and divided it by 2. For the Portland street tree inventory, crown width was not collected. I used the tree height and crown width predictive model to create crown width measurements. For each selected tree point, I created a buffer with the radius of the measured or predicted tree canopy using QGIS (Figure \ref{fig:point-radius}).
+
+To get NDVI for each tree in this method, I averaged the value of all pixels in the buffer circle for each tree using QGIS.
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/point_radius} 
+
+}
+
+\caption{CNH trees with crown width buffer}\label{fig:point-radius}
+\end{figure}
+\hypertarget{lidar-method}{%
+\subsection{LiDAR method}\label{lidar-method}}
+
+The LiDAR method is the most complex and involved of the three tree crown delineation methods, but theoretically, the most precise.
+
+The \texttt{ForestTools} crown delineation algorithm is a modified watershed delineation algorithm that takes a LiDAR file input, as well as treetop location point file.
+
+The LiDAR canopy height model was clipped to a 30 meter buffer around each selected tree point to reduce file size in the delineation processing (Figure \ref{fig:lidar-buffer}). A 30m buffer was chosen to ensure that no part of the tree canopy would be omitted from the processing. In addition to the trees selected for processing, all other inventoried trees that are contained within the 30m buffers were included as treetop location points (Figure \ref{fig:buffer-points}). A minimum tree height of 20 feet was specified, in order to reduce process time, since all sampled trees were already filtered for height requirements.
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/lidar_buffer_scale} 
+
+}
+
+\caption{LiDAR data clipped to 30m tree buffer}\label{fig:lidar-buffer}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/buffer_all_points} 
+
+}
+
+\caption{All inventoried trees within the 30m buffer}\label{fig:buffer-points}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/selected_lidar} 
+
+}
+
+\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-5}
+\end{figure}
+These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figures \ref{fig:clip-extent}, \ref{fig:random-sample-park}, \ref{fig:random-sample-street}).
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/pdx_extent} 
+
+}
+
+\caption{Geographic extent for random sampling}\label{fig:clip-extent}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/random_park_trees} 
+
+}
+
+\caption{Random sample of 100 park trees}\label{fig:random-sample-park}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figure/random_street_trees} 
+
+}
+
+\caption{Random sample of 100 street trees}\label{fig:random-sample-street}
+\end{figure}
+\hypertarget{modeling-tree-health}{%
+\section{Modeling Tree Health}\label{modeling-tree-health}}
+
+To tie all of my smaller pieces of data analysis together, I created a model to predict tree health categorization from NDVI values. I used the CNH data as my training data, and the random samples of park and street trees as testing data. I THINK THIS IS WRONG I DONT KNOW HOW TO WRITE ABOUT MODELS BUT I WILL COME BACK TO THIS. MY BRAIN IS JUST DONE FOR THE NIGHT. APOLOGIES
+
+Due to the small sample size and ordinal nature of the categorization for health, I chose an ordinal logistic regression model.
+
+\hypertarget{results}{%
+\chapter{Results}\label{results}}
+
+\hypertarget{cnh-tree-data}{%
+\section{CNH Tree Data}\label{cnh-tree-data}}
+
+\hypertarget{canopy-width-and-tree-height-model-1}{%
+\section{Canopy Width and Tree Height Model}\label{canopy-width-and-tree-height-model-1}}
+
+I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term.
+The tree height model has an adjusted R-squared value of 0.78, and a p-value of \textless{} 2.2e-16. The crown width model has an adjusted R-squared value of 0.72, and a p-value of \textless{} 2.2e-16.
+
+HEY AARON AND ANNA - WHAT AND HOW DO I WRITE ABOUT THIS??
+
+\includegraphics{thesis_files/figure-latex/height-model-1.pdf}
+\includegraphics{thesis_files/figure-latex/width-model-1.pdf}
+
+\hypertarget{ndvi-calculation-1}{%
+\section{NDVI Calculation}\label{ndvi-calculation-1}}
+
+\hypertarget{point-method-1}{%
+\section{Point Method}\label{point-method-1}}
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mean\_delay\_by\_carrier }\OtherTok{\textless{}{-}}\NormalTok{ flights }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(carrier) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{mean\_dep\_delay =} \FunctionTok{mean}\NormalTok{(dep\_delay))}
-\FunctionTok{ggplot}\NormalTok{(mean\_delay\_by\_carrier, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ carrier, }\AttributeTok{y =}\NormalTok{ mean\_dep\_delay)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"red"}\NormalTok{)}
+\NormalTok{cnh\_point }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/cnh\_point.csv"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{health\_rat =} \FunctionTok{fct\_relevel}\NormalTok{(health\_rat, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"poor"}\NormalTok{, }\StringTok{"fair"}\NormalTok{, }\StringTok{"good"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(health\_rat))}
+
+\NormalTok{cnh\_point }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ health\_rat, }\AttributeTok{y =}\NormalTok{ sample\_ndvi))}\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{()}\SpecialCharTok{+}
+  \CommentTok{\#geom\_point(aes(color = species))+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average NDVI measurement for CNH trees, by assigned health rating"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Health Rating"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean NDVI"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\begin{figure}
-\centering
-\includegraphics{thesis_files/figure-latex/delaysboxplot-1.pdf}
-\caption{\label{fig:delaysboxplot}Mean Delays by Airline}
-\end{figure}
-Here is a reference to this image: Figure \ref{fig:delaysboxplot}.
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-7-1.pdf}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2}
+\NormalTok{cnh\_point }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ health\_rat, }\AttributeTok{y =}\NormalTok{ sample\_ndvi))}\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{()}\SpecialCharTok{+}
+  \CommentTok{\#geom\_point(aes(color = species))+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{species)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"CNH average NDVI by health condition and species"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Health Rating"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean NDVI"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-7-2.pdf}
 
-A table linking these carrier codes to airline names is available at \url{https://github.com/ismayc/pnwflights14/blob/master/data/airlines.csv}.
-
-\clearpage
-
-Next, we will explore the use of the \texttt{out.extra} chunk option, which can be used to shrink or expand an image loaded from a file by specifying \texttt{"scale=\ "}. Here we use the mathematical graph stored in the ``subdivision.pdf'' file.
-\begin{figure}
-\includegraphics[scale=0.75]{figure/subdivision} \caption{Subdiv. graph}\label{fig:subd}
-\end{figure}
-Here is a reference to this image: Figure \ref{fig:subd}. Note that \texttt{echo=FALSE} is specified so that the \textbf{R} code is hidden in the document.
-
-\textbf{More Figure Stuff}
-
-Lastly, we will explore how to rotate and enlarge figures using the \texttt{out.extra} chunk option. (Currently this only works in the PDF version of the book.)
-\begin{figure}
-\includegraphics[angle=180, scale=1.1]{figure/subdivision} \caption{A Larger Figure, Flipped Upside Down}\label{fig:subd2}
-\end{figure}
-As another example, here is a reference: Figure \ref{fig:subd2}.
-
-\hypertarget{footnotes-and-endnotes}{%
-\section{Footnotes and Endnotes}\label{footnotes-and-endnotes}}
-
-You might want to footnote something. \footnote{footnote text} The footnote will be in a smaller font and placed appropriately. Endnotes work in much the same way. More information can be found about both on the CUS site or feel free to reach out to \href{mailto:data@reed.edu}{\nolinkurl{data@reed.edu}}.
-
-\hypertarget{bibliographies}{%
-\section{Bibliographies}\label{bibliographies}}
-
-Of course you will need to cite things, and you will probably accumulate an armful of sources. There are a variety of tools available for creating a bibliography database (stored with the .bib extension). In addition to BibTeX suggested below, you may want to consider using the free and easy-to-use tool called Zotero. The Reed librarians have created Zotero documentation at \url{https://libguides.reed.edu/citation/zotero}. In addition, a tutorial is available from Middlebury College at \url{https://sites.middlebury.edu/zoteromiddlebury/}.
-
-\emph{R Markdown} uses \emph{pandoc} (\url{https://pandoc.org/}) to build its bibliographies. One nice caveat of this is that you won't have to do a second compile to load in references as standard LaTeX requires. To cite references in your thesis (after creating your bibliography database), place the reference name inside square brackets and precede it by the ``at'' symbol. For example, here's a reference to a book about worrying: (\textbf{Molina1994?}). This \texttt{Molina1994} entry appears in a file called \texttt{thesis.bib} in the \texttt{bib} folder. This bibliography database file was created by a program called BibTeX. You can call this file something else if you like (look at the YAML header in the main .Rmd file) and, by default, is to placed in the \texttt{bib} folder.
-
-For more information about BibTeX and bibliographies, see our CUS site (\url{https://web.reed.edu/cis/help/latex/index.html})\footnote{(\textbf{reedweb2007?})}. There are three pages on this topic: \emph{bibtex} (which talks about using BibTeX, at \url{https://web.reed.edu/cis/help/latex/bibtex.html}), \emph{bibtexstyles} (about how to find and use the bibliography style that best suits your needs, at \url{https://web.reed.edu/cis/help/latex/bibtexstyles.html}) and \emph{bibman} (which covers how to make and maintain a bibliography by hand, without BibTeX, at \url{https://web.reed.edu/cis/help/latex/bibman.html}). The last page will not be useful unless you have only a few sources.
-
-If you look at the YAML header at the top of the main .Rmd file you can see that we can specify the style of the bibliography by referencing the appropriate csl file. You can download a variety of different style files at \url{https://www.zotero.org/styles}. Make sure to download the file into the csl folder.
-
-\vfill
-
-\textbf{Tips for Bibliographies}
-\begin{itemize}
-\tightlist
-\item
-  Like with thesis formatting, the sooner you start compiling your bibliography for something as large as thesis, the better. Typing in source after source is mind-numbing enough; do you really want to do it for hours on end in late April? Think of it as procrastination.
-\item
-  The cite key (a citation's label) needs to be unique from the other entries.
-\item
-  When you have more than one author or editor, you need to separate each author's name by the word ``and'' e.g.~\texttt{Author\ =\ \{Noble,\ Sam\ and\ Youngberg,\ Jessica\},}.
-\item
-  Bibliographies made using BibTeX (whether manually or using a manager) accept LaTeX markup, so you can italicize and add symbols as necessary.
-\item
-  To force capitalization in an article title or where all lowercase is generally used, bracket the capital letter in curly braces.
-\item
-  You can add a Reed Thesis citation\footnote{(\textbf{noble2002?})} option. The best way to do this is to use the phdthesis type of citation, and use the optional ``type'' field to enter ``Reed thesis'' or ``Undergraduate thesis.''
-\end{itemize}
-\hypertarget{anything-else}{%
-\section{Anything else?}\label{anything-else}}
-
-If you'd like to see examples of other things in this template, please contact the Data @ Reed team (email \href{mailto:data@reed.edu}{\nolinkurl{data@reed.edu}}) with your suggestions. We love to see people using \emph{R Markdown} for their theses, and are happy to help.
+\hypertarget{radius-method-1}{%
+\section{Radius Method}\label{radius-method-1}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cnh\_radius }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/cnh\_radius.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{lidar-method-1}{%
+\section{LiDAR Method}\label{lidar-method-1}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cnh\_lidar }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/cnh\_lidar.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{predictive-model}{%
+\section{Predictive Model}\label{predictive-model}}
 
 \hypertarget{conclusion}{%
 \chapter*{Conclusion}\label{conclusion}}
@@ -486,123 +635,137 @@ And here's some other random info: the first paragraph after a chapter title or 
 
 \appendix
 
-\hypertarget{the-first-appendix}{%
-\chapter{The First Appendix}\label{the-first-appendix}}
+\hypertarget{additional-tables-and-figures}{%
+\chapter{Additional Tables and Figures}\label{additional-tables-and-figures}}
 
-This first appendix includes all of the R chunks of code that were hidden throughout the document (using the \texttt{include\ =\ FALSE} chunk tag) to help with readibility and/or setup.
+\hypertarget{code}{%
+\chapter{Code}\label{code}}
 
-\textbf{In the main Rmd file}
+This second appendix includes all of the R chunks of code that were hidden throughout the document to help with readability and/or setup.
+
+\hypertarget{in-chapter-refdata-methods}{%
+\section{\texorpdfstring{\textbf{In Chapter} \ref{data-methods}\textbf{:}}{In Chapter \ref{data-methods}:}}\label{in-chapter-refdata-methods}}
+
+\hypertarget{portland-tree-inventory-counts-and-calculations}{%
+\subsection{Portland Tree Inventory counts and calculations}\label{portland-tree-inventory-counts-and-calculations}}
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# This chunk ensures that the thesisdown package is}
-\CommentTok{\# installed and loaded. This thesisdown package includes}
-\CommentTok{\# the template files for the thesis.}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(remotes)) \{}
-  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
-    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"remotes"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{stop}\NormalTok{(}
-      \FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}You need to run install.packages("remotes")",}
-\StringTok{            "first in the Console.\textquotesingle{}}\NormalTok{)}
-\NormalTok{    )}
-\NormalTok{  \}}
-\NormalTok{\}}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(thesisdown)) \{}
-  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
-\NormalTok{    remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{stop}\NormalTok{(}
-      \FunctionTok{paste}\NormalTok{(}
-        \StringTok{"You need to run"}\NormalTok{,}
-        \StringTok{\textquotesingle{}remotes::install\_github("ismayc/thesisdown")\textquotesingle{}}\NormalTok{,}
-        \StringTok{"first in the Console."}
-\NormalTok{      )}
-\NormalTok{    )}
-\NormalTok{  \}}
-\NormalTok{\}}
-\FunctionTok{library}\NormalTok{(thesisdown)}
-\CommentTok{\# Set how wide the R output will go}
-\FunctionTok{options}\NormalTok{(}\AttributeTok{width =} \DecValTok{70}\NormalTok{)}
+\NormalTok{street\_counts}\OtherTok{\textless{}{-}}\FunctionTok{get\_pdxTrees\_streets}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Species, Scientific, year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_count}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Count\_2016 =}\NormalTok{ n) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2016}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
+
+\NormalTok{park\_counts }\OtherTok{\textless{}{-}}\FunctionTok{get\_pdxTrees\_parks}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Species, Scientific\_Name, year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_count}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Count\_2019 =}\NormalTok{ n) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2019}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
 \end{Highlighting}
 \end{Shaded}
-\textbf{In Chapter \ref{ref-labels}:}
+\hypertarget{calculating-ndvi-from-satellite-imagery}{%
+\subsection{Calculating NDVI from satellite imagery}\label{calculating-ndvi-from-satellite-imagery}}
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# This chunk ensures that the thesisdown package is}
-\CommentTok{\# installed and loaded. This thesisdown package includes}
-\CommentTok{\# the template files for the thesis and also two functions}
-\CommentTok{\# used for labeling and referencing}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(remotes)) \{}
-  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
-    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"remotes"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{stop}\NormalTok{(}
-      \FunctionTok{paste}\NormalTok{(}
-        \StringTok{\textquotesingle{}You need to run install.packages("remotes")\textquotesingle{}}\NormalTok{,}
-        \StringTok{"first in the Console."}
-\NormalTok{      )}
-\NormalTok{    )}
-\NormalTok{  \}}
-\NormalTok{\}}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(dplyr)) \{}
-  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
-    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{stop}\NormalTok{(}
-      \FunctionTok{paste}\NormalTok{(}
-        \StringTok{\textquotesingle{}You need to run install.packages("dplyr")\textquotesingle{}}\NormalTok{,}
-        \StringTok{"first in the Console."}
-\NormalTok{      )}
-\NormalTok{    )}
-\NormalTok{  \}}
-\NormalTok{\}}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(ggplot2)) \{}
-  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
-    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{stop}\NormalTok{(}
-      \FunctionTok{paste}\NormalTok{(}
-        \StringTok{\textquotesingle{}You need to run install.packages("ggplot2")\textquotesingle{}}\NormalTok{,}
-        \StringTok{"first in the Console."}
-\NormalTok{      )}
-\NormalTok{    )}
-\NormalTok{  \}}
-\NormalTok{\}}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(bookdown)) \{}
-  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
-    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{stop}\NormalTok{(}
-      \FunctionTok{paste}\NormalTok{(}
-        \StringTok{\textquotesingle{}You need to run install.packages("bookdown")\textquotesingle{}}\NormalTok{,}
-        \StringTok{"first in the Console."}
-\NormalTok{      )}
-\NormalTok{    )}
-\NormalTok{  \}}
-\NormalTok{\}}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(thesisdown)) \{}
-  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
-\NormalTok{    remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{stop}\NormalTok{(}
-      \FunctionTok{paste}\NormalTok{(}
-        \StringTok{"You need to run"}\NormalTok{,}
-        \StringTok{\textquotesingle{}remotes::install\_github("ismayc/thesisdown")\textquotesingle{}}\NormalTok{,}
-        \StringTok{"first in the Console."}
-\NormalTok{      )}
-\NormalTok{    )}
-\NormalTok{  \}}
-\NormalTok{\}}
-\FunctionTok{library}\NormalTok{(thesisdown)}
-\FunctionTok{library}\NormalTok{(dplyr)}
-\FunctionTok{library}\NormalTok{(ggplot2)}
-\FunctionTok{library}\NormalTok{(knitr)}
-\NormalTok{flights }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/flights.csv"}\NormalTok{, }\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{import rasterio}
+\NormalTok{import numpy}
+
+\NormalTok{files }\OtherTok{=}\NormalTok{ [}\StringTok{"1"}\NormalTok{, }\StringTok{"2"}\NormalTok{, }\StringTok{"3"}\NormalTok{, }\StringTok{"4"}\NormalTok{] }\CommentTok{\# unique file identifiers}
+\NormalTok{folder }\OtherTok{=} \StringTok{"ndvi\_calc\_thesis/files"} \CommentTok{\# folder with the raw files}
+\NormalTok{date }\OtherTok{=} \StringTok{"20210726"} \CommentTok{\# product date}
+
+
+\ControlFlowTok{for}\NormalTok{ i }\ControlFlowTok{in} \FunctionTok{range}\NormalTok{(}\FunctionTok{len}\NormalTok{(files))}\SpecialCharTok{:}
+\NormalTok{    filenum }\OtherTok{=}\NormalTok{ files[i]}
+\NormalTok{    image\_file }\OtherTok{=}\NormalTok{ folder}\SpecialCharTok{+}\StringTok{"/"}\SpecialCharTok{+}\NormalTok{date}\SpecialCharTok{+}\StringTok{"\_"}\SpecialCharTok{+}\NormalTok{filenum}\SpecialCharTok{+}\StringTok{"\_AnalyticMS.tif"}
+
+\NormalTok{    metafile }\OtherTok{=}\NormalTok{ folder}\SpecialCharTok{+}\StringTok{"/"}\SpecialCharTok{+}\NormalTok{date}\SpecialCharTok{+}\StringTok{"\_"}\SpecialCharTok{+}\NormalTok{filenum}\SpecialCharTok{+}\StringTok{"\_AnalyticMS\_metadata.xml"}
+    \FunctionTok{print}\NormalTok{(image\_file)}
+    \FunctionTok{print}\NormalTok{(metafile)}
+
+    \CommentTok{\# Load red and NIR bands {-} note all PlanetScope 4{-}band images have band order BGRN}
+
+\NormalTok{    with }\FunctionTok{rasterio.open}\NormalTok{(image\_file) as src}\SpecialCharTok{:}
+\NormalTok{        band\_red }\OtherTok{=} \FunctionTok{src.read}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+
+\NormalTok{    with }\FunctionTok{rasterio.open}\NormalTok{(image\_file) as src}\SpecialCharTok{:}
+\NormalTok{        band\_nir }\OtherTok{=} \FunctionTok{src.read}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+
+\NormalTok{    from xml.dom import minidom}
+
+\NormalTok{    xmldoc }\OtherTok{=} \FunctionTok{minidom.parse}\NormalTok{(metafile)}
+\NormalTok{    nodes }\OtherTok{=} \FunctionTok{xmldoc.getElementsByTagName}\NormalTok{(}\StringTok{"ps:bandSpecificMetadata"}\NormalTok{)}
+
+    \CommentTok{\# XML parser refers to bands by numbers 1{-}4}
+\NormalTok{    coeffs }\OtherTok{=}\NormalTok{ \{\}}
+    \ControlFlowTok{for}\NormalTok{ node }\ControlFlowTok{in}\NormalTok{ nodes}\SpecialCharTok{:}
+\NormalTok{        bn }\OtherTok{=} \FunctionTok{node.getElementsByTagName}\NormalTok{(}\StringTok{"ps:bandNumber"}\NormalTok{)[}\DecValTok{0}\NormalTok{].firstChild.data}
+        \ControlFlowTok{if}\NormalTok{ bn }\ControlFlowTok{in}\NormalTok{ [}\StringTok{\textquotesingle{}1\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}2\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}3\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}4\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:}
+\NormalTok{            i }\OtherTok{=} \FunctionTok{int}\NormalTok{(bn)}
+\NormalTok{            value }\OtherTok{=} \FunctionTok{node.getElementsByTagName}\NormalTok{(}\StringTok{"ps:reflectanceCoefficient"}\NormalTok{)[}\DecValTok{0}\NormalTok{].firstChild.data}
+\NormalTok{            coeffs[i] }\OtherTok{=} \FunctionTok{float}\NormalTok{(value)}
+
+    \CommentTok{\# Multiply by corresponding coefficients}
+\NormalTok{    band\_red }\OtherTok{=}\NormalTok{ band\_red }\SpecialCharTok{*}\NormalTok{ coeffs[}\DecValTok{3}\NormalTok{]}
+\NormalTok{    band\_nir }\OtherTok{=}\NormalTok{ band\_nir }\SpecialCharTok{*}\NormalTok{ coeffs[}\DecValTok{4}\NormalTok{]}
+
+    \CommentTok{\# Allow division by zero}
+    \FunctionTok{numpy.seterr}\NormalTok{(}\AttributeTok{divide=}\StringTok{\textquotesingle{}ignore\textquotesingle{}}\NormalTok{, }\AttributeTok{invalid=}\StringTok{\textquotesingle{}ignore\textquotesingle{}}\NormalTok{)}
+
+    \CommentTok{\# Calculate NDVI}
+\NormalTok{    ndvi }\OtherTok{=}\NormalTok{ (}\FunctionTok{band\_nir.astype}\NormalTok{(float) }\SpecialCharTok{{-}} \FunctionTok{band\_red.astype}\NormalTok{(float)) }\SpecialCharTok{/}\NormalTok{ (band\_nir }\SpecialCharTok{+}\NormalTok{ band\_red)}
+
+    \CommentTok{\# Set spatial characteristics of the output object to mirror the input}
+\NormalTok{    kwargs }\OtherTok{=}\NormalTok{ src.meta}
+    \FunctionTok{kwargs.update}\NormalTok{(}
+        \AttributeTok{dtype=}\NormalTok{rasterio.float32,}
+        \AttributeTok{count=}\DecValTok{1}\NormalTok{)}
+    
+    \CommentTok{\# Set name for new NDVI file}
+\NormalTok{    newfile }\OtherTok{=}\NormalTok{ folder }\SpecialCharTok{+} \StringTok{\textquotesingle{}/ndvi\_\textquotesingle{}} \SpecialCharTok{+}\NormalTok{ date }\SpecialCharTok{+} \StringTok{"\_"} \SpecialCharTok{+}\NormalTok{ filenum }\SpecialCharTok{+} \StringTok{\textquotesingle{}.tif\textquotesingle{}}
+
+    \CommentTok{\# Create the file}
+\NormalTok{    with }\FunctionTok{rasterio.open}\NormalTok{(newfile, }\StringTok{\textquotesingle{}w\textquotesingle{}}\NormalTok{, }\SpecialCharTok{**}\NormalTok{kwargs) as dst}\SpecialCharTok{:}
+        \FunctionTok{dst.write\_band}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FunctionTok{ndvi.astype}\NormalTok{(rasterio.float32))}
 \end{Highlighting}
 \end{Shaded}
-\hypertarget{the-second-appendix-for-fun}{%
-\chapter{The Second Appendix, for Fun}\label{the-second-appendix-for-fun}}
+\hypertarget{lidar-canopy-delineation}{%
+\subsection{LiDAR canopy delineation}\label{lidar-canopy-delineation}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rgdal)}
+\FunctionTok{library}\NormalTok{(imager)}
+\FunctionTok{library}\NormalTok{(raster)}
+\FunctionTok{library}\NormalTok{(ForestTools)}
 
+\FunctionTok{options}\NormalTok{(}\StringTok{"rgdal\_show\_exportToProj4\_warnings"}\OtherTok{=}\StringTok{"none"}\NormalTok{)}
+
+\DocumentationTok{\#\# Loading raster data}
+\NormalTok{EML\_CHM }\OtherTok{\textless{}{-}} \FunctionTok{raster}\NormalTok{(}\StringTok{"\textasciitilde{}Desktop/thesis\_data/lidar\_crown/clipped\_lidar.tif"}\NormalTok{)}
+
+\DocumentationTok{\#\# Loading tree points}
+\NormalTok{all\_ttops }\OtherTok{\textless{}{-}} \FunctionTok{shapefile}\NormalTok{(}\StringTok{"\textasciitilde{}Desktop/thesis\_data/lidar\_crown/all\_tree\_points\_for\_delin.tif"}\NormalTok{)}
+
+\CommentTok{\# delineate tree crowns}
+\DocumentationTok{\#\# inputs: my tree points, LiDAR data}
+\NormalTok{crownsPoly }\OtherTok{\textless{}{-}} \FunctionTok{mcws}\NormalTok{(}\AttributeTok{treetops =}\NormalTok{ all\_ttops, }\AttributeTok{CHM =}\NormalTok{ EML\_CHM, }\AttributeTok{format =} \StringTok{"polygons"}\NormalTok{, }\AttributeTok{minHeight =} \DecValTok{20}\NormalTok{, }\AttributeTok{verbose =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# export file}
+\FunctionTok{writeOGR}\NormalTok{(crownsPoly, }\StringTok{"\textasciitilde{}/Desktop/thesis\_data/lidar\_crown"}\NormalTok{, }\StringTok{"canopy\_delin\_polygons\_poly"}\NormalTok{, }\AttributeTok{driver =} \StringTok{"ESRI Shapefile"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 \backmatter
 
 \hypertarget{references}{%
@@ -628,6 +791,9 @@ Breshears, D. D., Cobb, N. S., Rich, P. M., Price, K. P., Allen, C. D., Balice, 
 
 \leavevmode\vadjust pre{\hypertarget{ref-byer2017}{}}%
 Byer, S., \& Jin, Y. (2017). Detecting Drought-Induced Tree Mortality in Sierra Nevada Forests with Time Series of Satellite Data. \emph{Remote Sensing}, \emph{9}(9), 929. http://doi.org/\href{https://doi.org/10.3390/rs9090929}{10.3390/rs9090929}
+
+\leavevmode\vadjust pre{\hypertarget{ref-canopy2014}{}}%
+Canopy 2014. (2016). Retrieved from \url{https://www.arcgis.com/sharing/rest/content/items/05cbf1630c2f4904a076298b888de9bc/info/metadata/metadata.xml?format=default\&output=html}
 
 \leavevmode\vadjust pre{\hypertarget{ref-cityofportland}{}}%
 City of Portland. (2020). Carbon emissions. Retrieved from \url{https://www.portland.gov/bps/scg/scg-dashboard/carbon-emissions}
@@ -673,6 +839,12 @@ Nowak, David J., Greenfield, E. J., Hoehn, R. E., \& Lapoint, E. (2013). Carbon 
 
 \leavevmode\vadjust pre{\hypertarget{ref-nowak2010}{}}%
 Nowak, David J., Stein, S. M., Randler, P. B., Comas, S. J., Carr, M. A., \& Alig, R. J. (2010). \emph{Sustaining America{'}s Urban Trees and Forests} (p. 28).
+
+\leavevmode\vadjust pre{\hypertarget{ref-planetndvi}{}}%
+Planet. (n.d.). Calculate an NDVI in Python: Learn to calculate a vegetation index to assess the quality of vegetation within an area of interest. Retrieved from \url{https://developers.planet.com/planetschool/calculate-an-ndvi-in-python/}
+
+\leavevmode\vadjust pre{\hypertarget{ref-planetlabs2022}{}}%
+Planet imagery product specifications. (2022). Retrieved from \url{https://assets.planet.com/docs/Planet_Combined_Imagery_Product_Specs_letter_screen.pdf}
 
 \leavevmode\vadjust pre{\hypertarget{ref-portlandurbanforestry2019}{}}%
 Portland Urban Forestry. (2019). Inventory findings 2019. Retrieved from \url{https://www.portland.gov/trees/get-involved/tree-summit}
