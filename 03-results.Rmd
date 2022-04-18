@@ -3,35 +3,23 @@ bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(message = F, warning = F)
+knitr::opts_chunk$set(message = F, warning = F, tidy = TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60))
 ```
 
+```{r, echo = F}
+species_pal <- c("#219EBC", "#023047", "#FFB703", "#FB8500", "#586f7c")
+
+health_pal <- c("#83b692", "#f9ada0", "#f9627d", "#586f7c")
+
+method_pal <- c("#FBCF9D", "#7dcfb6", "#f79256")
+```
 
 # Results {#results}
 
-## CNH Tree Data
-
-```{r, include = F}
-cnh_all <- read_csv("data/2021_zonal_stats_cnh.csv") %>%
-  select(-(9:34))
-species_pal <- c("#219EBC", "#023047", "#FFB703", "#FB8500", "#586f7c")
-
-
-health_pal <- c("#1a005c", "#c80050", "#ffa600", "#586f7c")
-
-ggplot(cnh_all, aes(x = species.x, fill = health_rat))+
-  geom_bar()+
-  scale_fill_manual(values = health_pal)+
-  labs(x = "Species", y = "Count", fill = "Health rating")
-```
-
-
 ## Canopy Width and Tree Height Model
 
-I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term.
-The tree height model has an adjusted R-squared value of 0.78, and a p-value of < 2.2e-16. The crown width model has an adjusted R-squared value of 0.72, and a p-value of < 2.2e-16.
-
-HEY AARON AND ANNA - WHAT AND HOW DO I WRITE ABOUT THIS??
+I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term. I chose a third order polynomial because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species. 
+The tree height model has an adjusted R-squared value of 0.78, and a P-value of < 2.2e-16 (Figure \@ref(fig:height-model)). The crown width model has an adjusted R-squared value of 0.72, and a P-value of < 2.2e-16 (Figure \@ref(fig:width-model-g)).
 
 ```{r tree-model, include = F}
 # load park data, filter to relevant species, and get average crown width.
@@ -84,55 +72,309 @@ s_width_preds <- my_street %>%
   ggplot(aes(x = sqrt(DBH), y = width_preds, color = Species)) +
   geom_point(alpha = .3)+
   scale_color_manual(values = species_pal)+
-  labs(subtitle = "Park trees", y = "Canopy Width Prediction")
+  labs(subtitle = "Street trees", y = "Canopy Width Prediction")
 ```
 
-```{r height-model, echo = F, fig.cap="Tree height predictive model"}
+```{r height-model, echo = F, fig.scap="Tree height predictive model", out.width= "90%", fig.cap = "Predictive model for tree height from measured DBH. A third order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.72, P <2.2e-16)"}
 p_height_model + s_height_preds 
 ```
-```{r width-model, echo = F, fig.cap="Crown width predictive model"}
+
+```{r width-model-g, echo = F, fig.scap="Crown width predictive model", out.width = "90%", fig.cap = "Third order polynomial model for predicting tree crown width based on measured DBH and species, with predictions for street trees. (R-squared = 0.72,  P <2.2e-16)"}
 p_width_model + s_width_preds
 ```
 
-## NDVI Calculation
-
-
-
 ## Point Method
 
-```{r}
+```{r, include = F}
 cnh_point <- read_csv("data/cnh_point.csv") %>%
   mutate(health_rat = fct_relevel(health_rat, levels = c("poor", "fair", "good"))) %>%
   filter(!is.na(health_rat))
+```
 
+With the selection of CNH trees and 2021 NDVI data, a statistical analysis of the point value method shows that there is a statistically significant difference in the average NDVI values between health categorizations of "Fair" and "Good" (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD). There is a general positive correlation between NDVI and health category, specifically Fair and Good. The relationship between health and NDVI is more apparent in the two maple species, but still holds in the "fair" and "good" categories in the two coniferous species (Figure \@ref(fig:point-species)).
+
+```{r, include = F}
+summary(aov(sample_ndvi ~ health_rat, data = cnh_point))
+TukeyHSD(aov(sample_ndvi ~ health_rat, data = cnh_point))
+```
+
+```{r point-species, echo = F, out.width = "90%", fig.scap = "Point Method NDVI and Health Rating, by Species", fig.cap="NDVI extracted for CNH trees using the point method compared to CNH tree health categorization. There is a statistically significant difference between Fair and Good (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD)"}
 cnh_point %>%
   ggplot(aes(x = health_rat, y = sample_ndvi))+
+  scale_color_manual(values = species_pal)+
   geom_boxplot()+
-  #geom_point(aes(color = species))+
-  theme_minimal()+
-  labs(title = "Average NDVI measurement for CNH trees, by assigned health rating", x = "Health Rating", y = "Mean NDVI")
-
-# 2
-cnh_point %>%
-  ggplot(aes(x = health_rat, y = sample_ndvi))+
-  geom_boxplot()+
-  #geom_point(aes(color = species))+
+  geom_point(aes(color = species), alpha = .2, size = 3)+
   facet_wrap(~species)+
-  theme_minimal()+
-  labs(title = "CNH average NDVI by health condition and species", x = "Health Rating", y = "Mean NDVI")
+  labs(x = "Health Rating", y = "Mean NDVI")
 ```
 
 
 ## Radius Method
 
-```{r}
-cnh_radius <- read_csv("data/cnh_radius.csv")
+```{r, include = F}
+cnh_radius <- read_csv("data/cnh_radius.csv") %>%
+  mutate(health_rat = fct_relevel(health_rat, levels = c("poor", "fair", "good"))) %>%
+  filter(!is.na(health_rat))
+```
+
+With the radius method of pixel selection and crown delineation, there is a statistically significant difference in the mean NDVI values for health categories (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$). Similar to the point method, there is a larger difference in average NDVI between the "fair" and "good" categories than "poor" and "fair", and with the radius method, this is now a statistically significant difference (Figure \@ref(fig:radius-species)). 
+
+```{r, include = F}
+summary(aov(sample_ndvi ~ health_rat, data = cnh_radius))
+TukeyHSD(aov(sample_ndvi ~ health_rat, data = cnh_radius))
+```
+
+```{r radius-species, echo = F, fig.scap = "Radius method mean NDVI and health condition by species", fig.cap = "Boxplot of average NDVI from radius method and health condition, by species. The relationship berween NDVI and health category is strongest in the maples, but still somewhat aparent in the conifers. (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$)", out.width = "90%"}
+cnh_radius %>%
+  ggplot(aes(x = health_rat, y = sample_ndvi))+
+  scale_color_manual(values = species_pal)+
+  geom_boxplot()+
+  geom_point(aes(color = species), alpha = .2, size = 3)+
+  facet_wrap(~species)+
+  theme_minimal()+
+  labs(x = "Health Rating", y = "Mean NDVI")
 ```
 
 ## LiDAR Method
 
-```{r}
-cnh_lidar <- read_csv("data/cnh_lidar.csv")
+```{r, echo = F}
+cnh_lidar <- read_csv("data/cnh_lidar.csv") %>%
+  mutate(health_rat = fct_relevel(health_rat, levels = c("poor", "fair", "good"))) %>%
+  filter(!is.na(health_rat))
+```
+
+There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between good and fair (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD). 
+
+```{r, include = F}
+summary(aov(sample_ndvi ~ health_rat, data = cnh_lidar))
+TukeyHSD(aov(sample_ndvi ~ health_rat, data = cnh_lidar))
+```
+
+```{r lidar-species, echo = F, out.width = "90%", fig.scap = "NDVI and health condition for LiDAR method", fig.cap = "Boxplot of average NDVI from LiDAR method and health condition for each species. Due to the nature of the LiDAR delineation algorithm, no crown was detected for the PSME individual with a poor health rating. The difference between "good" and "fair" average NDVIs is statistically significant (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD)"}
+cnh_lidar %>%
+  ggplot(aes(x = health_rat, y = sample_ndvi))+
+  scale_color_manual(values = species_pal)+
+  geom_boxplot()+
+  geom_point(aes(color = species), alpha = .2, size = 3)+
+  facet_wrap(~species)+
+  theme_minimal()+
+  labs(x = "Health Rating", y = "Mean NDVI")
+```
+
+## Method Comparison
+
+```{r, echo = F}
+cnh_long <- cnh_point %>%
+  bind_rows(cnh_radius) %>%
+  bind_rows(cnh_lidar) %>%
+  mutate(method = fct_relevel(method, levels = c("point", "radius", "lidar")))
+```
+
+There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$).
+
+```{r, include = F}
+summary(aov(sample_ndvi ~ method, data = cnh_long))
+TukeyHSD(aov(sample_ndvi ~ method, data = cnh_long))
+```
+
+```{r methods-all-species, echo = F}
+cnh_long %>%
+  ggplot(aes(y = sample_ndvi, x = health_rat, color = method))+
+  scale_color_manual(values = method_pal)+
+  geom_boxplot()+
+  facet_wrap(~method)+
+  labs(x = "Health categorization", y = "Sample NDVI")+
+  guides(color = "none")
+```
+
+```{r methods-species, echo = F}
+cnh_long %>%
+  ggplot(aes(y = sample_ndvi, x = health_rat, color = species))+
+  scale_color_manual(values =species_pal)+
+  geom_boxplot()+
+  facet_grid(rows = vars(species), cols = vars(method))+
+  labs(x = "Health categorization", y = "Sample NDVI")+
+  guides(color = "none")
 ```
 
 ## Predictive Model
+
+```{r, include = F}
+test_p <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = cnh_point) 
+preds_p <- predict(test_p, cnh_point)
+cfm_p <- confusionMatrix(preds_p, cnh_point$health_rat)
+```
+
+```{r, include = F}
+matrix_point <- ggplotConfusionMatrix(cfm_p)+
+  labs(subtitle = "Point values")
+```
+
+```{r, include = F}
+data_p1 <- cnh_point %>% filter(species == "ACMA")
+test_p1 <- polr(health_rat~sample_ndvi, Hess = TRUE, data = data_p1)
+preds_p1 <- predict(test_p1, data_p1)
+cfm_p1 <- confusionMatrix(preds_p1, data_p1$health_rat)
+p_acma <- ggplotConfusionMatrix(cfm_p1)+
+  labs(subtitle = "ACMA")
+
+data_p2 <- cnh_point %>% filter(species == "ACPL")
+test_p2 <- polr(health_rat~sample_ndvi, Hess = TRUE, data = data_p2)
+preds_p2 <- predict(test_p2, data_p2)
+cfm_p2 <- confusionMatrix(preds_p2, data_p2$health_rat)
+p_acpl <- ggplotConfusionMatrix(cfm_p2)+
+  labs(subtitle = "ACPL")
+
+data_p3 <- cnh_point %>% filter(species == "PSME")
+test_p3 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_p3)
+preds_p3 <- predict(test_p3, data_p3)
+cfm_p3 <- confusionMatrix(preds_p3, data_p3$health_rat)
+p_psme <- ggplotConfusionMatrix(cfm_p3)+
+  labs(subtitle = "PSME")
+
+data_p4 <- cnh_point %>% filter(species == "THPL")
+test_p4 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_p4)
+preds_p4 <- predict(test_p4, data_p4)
+cfm_p4 <- confusionMatrix(preds_p4, data_p4$health_rat)
+p_thpl <- ggplotConfusionMatrix(cfm_p4)+
+  labs(subtitle = "THPL")
+```
+
+```{r, echo = F}
+(p_acma + p_acpl) / (p_psme + p_thpl) + 
+  plot_annotation(title = "point method", tag_levels = "a", tag_suffix = ")")
+```
+
+
+
+```{r, echo = F}
+test_r <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = cnh_radius)
+preds_r <- predict(test_r, cnh_radius)
+cfm_r <- confusionMatrix(preds_r, cnh_radius$health_rat)
+matrix_radius <- ggplotConfusionMatrix(cfm_r)+
+  labs(subtitle = "Radius data")
+```
+
+```{r, include = F}
+data_r1 <- cnh_radius %>% filter(species == "ACMA")
+test_r1 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_r1)
+preds_r1 <- predict(test_r1, data_r1)
+cfm_r1 <- confusionMatrix(preds_r1, data_r1$health_rat)
+r_acma <- ggplotConfusionMatrix(cfm_r1)+
+  labs(subtitle = "ACMA")
+
+data_r2 <- cnh_radius %>% filter(species == "ACPL")
+test_r2 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_r2)
+preds_r2 <- predict(test_r2, data_r2)
+cfm_r2 <- confusionMatrix(preds_r2, data_r2$health_rat)
+r_acpl <- ggplotConfusionMatrix(cfm_r2) + 
+  labs(subtitle = "ACPL")
+
+data_r3 <- cnh_radius %>% filter(species == "PSME")
+test_r3 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_r3)
+preds_r3 <- predict(test_r3, data_r3)
+cfm_r3 <- confusionMatrix(preds_r3, data_r3$health_rat)
+r_psme <- ggplotConfusionMatrix(cfm_r3)+
+  labs(subtitle = "PSME")
+
+data_r4 <- cnh_radius %>% filter(species == "THPL")
+test_r4 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_r4)
+preds_r4 <- predict(test_r4, data_r4)
+cfm_r4 <- confusionMatrix(preds_r4, data_r4$health_rat)
+r_thpl <- ggplotConfusionMatrix(cfm_r4)+
+  labs(subtitle = "radius thpl")
+```
+
+```{r, echo = F}
+(r_acma + r_acpl) / (r_psme + r_thpl)
+```
+
+
+```{r, include = F}
+test_l <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = cnh_lidar)
+preds_l <- predict(test_l, cnh_lidar)
+cfm_l <- confusionMatrix(preds_l, cnh_lidar$health_rat)
+matrix_lidar <- ggplotConfusionMatrix(cfm_l)+
+  labs(subtitle = "LiDAR Data")
+```
+
+```{r, include = F}
+data_l1 <- cnh_lidar %>% filter(species == "ACMA")
+test_l1 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_l1)
+preds_l1 <- predict(test_l1, data_l1)
+cfm_l1 <- confusionMatrix(preds_l1, data_l1$health_rat)
+l_acma <- ggplotConfusionMatrix(cfm_l1)+
+  labs(subtitle = "ACMA")
+
+data_l2 <- cnh_lidar %>% filter(species == "ACPL")
+test_l2 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_l2)
+preds_l2 <- predict(test_l2, data_l2)
+cfm_l2 <- confusionMatrix(preds_l2, data_l2$health_rat)
+l_acpl <- ggplotConfusionMatrix(cfm_l2)+
+  labs(subtitle = "ACPL")
+
+data_l3 <- cnh_lidar %>% filter(species == "PSME")
+test_l3 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_l3)
+preds_l3 <- predict(test_l3, data_l3)
+cfm_l3 <- confusionMatrix(preds_l3, data_l3$health_rat)
+l_psme <- ggplotConfusionMatrix(cfm_l3)+
+  labs(subtitle = "PSME")
+
+data_l4 <- cnh_lidar %>% filter(species == "THPL")
+test_l4 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_l4)
+preds_l4 <- predict(test_l4, data_l4)
+cfm_l4 <- confusionMatrix(preds_l4, data_l4$health_rat)
+l_thpl <- ggplotConfusionMatrix(cfm_l4)+
+  labs(subtitle = "THPL")
+```
+
+```{r, echo = F}
+(l_acma + l_acpl) / (l_psme + l_thpl)
+```
+
+```{r, echo = F}
+matrix_point + matrix_radius + matrix_lidar + 
+  plot_layout(ncol = 2)
+```
+
+
+```{r, include = F}
+test_data_point <- cnh_long %>%
+  filter(method == "point") %>%
+  group_by(health_rat) %>%
+  sample_n(15)
+
+test_point <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_point) 
+preds_point <- predict(test_point, test_data_point)
+cfm_point <- confusionMatrix(preds_point, test_data_point$health_rat)
+
+test_data_radius <- cnh_long %>%
+  filter(method == "radius") %>%
+  group_by(health_rat) %>%
+  sample_n(15)
+
+test_radius <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_radius) 
+preds_radius <- predict(test_radius, test_data_radius)
+cfm_radius <- confusionMatrix(preds_radius, test_data_radius$health_rat)
+
+test_data_lidar <- cnh_long %>%
+  filter(method == "lidar") %>%
+  group_by(health_rat) %>%
+  sample_n(13)
+
+test_lidar <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_lidar) 
+preds_lidar <- predict(test_lidar, test_data_lidar)
+cfm_lidar <- confusionMatrix(preds_lidar, test_data_lidar$health_rat)
+```
+
+
+```{r, echo = F}
+ggplotConfusionMatrix(cfm_point) + 
+    labs(subtitle = "Point method") +
+  ggplotConfusionMatrix(cfm_radius) +
+    labs(subtitle = "Radius method") +
+  ggplotConfusionMatrix(cfm_lidar) +
+    labs(subtitle = "LiDAR method") +
+  plot_layout(ncol = 2)
+```
+

@@ -108,6 +108,8 @@ library(pdxTrees)
 
 # processing and analysis packages
 library(ForestTools)
+library(MASS)
+library(caret)
 
 # visualization packages
 library(scales)
@@ -117,6 +119,23 @@ library(patchwork)
 options(width = 70)
 
 theme_set(theme_light())
+
+ggplotConfusionMatrix <- function(m){
+  mytitle <- paste("Accuracy", percent_format()(m$overall[1]),
+                   "Kappa", percent_format()(m$overall[2]))
+  mypval <- paste("P =", format(digits = 4, (m$overall[6])))
+  p <-
+    ggplot(data = as.data.frame(m$table) ,
+           aes(x = Reference, y = Prediction)) +
+    geom_tile(aes(fill = log(Freq)), colour = "grey50") +
+    scale_fill_gradient(low = "#AFACD7", high = "#4E4B95", na.value = "#E6E6F0",) +
+    geom_text(aes(x = Reference, y = Prediction, label = Freq)) +
+    theme(legend.position = "none") +
+    labs(title = mytitle, caption = mypval)
+  return(p)
+}
+
+knitr::opts_chunk$set(message = F, warning = F, tidy = T)
 ```
 
 

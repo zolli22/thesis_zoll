@@ -253,6 +253,9 @@ Second paragraph of abstract starts here.
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
+\hypertarget{the-accessability-of-science}{%
+\section{The Accessability of Science}\label{the-accessability-of-science}}
+
 \hypertarget{urban-forests-and-urbanization}{%
 \section{Urban Forests and Urbanization}\label{urban-forests-and-urbanization}}
 
@@ -296,7 +299,9 @@ Measuring urban tree health through field surveys can be extremely time and labo
 
 While the term ``remote sensing'' was first used in the 1960s, the first aerial images were taken in the 1850s from hot air balloons. Later, small cameras were attached to kites and even pigeons to capture aerial images. With the development of airplanes in the early 20th century, images were able to be taken from higher altitudes, providing aerial views of larger surface areas (Moore, 1979). Aerial images taken from planes provided essential military reconnaissance during both World War I and II. The first environmental applications of aerial imagery began in the 1930s, when the Agriculture Department began to use aerial photography to map and catalog farmland in the United States. Soon after, aerial imagery became a tool for conservation and land planning purposes. Capturing aerial images from planes was the primary method of capturing images of the earth's surface until the early 1960s. Since the first satellite was launched in 1957, the technical capabilities of satellites has greatly increased, along with the types and applications of satellite-collected data (Khorram, 2012).
 
-Within the field of forestry and ecology, remote sensing has numerous applications, from measuring the cover and structure of vegetation, to examining biodiversity and soil characteristics of specific areas. Additionally, remote sensing measurements can be used to calculate and monitor changes in forest density, which is critical for determining the fuel load and forest health in regards to fire risk. One of the most commonly used remote sensing metrics used to measure forest health is the Normalized Difference Vegetation Index (NDVI), which is calculated from the red and near infrared (NIR) bands from remote sensing imagery. Studies have shown that NDVI is highly correlated with chlorophyll content. Specifically, NDVI has a near-linear relationship to the chlorophyll content of soybean crops (Myneni, Hall, Sellers, \& Marshak, 1995; Tucker, 1979). Especially when the goal is monitoring tree health changes over time, remote sensing data eliminates the need for repeated sampling over long time periods, since satellite images are taken at regular intervals as the satellites continually orbit the earth. With the availability and accuracy of aerial imagery increasing as these technologies continue to advance, remote sensing is becoming an important and effective method for mapping, monitoring, and analyzing tree health on an individual tree scale (Xiao \& McPherson, 2005).
+Within the field of forestry and ecology, remote sensing has numerous applications, from measuring the cover and structure of vegetation, to examining biodiversity and soil characteristics of specific areas. Additionally, remote sensing measurements can be used to calculate and monitor changes in forest density, which is critical for determining the fuel load and forest health in regards to fire risk. One of the most commonly used remote sensing metrics used to measure forest health is the Normalized Difference Vegetation Index (NDVI), which is calculated from the red and near infrared (NIR) bands from remote sensing imagery. Vegetation that is photosynthetically active absorbs most of the red light and reflects much of the near infrared light. Conversely, vegetation that is dead or stressed reflects more red light and absorbs more near infrared light. Biologically, NDVI can be interpreted as the fraction of absorbed photosynthetically active radiation. A value closer to 1 indicates vegetation that is more photosynthetically active and greener, which can be used as a proxy for vegetation health. NDVI is not a diagnostic tool of vegetation health, but can be used as an indicator of health for further analysis. Studies have shown that NDVI is highly correlated with chlorophyll content. Specifically, NDVI has a near-linear relationship to the chlorophyll content of soybean crops (Myneni, Hall, Sellers, \& Marshak, 1995; Tucker, 1979).
+
+Especially when the goal is monitoring tree health changes over time, remote sensing data eliminates the need for repeated sampling over long time periods, since satellite images are taken at regular intervals as the satellites continually orbit the earth. With the availability and accuracy of aerial imagery increasing as these technologies continue to advance, remote sensing is becoming an important and effective method for mapping, monitoring, and analyzing tree health on an individual tree scale (Xiao \& McPherson, 2005).
 
 \hypertarget{previous-work}{%
 \section{Previous work}\label{previous-work}}
@@ -393,6 +398,12 @@ ACMA & Acer macrophyllum & 256 & 490\\
 \bottomrule
 \end{tabular}
 \end{table}
+The Portland park and street tree inventories include a health categorization variable of Good, Fair, Poor, or Dead. A drawback that can come with qualitative health ratings such as this one is that if a tree does not appear close to death, or perfectly healthy, it is very easy to categorize its health as ``Fair'', which is what we see in both the street and park tree databases. The proportion of trees rated ``Fair'' is extremely high, especially in the park trees inventory (Figure \ref{fig:rating-ratios}).
+\begin{figure}
+\centering
+\includegraphics{thesis_files/figure-latex/rating-ratios-1.pdf}
+\caption{\label{fig:rating-ratios}Distribution of Health Ratings in the Portland Tree Inventories}
+\end{figure}
 \hypertarget{canopy-width-and-tree-height-model}{%
 \section{Canopy width and tree height model}\label{canopy-width-and-tree-height-model}}
 
@@ -431,7 +442,7 @@ NIR & 780 - 860 nm\\
 \hypertarget{ndvi-calculation}{%
 \section{NDVI calculation}\label{ndvi-calculation}}
 
-The NDVI calculations were done using Python in PyCharm. Besides minor alterations, the processing code came from Planet's instructions on calculating NDVI from 4-band PlanetScope data (Planet, n.d.). NDVI is calculated from the red and NIR satellite bands (Equation \eqref{eq:ndvi-eq})
+The NDVI calculations were done using Python in PyCharm. Besides minor alterations, the processing code came from Planet's instructions on calculating NDVI from 4-band PlanetScope data (Planet, n.d.). NDVI is calculated from the red and NIR satellite bands, as shown in Equation \eqref{eq:ndvi-eq}.
 \begin{equation}
   \mathrm{NDVI} = \frac{(NIR - Red)}{(NIR + Red)} 
   \label{eq:ndvi-eq}
@@ -521,32 +532,16 @@ The LiDAR canopy height model was clipped to a 30 meter buffer around each selec
 
 }
 
-\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-5}
+\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-6}
 \end{figure}
-These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figures \ref{fig:clip-extent}, \ref{fig:random-sample-park}, \ref{fig:random-sample-street}).
+These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figure \ref{fig:clip-extent}).
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{figure/pdx_extent} 
+{\centering \includegraphics[width=1\linewidth]{figure/extent_and_samples} 
 
 }
 
-\caption{Geographic extent for random sampling}\label{fig:clip-extent}
-\end{figure}
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{figure/random_park_trees} 
-
-}
-
-\caption{Random sample of 100 park trees}\label{fig:random-sample-park}
-\end{figure}
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{figure/random_street_trees} 
-
-}
-
-\caption{Random sample of 100 street trees}\label{fig:random-sample-street}
+\caption{Geographic extent and random sampling}\label{fig:clip-extent}
 \end{figure}
 \hypertarget{modeling-tree-health}{%
 \section{Modeling Tree Health}\label{modeling-tree-health}}
@@ -558,70 +553,73 @@ Due to the small sample size and ordinal nature of the categorization for health
 \hypertarget{results}{%
 \chapter{Results}\label{results}}
 
-\hypertarget{cnh-tree-data}{%
-\section{CNH Tree Data}\label{cnh-tree-data}}
-
 \hypertarget{canopy-width-and-tree-height-model-1}{%
 \section{Canopy Width and Tree Height Model}\label{canopy-width-and-tree-height-model-1}}
 
-I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term.
-The tree height model has an adjusted R-squared value of 0.78, and a p-value of \textless{} 2.2e-16. The crown width model has an adjusted R-squared value of 0.72, and a p-value of \textless{} 2.2e-16.
-
-HEY AARON AND ANNA - WHAT AND HOW DO I WRITE ABOUT THIS??
-
-\includegraphics{thesis_files/figure-latex/height-model-1.pdf}
-\includegraphics{thesis_files/figure-latex/width-model-1.pdf}
-
-\hypertarget{ndvi-calculation-1}{%
-\section{NDVI Calculation}\label{ndvi-calculation-1}}
-
+I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term. I chose a third order polynomial because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species.
+The tree height model has an adjusted R-squared value of 0.78, and a p-value of \textless{} 2.2e-16 (Figure \ref{fig:height-model}). The crown width model has an adjusted R-squared value of 0.72, and a p-value of \textless{} 2.2e-16 (Figure \ref{fig:width-model-g}).
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/height-model-1} \caption[Tree height predictive model]{ootnotesize{Predictive model for tree height from measured DBH. A third order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.72, P = <2.2e-16)}}\label{fig:height-model}
+\end{figure}
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/width-model-g-1} \caption[Crown width predictive model]{test}\label{fig:width-model-g}
+\end{figure}
 \hypertarget{point-method-1}{%
 \section{Point Method}\label{point-method-1}}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{cnh\_point }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/cnh\_point.csv"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{health\_rat =} \FunctionTok{fct\_relevel}\NormalTok{(health\_rat, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"poor"}\NormalTok{, }\StringTok{"fair"}\NormalTok{, }\StringTok{"good"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(health\_rat))}
 
-\NormalTok{cnh\_point }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ health\_rat, }\AttributeTok{y =}\NormalTok{ sample\_ndvi))}\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{()}\SpecialCharTok{+}
-  \CommentTok{\#geom\_point(aes(color = species))+}
-  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average NDVI measurement for CNH trees, by assigned health rating"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Health Rating"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean NDVI"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-7-1.pdf}
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 2}
-\NormalTok{cnh\_point }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ health\_rat, }\AttributeTok{y =}\NormalTok{ sample\_ndvi))}\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{()}\SpecialCharTok{+}
-  \CommentTok{\#geom\_point(aes(color = species))+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{species)}\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{()}\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"CNH average NDVI by health condition and species"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Health Rating"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean NDVI"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-7-2.pdf}
+With the selection of CNH trees and 2021 NDVI data, a statistical analysis of the point value method shows that there is a statistically significant difference in the average NDVI values between health categorizations of ``Fair'' and ``Good'' (ANOVA, \(F_{2, 109} = 3.892\), \(P = 0.023\), TukeyHSD). There is a general positive correlation between NDVI and health category, specifically Fair and Good (Figure \ref{fig:point-all}). When split by species, the relationship between health and NDVI is more apparent in the two maple species, but still holds in the ``fair'' and ``good'' categories in the two coniferous species (Figure \ref{fig:point-species}).
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-all-1} \caption[Point Method NDVI and Health Rating]{NDVI extracted for CNH trees using the point method compared to CNH tree health categorization. There is a statistically significant difference between 'Fair' and 'Good' (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD)}\label{fig:point-all}
+\end{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-species-1}
 
 \hypertarget{radius-method-1}{%
 \section{Radius Method}\label{radius-method-1}}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{cnh\_radius }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/cnh\_radius.csv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+
+With the radius method of pixel selection and crown delineation, there is a statistically significant difference in the mean NDVI values for health categories (ANOVA, \(F_{2,109}=4.923\), \(P = 0.0089\); TukeyHSD: good-poor \(P = 0.033\), good-fair \(P = 0.014\)). Similar to the point method, there is a larger difference in average NDVI between the ``fair'' and ``good'' categories than ``poor'' and ``fair'', and with the radius method, this is now statistically significant (Figure \ref{fig:radius-all}).
+\begin{figure}
+\includegraphics{thesis_files/figure-latex/radius-all-1} \caption[NDVI and health rating for Radius method]{Boxplot of average NDVI for each CNH tree health categorization. There is a statistically significant difference between good and poor, as well as good and fair. (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$)}\label{fig:radius-all}
+\end{figure}
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/radius-species-1} \caption[Radius method mean NDVI and health condition by species]{Boxplot of average NDVI from radius method and health condition, by species. The relationship berween NDVI and health category is strongest in the maples, but still somewhat aparent in the conifers.}\label{fig:radius-species}
+\end{figure}
 \hypertarget{lidar-method-1}{%
 \section{LiDAR Method}\label{lidar-method-1}}
+
+There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between good and fair (ANOVA, \(F_{2,101} = 5.405\), \(P = 0.00589\), TukeyHSD)
+
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-14-1.pdf}
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{cnh\_lidar }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/cnh\_lidar.csv"}\NormalTok{)}
+\NormalTok{cnh\_lidar }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ health\_rat, }\AttributeTok{y =}\NormalTok{ sample\_ndvi)) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ species), }\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{species) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"CNH average NDVI by health condition and species"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Health Rating"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean NDVI"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\hypertarget{method-comparison}{%
+\section{Method Comparison}\label{method-comparison}}
+
+There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, \(F_{2, 325}=517.8\), \(P = <2e-16\), TukeyHSD: radius-point \(P = 0.00\), lidar-point \(P = 0.00\)).
+
+\includegraphics{thesis_files/figure-latex/methods-all-species-1.pdf}
+\includegraphics{thesis_files/figure-latex/methods-species-1.pdf}
+
 \hypertarget{predictive-model}{%
 \section{Predictive Model}\label{predictive-model}}
+
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-30-1.pdf}
 
 \hypertarget{conclusion}{%
 \chapter*{Conclusion}\label{conclusion}}
@@ -650,29 +648,29 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \subsection{Portland Tree Inventory counts and calculations}\label{portland-tree-inventory-counts-and-calculations}}
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{street\_counts}\OtherTok{\textless{}{-}}\FunctionTok{get\_pdxTrees\_streets}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(Species, Scientific, year) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_count}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Count\_2016 =}\NormalTok{ n) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2016}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
+\NormalTok{street\_counts }\OtherTok{\textless{}{-}} \FunctionTok{get\_pdxTrees\_streets}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Species, Scientific, year) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{add\_count}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{Count\_2016 =}\NormalTok{ n) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2016}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
 
-\NormalTok{park\_counts }\OtherTok{\textless{}{-}}\FunctionTok{get\_pdxTrees\_parks}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(Species, Scientific\_Name, year) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{add\_count}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Count\_2019 =}\NormalTok{ n) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2019}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
+\NormalTok{park\_counts }\OtherTok{\textless{}{-}} \FunctionTok{get\_pdxTrees\_parks}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Species, Scientific\_Name, year) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{add\_count}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(n)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{Count\_2019 =}\NormalTok{ n) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2019}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{calculating-ndvi-from-satellite-imagery}{%
@@ -750,7 +748,7 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \FunctionTok{library}\NormalTok{(raster)}
 \FunctionTok{library}\NormalTok{(ForestTools)}
 
-\FunctionTok{options}\NormalTok{(}\StringTok{"rgdal\_show\_exportToProj4\_warnings"}\OtherTok{=}\StringTok{"none"}\NormalTok{)}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{rgdal\_show\_exportToProj4\_warnings =} \StringTok{"none"}\NormalTok{)}
 
 \DocumentationTok{\#\# Loading raster data}
 \NormalTok{EML\_CHM }\OtherTok{\textless{}{-}} \FunctionTok{raster}\NormalTok{(}\StringTok{"\textasciitilde{}Desktop/thesis\_data/lidar\_crown/clipped\_lidar.tif"}\NormalTok{)}
@@ -758,12 +756,13 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \DocumentationTok{\#\# Loading tree points}
 \NormalTok{all\_ttops }\OtherTok{\textless{}{-}} \FunctionTok{shapefile}\NormalTok{(}\StringTok{"\textasciitilde{}Desktop/thesis\_data/lidar\_crown/all\_tree\_points\_for\_delin.tif"}\NormalTok{)}
 
-\CommentTok{\# delineate tree crowns}
-\DocumentationTok{\#\# inputs: my tree points, LiDAR data}
-\NormalTok{crownsPoly }\OtherTok{\textless{}{-}} \FunctionTok{mcws}\NormalTok{(}\AttributeTok{treetops =}\NormalTok{ all\_ttops, }\AttributeTok{CHM =}\NormalTok{ EML\_CHM, }\AttributeTok{format =} \StringTok{"polygons"}\NormalTok{, }\AttributeTok{minHeight =} \DecValTok{20}\NormalTok{, }\AttributeTok{verbose =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\# delineate tree crowns inputs: my tree points, LiDAR data}
+\NormalTok{crownsPoly }\OtherTok{\textless{}{-}} \FunctionTok{mcws}\NormalTok{(}\AttributeTok{treetops =}\NormalTok{ all\_ttops, }\AttributeTok{CHM =}\NormalTok{ EML\_CHM, }\AttributeTok{format =} \StringTok{"polygons"}\NormalTok{,}
+    \AttributeTok{minHeight =} \DecValTok{20}\NormalTok{, }\AttributeTok{verbose =} \ConstantTok{TRUE}\NormalTok{)}
 
 \CommentTok{\# export file}
-\FunctionTok{writeOGR}\NormalTok{(crownsPoly, }\StringTok{"\textasciitilde{}/Desktop/thesis\_data/lidar\_crown"}\NormalTok{, }\StringTok{"canopy\_delin\_polygons\_poly"}\NormalTok{, }\AttributeTok{driver =} \StringTok{"ESRI Shapefile"}\NormalTok{)}
+\FunctionTok{writeOGR}\NormalTok{(crownsPoly, }\StringTok{"\textasciitilde{}/Desktop/thesis\_data/lidar\_crown"}\NormalTok{, }\StringTok{"canopy\_delin\_polygons\_poly"}\NormalTok{,}
+    \AttributeTok{driver =} \StringTok{"ESRI Shapefile"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 \backmatter

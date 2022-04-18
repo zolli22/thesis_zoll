@@ -53,6 +53,7 @@ knitr::kable(
 knitr::include_graphics("figure/cnh_trees.png")
 ```
 
+
 ## Portland Tree Inventory
 
 The Portland Tree Inventory Project, managed by the City of Portland's Parks & Recreation Urban Forestry Department, cataloged nearly 245,000 street and park trees in Portland between 2010 to 2019. The street tree inventory, which was collected from 2010 to 2016, contains information on 216,750 street trees of 145 genera. The park tree inventory, collected from 2017 to 2019, contains data on 25,740 park trees of 116 genera. While many of the collected variables differ between the two inventories, they both include data on location, tree identification, DBH, and a visual assessment of the trees health which was rated as good, fair, poor, or dead.
@@ -63,26 +64,26 @@ To reduce the variability in data due to the time span of data collection, I fil
 street_counts<-get_pdxTrees_streets() %>%
   filter(Species %in% c("ACMA", "ACPL", "PSME", "THPL")) %>%
   mutate(year = year(Inventory_Date)) %>%
-  select(Species, Scientific, year) %>%
+  dplyr::select(Species, Scientific, year) %>%
   add_count(Species, year) %>%
   distinct() %>%
   group_by(Species) %>%
   mutate(Total = sum(n)) %>%
   rename(Count_2016 = n) %>%
   filter(year == 2016) %>%
-  select(-year)
+  dplyr::select(-year)
 
 park_counts <-get_pdxTrees_parks() %>%
   filter(Species %in% c("ACMA", "ACPL", "PSME", "THPL")) %>%
   mutate(year = year(Inventory_Date)) %>%
-  select(Species, Scientific_Name, year) %>%
+  dplyr::select(Species, Scientific_Name, year) %>%
   add_count(Species, year) %>%
   distinct() %>%
   group_by(Species) %>%
   mutate(Total = sum(n)) %>%
   rename(Count_2019 = n) %>%
   filter(year == 2019) %>%
-  select(-year)
+  dplyr::select(-year)
 ```
 
 ```{r streettable, results='asis', echo = FALSE}
@@ -102,6 +103,36 @@ knitr::kable(
   caption.short = 'Species counts in Park Trees Database'
 )
 ```
+
+The Portland park and street tree inventories include a health categorization variable of Good, Fair, Poor, or Dead. A drawback that can come with qualitative health ratings such as this one is that if a tree does not appear close to death, or perfectly healthy, it is very easy to categorize its health as "Fair", which is what we see in both the street and park tree databases. The proportion of trees rated "Fair" is extremely high, especially in the park trees inventory (Figure \@ref(fig:rating-ratios)).
+
+```{r, echo = F, message = F, warning = F}
+species_pal <- c("#219EBC", "#023047", "#FFB703", "#FB8500", "#586f7c")
+
+street_health <- get_pdxTrees_streets() %>%
+  dplyr::select(Species, Condition) %>%
+  filter(Species %in% c("ACMA", "ACPL", "PSME", "THPL")) %>%
+  mutate(Condition = fct_relevel(Condition, levels = c("Good", "Fair", "Poor"))) %>%
+  ggplot(aes(fill = Species, x = Condition))+
+  geom_bar()+
+  scale_fill_manual(values = species_pal)+
+  labs(x = "Health rating", fill = "Species", y = "Count", title = "Street trees")+
+  guides(fill = "none")
+
+park_health <- get_pdxTrees_parks() %>%
+  dplyr::select(Species, Condition) %>%
+  filter(Species %in% c("ACMA", "ACPL", "PSME", "THPL")) %>%
+  mutate(Condition = fct_relevel(Condition, levels = c("Good", "Fair", "Poor"))) %>%
+  ggplot(aes(fill = Species, x = Condition))+
+  geom_bar()+
+  scale_fill_manual(values = species_pal)+
+  labs(x = "Health rating", fill = "Species", y = "Count", title = "Park trees")
+```
+
+```{r rating-ratios, echo = F, fig.cap="Distribution of Health Ratings in the Portland Tree Inventories"}
+street_health + park_health
+```
+
 
 ## Canopy width and tree height model
 
@@ -148,7 +179,8 @@ knitr::kable(
 
 ## NDVI calculation
 
-The NDVI calculations were done using Python in PyCharm. Besides minor alterations, the processing code came from Planet's instructions on calculating NDVI from 4-band PlanetScope data [@planetndvi]. NDVI is calculated from the red and NIR satellite bands (Equation \@ref(eq:ndvi-eq))
+The NDVI calculations were done using Python in PyCharm. Besides minor alterations, the processing code came from Planet's instructions on calculating NDVI from 4-band PlanetScope data [@planetndvi]. NDVI is calculated from the red and NIR satellite bands, as shown in Equation \@ref(eq:ndvi-eq). 
+
 
 ```{=tex} 
 \begin{equation}
