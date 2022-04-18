@@ -557,69 +557,109 @@ Due to the small sample size and ordinal nature of the categorization for health
 \section{Canopy Width and Tree Height Model}\label{canopy-width-and-tree-height-model-1}}
 
 I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term. I chose a third order polynomial because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species.
-The tree height model has an adjusted R-squared value of 0.78, and a p-value of \textless{} 2.2e-16 (Figure \ref{fig:height-model}). The crown width model has an adjusted R-squared value of 0.72, and a p-value of \textless{} 2.2e-16 (Figure \ref{fig:width-model-g}).
+The tree height model has an adjusted R-squared value of 0.78, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:height-model}). The crown width model has an adjusted R-squared value of 0.72, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:width-model-g}).
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/height-model-1} \caption[Tree height predictive model]{ootnotesize{Predictive model for tree height from measured DBH. A third order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.72, P = <2.2e-16)}}\label{fig:height-model}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/height-model-1} \caption[Tree height predictive model]{Predictive model for tree height from measured DBH. A third order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.72, P <2.2e-16)}\label{fig:height-model}
 \end{figure}
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/width-model-g-1} \caption[Crown width predictive model]{test}\label{fig:width-model-g}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/width-model-g-1} \caption[Crown width predictive model]{Third order polynomial model for predicting tree crown width based on measured DBH and species, with predictions for street trees. (R-squared = 0.72,  P <2.2e-16)}\label{fig:width-model-g}
 \end{figure}
 \hypertarget{point-method-1}{%
 \section{Point Method}\label{point-method-1}}
 
-With the selection of CNH trees and 2021 NDVI data, a statistical analysis of the point value method shows that there is a statistically significant difference in the average NDVI values between health categorizations of ``Fair'' and ``Good'' (ANOVA, \(F_{2, 109} = 3.892\), \(P = 0.023\), TukeyHSD). There is a general positive correlation between NDVI and health category, specifically Fair and Good (Figure \ref{fig:point-all}). When split by species, the relationship between health and NDVI is more apparent in the two maple species, but still holds in the ``fair'' and ``good'' categories in the two coniferous species (Figure \ref{fig:point-species}).
+With the selection of CNH trees and 2021 NDVI data, a statistical analysis of the point value method shows that there is a statistically significant difference in the average NDVI values between health categorizations of ``Fair'' and ``Good'' (ANOVA, \(F_{2, 109} = 3.892\), \(P = 0.023\), TukeyHSD). There is a general positive correlation between NDVI and health category, specifically Fair and Good. The relationship between health and NDVI is more apparent in the two maple species, but still holds in the ``fair'' and ``good'' categories in the two coniferous species (Figure \ref{fig:point-species}).
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-all-1} \caption[Point Method NDVI and Health Rating]{NDVI extracted for CNH trees using the point method compared to CNH tree health categorization. There is a statistically significant difference between 'Fair' and 'Good' (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD)}\label{fig:point-all}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-species-1} \caption[Point Method NDVI and Health Rating, by Species]{NDVI extracted for CNH trees using the point method compared to CNH tree health categorization. There is a statistically significant difference between Fair and Good (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD)}\label{fig:point-species}
 \end{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-species-1}
-
 \hypertarget{radius-method-1}{%
 \section{Radius Method}\label{radius-method-1}}
 
-With the radius method of pixel selection and crown delineation, there is a statistically significant difference in the mean NDVI values for health categories (ANOVA, \(F_{2,109}=4.923\), \(P = 0.0089\); TukeyHSD: good-poor \(P = 0.033\), good-fair \(P = 0.014\)). Similar to the point method, there is a larger difference in average NDVI between the ``fair'' and ``good'' categories than ``poor'' and ``fair'', and with the radius method, this is now statistically significant (Figure \ref{fig:radius-all}).
+With the radius method of pixel selection and crown delineation, there is a statistically significant difference in the mean NDVI values for health categories (ANOVA, \(F_{2,109}=4.923\), \(P = 0.0089\); TukeyHSD: good-poor \(P = 0.033\), good-fair \(P = 0.014\)). Similar to the point method, there is a larger difference in average NDVI between the ``fair'' and ``good'' categories than ``poor'' and ``fair'', and with the radius method, this is now a statistically significant difference (Figure \ref{fig:radius-species}).
 \begin{figure}
-\includegraphics{thesis_files/figure-latex/radius-all-1} \caption[NDVI and health rating for Radius method]{Boxplot of average NDVI for each CNH tree health categorization. There is a statistically significant difference between good and poor, as well as good and fair. (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$)}\label{fig:radius-all}
-\end{figure}
-\begin{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/radius-species-1} \caption[Radius method mean NDVI and health condition by species]{Boxplot of average NDVI from radius method and health condition, by species. The relationship berween NDVI and health category is strongest in the maples, but still somewhat aparent in the conifers.}\label{fig:radius-species}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/radius-species-1} \caption[Radius method mean NDVI and health condition by species]{Boxplot of average NDVI from radius method and health condition, by species. The relationship berween NDVI and health category is strongest in the maples, but still somewhat aparent in the conifers. (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$)}\label{fig:radius-species}
 \end{figure}
 \hypertarget{lidar-method-1}{%
 \section{LiDAR Method}\label{lidar-method-1}}
 
-There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between good and fair (ANOVA, \(F_{2,101} = 5.405\), \(P = 0.00589\), TukeyHSD)
-
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-14-1.pdf}
+There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between good and fair (ANOVA, \(F_{2,101} = 5.405\), \(P = 0.00589\), TukeyHSD). The same relationship between NDVI and health condition for the maples that was seen in the point and radius method is seen here (Figure \ref{fig:lidar-species}).
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/lidar-species-1} \caption[NDVI and health condition for LiDAR method]{Boxplot of average NDVI from LiDAR method and health condition for each species. Due to the nature of the LiDAR delineation algorithm, no crown was detected for the PSME individual with a poor health rating. The difference between good and fair average NDVIs is statistically significant (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD)}\label{fig:lidar-species}
+\end{figure}
+Another aspect of the LiDAR delineation method is the potential for data loss. Five ACMA and three PSME individuals were lost in the LiDAR crown delineation process. If this was with a very large sample size the data loss would likely not be detrimental but especially with a sample size such as mine, a loss of eight trees is a loss of 5\% of the total data, 17\% loss for ACMA, and 12\% loss for THPL.
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{cnh\_lidar }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ health\_rat, }\AttributeTok{y =}\NormalTok{ sample\_ndvi)) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
-    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ species), }\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{species) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"CNH average NDVI by health condition and species"}\NormalTok{,}
-    \AttributeTok{x =} \StringTok{"Health Rating"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Mean NDVI"}\NormalTok{)}
+\NormalTok{cnh\_long }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{count}\NormalTok{(method, species) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =} \StringTok{"method"}\NormalTok{, }\AttributeTok{values\_from =} \StringTok{"n"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-15-1.pdf}
-
+\begin{verbatim}
+# A tibble: 4 x 4
+  species point radius lidar
+  <chr>   <int>  <int> <int>
+1 ACMA       29     29    24
+2 ACPL       30     30    30
+3 PSME       25     25    22
+4 THPL       28     28    28
+\end{verbatim}
 \hypertarget{method-comparison}{%
 \section{Method Comparison}\label{method-comparison}}
 
-There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, \(F_{2, 325}=517.8\), \(P = <2e-16\), TukeyHSD: radius-point \(P = 0.00\), lidar-point \(P = 0.00\)).
-
-\includegraphics{thesis_files/figure-latex/methods-all-species-1.pdf}
-\includegraphics{thesis_files/figure-latex/methods-species-1.pdf}
-
+There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, \(F_{2, 325}=517.8\), \(P = <2e-16\), TukeyHSD: radius-point \(P = 0.00\), lidar-point \(P = 0.00\)). All three methods seem to show the same pattern, though the NDVI values are much higher for the point method than either of the other two methods (Figure \ref{fig:methods-all-species}). When all three methods are compared along with species, we can see that the general trend of health rating and NDVI is consistent within each species, but varies across methods (Figure \ref{fig:methods-species}). The patterns are similar between species of the same physiognomic tree type
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/methods-all-species-1} \caption[NDVI and health rating comparison across methods]{Average NDVI values from all three pixel selection methods with CNH health rating. There is a statistically significant difference in mean NDVI between point and both radius and lidar methods. (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$)}\label{fig:methods-all-species}
+\end{figure}
+\begin{figure}
+\includegraphics{thesis_files/figure-latex/methods-species-1} \caption[Average NDVI comparison between species and methods.]{Average NDVI for each health category, split by tree species and pixel selection method. The general trends remain the same within species, but vary among pixel selection methods.}\label{fig:methods-species}
+\end{figure}
 \hypertarget{predictive-model}{%
 \section{Predictive Model}\label{predictive-model}}
 
+When used to create an ordinal logistic regression method, the point method data was unsuccessful at predicting health condition from NDVI. For ACMA, PSME and THPL, the model categorized all trees as ``Fair.'' ACPL predicted that most trees would be in ``Good'' health condition (Figure \ref{point-model-split}).
+
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-model-split-1}
+
+The radius method was slightly more successful than the point method for the model, but both coniferous species were all categorized as ``Fair''. The ACPL predictions are the same as they were with the point method, but ACMA has much more specificity with the radius method data (Figure \ref{fig:radius-model-split}).
+\begin{figure}
+\includegraphics{thesis_files/figure-latex/radius-model-split-1} \caption[Confusion matrixes for Radius data model]{Confusion matrixes for each species predictions with radius method data}\label{fig:radius-model-split}
+\end{figure}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-20-1.pdf}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p\_acma }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ r\_acma }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius"}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{    l\_acma }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 \includegraphics{thesis_files/figure-latex/unnamed-chunk-21-1.pdf}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p\_acpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ r\_acpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius"}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{    l\_acpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-2.pdf}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p\_psme }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ r\_psme }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius"}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{    l\_psme }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-3.pdf}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p\_thpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ r\_thpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius"}\NormalTok{) }\SpecialCharTok{+}
+\NormalTok{    l\_thpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-4.pdf}
+
+With all the species combined, we get a slightly better picture of the impact of different pixel selection methods.
+
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+Due to the variation in sample sizes for each health condition category, I sampled down the data so each health category had the same number of points. This improved the results of the model by a lot.
 
 \includegraphics{thesis_files/figure-latex/unnamed-chunk-24-1.pdf}
-
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-27-1.pdf}
-
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-28-1.pdf}
-
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-30-1.pdf}
 
 \hypertarget{conclusion}{%
 \chapter*{Conclusion}\label{conclusion}}
@@ -659,7 +699,6 @@ This second appendix includes all of the R chunks of code that were hidden throu
     \FunctionTok{rename}\NormalTok{(}\AttributeTok{Count\_2016 =}\NormalTok{ n) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2016}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
-
 \NormalTok{park\_counts }\OtherTok{\textless{}{-}} \FunctionTok{get\_pdxTrees\_parks}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -747,19 +786,14 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \FunctionTok{library}\NormalTok{(imager)}
 \FunctionTok{library}\NormalTok{(raster)}
 \FunctionTok{library}\NormalTok{(ForestTools)}
-
 \FunctionTok{options}\NormalTok{(}\AttributeTok{rgdal\_show\_exportToProj4\_warnings =} \StringTok{"none"}\NormalTok{)}
-
 \DocumentationTok{\#\# Loading raster data}
 \NormalTok{EML\_CHM }\OtherTok{\textless{}{-}} \FunctionTok{raster}\NormalTok{(}\StringTok{"\textasciitilde{}Desktop/thesis\_data/lidar\_crown/clipped\_lidar.tif"}\NormalTok{)}
-
 \DocumentationTok{\#\# Loading tree points}
 \NormalTok{all\_ttops }\OtherTok{\textless{}{-}} \FunctionTok{shapefile}\NormalTok{(}\StringTok{"\textasciitilde{}Desktop/thesis\_data/lidar\_crown/all\_tree\_points\_for\_delin.tif"}\NormalTok{)}
-
 \CommentTok{\# delineate tree crowns inputs: my tree points, LiDAR data}
 \NormalTok{crownsPoly }\OtherTok{\textless{}{-}} \FunctionTok{mcws}\NormalTok{(}\AttributeTok{treetops =}\NormalTok{ all\_ttops, }\AttributeTok{CHM =}\NormalTok{ EML\_CHM, }\AttributeTok{format =} \StringTok{"polygons"}\NormalTok{,}
     \AttributeTok{minHeight =} \DecValTok{20}\NormalTok{, }\AttributeTok{verbose =} \ConstantTok{TRUE}\NormalTok{)}
-
 \CommentTok{\# export file}
 \FunctionTok{writeOGR}\NormalTok{(crownsPoly, }\StringTok{"\textasciitilde{}/Desktop/thesis\_data/lidar\_crown"}\NormalTok{, }\StringTok{"canopy\_delin\_polygons\_poly"}\NormalTok{,}
     \AttributeTok{driver =} \StringTok{"ESRI Shapefile"}\NormalTok{)}

@@ -143,14 +143,14 @@ cnh_lidar <- read_csv("data/cnh_lidar.csv") %>%
   filter(!is.na(health_rat))
 ```
 
-There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between good and fair (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD). 
+There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between good and fair (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD). The same relationship between NDVI and health condition for the maples that was seen in the point and radius method is seen here (Figure \@ref(fig:lidar-species)). 
 
 ```{r, include = F}
 summary(aov(sample_ndvi ~ health_rat, data = cnh_lidar))
 TukeyHSD(aov(sample_ndvi ~ health_rat, data = cnh_lidar))
 ```
 
-```{r lidar-species, echo = F, out.width = "90%", fig.scap = "NDVI and health condition for LiDAR method", fig.cap = "Boxplot of average NDVI from LiDAR method and health condition for each species. Due to the nature of the LiDAR delineation algorithm, no crown was detected for the PSME individual with a poor health rating. The difference between "good" and "fair" average NDVIs is statistically significant (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD)"}
+```{r lidar-species, echo = F, out.width = "90%", fig.scap = "NDVI and health condition for LiDAR method", fig.cap = "Boxplot of average NDVI from LiDAR method and health condition for each species. Due to the nature of the LiDAR delineation algorithm, no crown was detected for the PSME individual with a poor health rating. The difference between good and fair average NDVIs is statistically significant (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD)"}
 cnh_lidar %>%
   ggplot(aes(x = health_rat, y = sample_ndvi))+
   scale_color_manual(values = species_pal)+
@@ -161,7 +161,7 @@ cnh_lidar %>%
   labs(x = "Health Rating", y = "Mean NDVI")
 ```
 
-## Method Comparison
+Another aspect of the LiDAR delineation method is the potential for data loss. Five ACMA and three PSME individuals were lost in the LiDAR crown delineation process. If this was with a very large sample size the data loss would likely not be detrimental but especially with a sample size such as mine, a loss of eight trees is a loss of 5% of the total data, 17% loss for ACMA, and 12% loss for THPL.
 
 ```{r, echo = F}
 cnh_long <- cnh_point %>%
@@ -170,14 +170,24 @@ cnh_long <- cnh_point %>%
   mutate(method = fct_relevel(method, levels = c("point", "radius", "lidar")))
 ```
 
-There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$).
+```{r}
+cnh_long %>%
+  count(method, species) %>%
+  pivot_wider(names_from = "method", values_from = "n")
+```
+
+
+
+## Method Comparison
+
+There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$). All three methods seem to show the same pattern, though the NDVI values are much higher for the point method than either of the other two methods (Figure \@ref(fig:methods-all-species)). When all three methods are compared along with species, we can see that the general trend of health rating and NDVI is consistent within each species, but varies across methods (Figure \@ref(fig:methods-species)). The patterns are similar between species of the same physiognomic tree type 
 
 ```{r, include = F}
 summary(aov(sample_ndvi ~ method, data = cnh_long))
 TukeyHSD(aov(sample_ndvi ~ method, data = cnh_long))
 ```
 
-```{r methods-all-species, echo = F}
+```{r methods-all-species, echo = F, out.width = "90%", fig.scap = "NDVI and health rating comparison across methods", fig.cap = "Average NDVI values from all three pixel selection methods with CNH health rating. There is a statistically significant difference in mean NDVI between point and both radius and lidar methods. (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$)"}
 cnh_long %>%
   ggplot(aes(y = sample_ndvi, x = health_rat, color = method))+
   scale_color_manual(values = method_pal)+
@@ -187,7 +197,7 @@ cnh_long %>%
   guides(color = "none")
 ```
 
-```{r methods-species, echo = F}
+```{r methods-species, echo = F, fig.scap = "Average NDVI comparison between species and methods.", fig.cap = "Average NDVI for each health category, split by tree species and pixel selection method. The general trends remain the same within species, but vary among pixel selection methods."}
 cnh_long %>%
   ggplot(aes(y = sample_ndvi, x = health_rat, color = species))+
   scale_color_manual(values =species_pal)+
@@ -203,14 +213,10 @@ cnh_long %>%
 test_p <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = cnh_point) 
 preds_p <- predict(test_p, cnh_point)
 cfm_p <- confusionMatrix(preds_p, cnh_point$health_rat)
-```
 
-```{r, include = F}
 matrix_point <- ggplotConfusionMatrix(cfm_p)+
-  labs(subtitle = "Point values")
-```
+  labs(subtitle = "Point method")
 
-```{r, include = F}
 data_p1 <- cnh_point %>% filter(species == "ACMA")
 test_p1 <- polr(health_rat~sample_ndvi, Hess = TRUE, data = data_p1)
 preds_p1 <- predict(test_p1, data_p1)
@@ -240,9 +246,11 @@ p_thpl <- ggplotConfusionMatrix(cfm_p4)+
   labs(subtitle = "THPL")
 ```
 
-```{r, echo = F}
+When used to create an ordinal logistic regression method, the point method data was unsuccessful at predicting health condition from NDVI. For ACMA, PSME and THPL, the model categorized all trees as "Fair." ACPL predicted that most trees would be in "Good" health condition (Figure \@ref(point-model-split)).
+
+```{r point-model-split, echo = F, out.width = "90%", fig.scap = "Confusion Matrix results for Point Method OLM"}
 (p_acma + p_acpl) / (p_psme + p_thpl) + 
-  plot_annotation(title = "point method", tag_levels = "a", tag_suffix = ")")
+  plot_annotation(tag_levels = "a", tag_suffix = ")")
 ```
 
 
@@ -252,10 +260,8 @@ test_r <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = cnh_radius)
 preds_r <- predict(test_r, cnh_radius)
 cfm_r <- confusionMatrix(preds_r, cnh_radius$health_rat)
 matrix_radius <- ggplotConfusionMatrix(cfm_r)+
-  labs(subtitle = "Radius data")
-```
+  labs(subtitle = "Radius method")
 
-```{r, include = F}
 data_r1 <- cnh_radius %>% filter(species == "ACMA")
 test_r1 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_r1)
 preds_r1 <- predict(test_r1, data_r1)
@@ -282,11 +288,14 @@ test_r4 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_r4)
 preds_r4 <- predict(test_r4, data_r4)
 cfm_r4 <- confusionMatrix(preds_r4, data_r4$health_rat)
 r_thpl <- ggplotConfusionMatrix(cfm_r4)+
-  labs(subtitle = "radius thpl")
+  labs(subtitle = "THPL")
 ```
 
-```{r, echo = F}
-(r_acma + r_acpl) / (r_psme + r_thpl)
+The radius method was slightly more successful than the point method for the model, but both coniferous species were all categorized as "Fair". The ACPL predictions are the same as they were with the point method, but ACMA has much more specificity with the radius method data (Figure \@ref(fig:radius-model-split)).
+
+```{r radius-model-split, echo = F, fig.scap = "Confusion matrixes for Radius data model", fig.cap = "Confusion matrixes for each species predictions with radius method data"}
+(r_acma + r_acpl) / (r_psme + r_thpl) + 
+  plot_annotation(tag_levels = "a", tag_suffix = ")")
 ```
 
 
@@ -295,10 +304,8 @@ test_l <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = cnh_lidar)
 preds_l <- predict(test_l, cnh_lidar)
 cfm_l <- confusionMatrix(preds_l, cnh_lidar$health_rat)
 matrix_lidar <- ggplotConfusionMatrix(cfm_l)+
-  labs(subtitle = "LiDAR Data")
-```
+  labs(subtitle = "LiDAR method")
 
-```{r, include = F}
 data_l1 <- cnh_lidar %>% filter(species == "ACMA")
 test_l1 <- polr(health_rat~sample_ndvi, Hess = TRUE, data_l1)
 preds_l1 <- predict(test_l1, data_l1)
@@ -329,14 +336,53 @@ l_thpl <- ggplotConfusionMatrix(cfm_l4)+
 ```
 
 ```{r, echo = F}
-(l_acma + l_acpl) / (l_psme + l_thpl)
+(l_acma + l_acpl) / (l_psme + l_thpl) + 
+  plot_annotation(tag_levels = "a", tag_suffix = ")")
 ```
+
+```{r}
+p_acma + 
+  labs(subtitle = "Point")+
+  r_acma + 
+  labs(subtitle = "Radius")+
+  l_acma + 
+  labs(subtitle = "LiDAR")+
+  plot_layout(ncol = 2)
+
+p_acpl + 
+  labs(subtitle = "Point")+
+  r_acpl + 
+  labs(subtitle = "Radius")+
+  l_acpl + 
+  labs(subtitle = "LiDAR")+
+  plot_layout(ncol = 2)
+
+p_psme + 
+  labs(subtitle = "Point")+
+  r_psme + 
+  labs(subtitle = "Radius")+
+  l_psme + 
+  labs(subtitle = "LiDAR")+
+  plot_layout(ncol = 2)
+
+p_thpl + 
+  labs(subtitle = "Point")+
+  r_thpl + 
+  labs(subtitle = "Radius")+
+  l_thpl + 
+  labs(subtitle = "LiDAR")+
+  plot_layout(ncol = 2)
+```
+
+With all the species combined, we get a slightly better picture of the impact of different pixel selection methods.
+
 
 ```{r, echo = F}
 matrix_point + matrix_radius + matrix_lidar + 
   plot_layout(ncol = 2)
 ```
 
+Due to the variation in sample sizes for each health condition category, I sampled down the data so each health category had the same number of points. This improved the results of the model by a lot. 
 
 ```{r, include = F}
 test_data_point <- cnh_long %>%
