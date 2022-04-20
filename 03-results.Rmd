@@ -21,7 +21,7 @@ method_pal <- c("#FBCF9D", "#7dcfb6", "#f79256")
 I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term. I chose a third order polynomial because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species. While the 
 The tree height model has an adjusted R-squared value of 0.78, and a P-value of < 2.2e-16 (Figure \@ref(fig:height-model)). The crown width model has an adjusted R-squared value of 0.72, and a P-value of < 2.2e-16 (Figure \@ref(fig:width-model-g), \@ref(tree-model-eqs)).
 
-```{r tree-model, include = F}
+```{r tree-model, include = F, tidy = T}
 # load park data, filter to relevant species, and get average crown width.
 my_park <- pdxTrees::get_pdxTrees_parks() %>%
   filter(Species %in% c('ACPL', 'THPL', 'PSME', 'ACMA')) %>%
@@ -75,11 +75,11 @@ s_width_preds <- my_street %>%
   labs(subtitle = "Street trees", y = "Canopy Width Prediction")
 ```
 
-```{r height-model, echo = F, fig.scap="Tree height predictive model", out.width= "90%", fig.cap = "Predictive model for tree height from measured DBH. A third order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.72, P <2.2e-16)"}
+```{r height-model, echo = F, fig.scap="Tree height predictive model", out.width= "80%", fig.cap = "Predictive model for tree height from measured DBH. A third order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.72, P <2.2e-16)"}
 p_height_model + s_height_preds 
 ```
 
-```{r width-model-g, echo = F, fig.scap="Crown width predictive model", out.width = "90%", fig.cap = "Third order polynomial model for predicting tree crown width based on measured DBH and species, with predictions for street trees. (R-squared = 0.72,  P <2.2e-16)"}
+```{r width-model-g, echo = F, fig.scap="Crown width predictive model", out.width = "80%", fig.cap = "Third order polynomial model for predicting tree crown width based on measured DBH and species, with predictions for street trees. (R-squared = 0.72,  P <2.2e-16)"}
 p_width_model + s_width_preds
 ```
 
@@ -170,34 +170,22 @@ cnh_lidar %>%
   labs(x = "Health Rating", y = "Mean NDVI")
 ```
 
-Another aspect of the LiDAR delineation method is the potential for data loss. Five ACMA and three PSME individuals were lost in the LiDAR crown delineation process. If this was with a very large sample size the data loss would likely not be detrimental but especially with a sample size such as mine, a loss of eight trees is a loss of 5% of the total data, 17% loss for ACMA, and 12% loss for THPL.
-
-```{r, echo = F, message = F, warning = F}
-cnh_long <- cnh_point %>%
-  bind_rows(cnh_radius) %>%
-  bind_rows(cnh_lidar) %>%
-  mutate(method = fct_relevel(method, levels = c("point", "radius", "lidar")))
-```
-
-```{r, echo = F}
-knitr::kable(cnh_long %>%
-  count(method, species) %>%
-  pivot_wider(names_from = "method", values_from = "n")
-  
-)
-```
-
+Another aspect of the LiDAR delineation method is the potential for data loss. Five ACMA and three PSME individuals were lost in the LiDAR crown delineation process. If this was with a very large sample size the data loss would likely not be detrimental but especially with a sample size such as mine, a loss of eight trees is a loss of 5% of the total data, 17% loss for ACMA, and 12% loss for THPL.  
 
 ## Method Comparison
 
-There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$). All three methods seem to show the same pattern, though the NDVI values are much higher for the point method than either of the other two methods (Figure \@ref(fig:methods-all-species)). When all three methods are compared along with species, we can see that the general trend of health rating and NDVI is consistent within each species, but varies across methods (Figure \@ref(fig:methods-species)). The patterns are similar between species of the same physiognomic tree type 
+There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, $F_{2, 325}=517.8$, $P < 2e-16$; TukeyHSD, radius-point $P = 0.00$, lidar-point $P = 0.00$). When the species are clumped, the three methods show very similar patterns, though the NDVI values are higher for the point method than either of the other two methods (Figure \@ref(fig:methods-all-species)). When all three methods are compared along with species, we can see that the general trend of health rating and NDVI is consistent within each species, but varies across methods (Figure \@ref(fig:methods-species)). Additionally, the pattern between health rating and NDVI is also very similar between trees of the same functional type. Because of the similarities in health patter, I included additional testing examining the difference in species specificity addition versus functional type separation.
 
 ```{r, include = F}
+cnh_long <- cnh_point %>%
+  bind_rows(cnh_radius) %>%
+  bind_rows(cnh_lidar)
+
 summary(aov(sample_ndvi ~ method, data = cnh_long))
 TukeyHSD(aov(sample_ndvi ~ method, data = cnh_long))
 ```
 
-```{r methods-all-species, echo = F, out.width = "100%", fig.scap = "NDVI and health rating comparison across methods", fig.cap = "Average NDVI values from all three pixel selection methods with CNH health rating. There is a statistically significant difference in mean NDVI between point and both radius and lidar methods. (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$)"}
+```{r methods-all-species, echo = F, out.width = "80%", fig.scap = "NDVI and health rating comparison across methods", fig.cap = "Average NDVI values from all three pixel selection methods with CNH health rating. There is a statistically significant difference in mean NDVI between point and both radius and lidar methods. (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$)"}
 cnh_long %>%
   ggplot(aes(y = sample_ndvi, x = health_rat, color = method))+
   scale_color_manual(values = method_pal)+
@@ -217,26 +205,45 @@ cnh_long %>%
   guides(color = "none")
 ```
 
-```{r, }
-cnh_long %>%
-  ggplot(aes(y = sample_ndvi, x = health_rat, color = method))+
-  scale_color_manual(values = method_pal)+
-  geom_boxplot()+
-  facet_grid(rows = vars(tree_type), cols = vars(method))+
-  labs(x = "Health categorization", y = "Sample NDVI")+
-  guides(color = "none")
+Another important factor to consider when comparing the three pixel selection methods is the amount of pixels used in the NDVI analysis. For the point method, each NDVI value is based off one singular point. 
 
+```{r}
+radius_sample_data <- read_csv("data/radius_sample_data.csv") %>%
+  dplyr::select(-4, -5) %>% 
+  mutate(method = "radius")
+
+lidar_sample_data <- read_csv("data/lidar_sample_data.csv") %>%
+  dplyr::select(-4) %>%
+  mutate(method = "LiDAR")
+
+count_sample_data <- lidar_sample_data %>%
+  bind_rows(radius_sample_data)
+
+ggplot(data = count_sample_data, aes(x = method, y=ndvi_count, color = species))+
+  geom_boxplot(outlier.shape=NA)+
+  geom_point(position=position_jitterdodge(jitter.width = .1), alpha = .3)+
+  scale_color_manual(values = species_pal)+
+  labs(x = "Pixel selection method", y = "Pixel count", color = "Tree species")
+
+
+ggplot(data = count_sample_data, aes(x = ndvi_mean, y=ndvi_count, color = species))+
+  geom_point()+
+  scale_color_manual(values = species_pal)+
+  labs(x = "Average NDVI", y = "Pixel count", color = "Tree species")
 ```
+
 
 
 ## Predictive Model
 
-```{r, include = F}
+```{r point-modeling, include = F}
 point_all <- polr(health_rat~sample_ndvi, Hess = TRUE, data = cnh_point)
 point_all_preds <- predict(point_all, cnh_point)
 cfm_p_all <- confusionMatrix(point_all_preds, cnh_point$health_rat)
 p_all <- ggplotConfusionMatrix(cfm_p_all)+
   labs(subtitle = "health rating ~ NDVI")
+
+brant::brant(point_all)
 
 point_type <- polr(health_rat~sample_ndvi*tree_type, Hess = TRUE, data = cnh_point)
 point_type_preds <- predict(point_type, cnh_point)
@@ -244,14 +251,20 @@ cfm_p_type <- confusionMatrix(point_type_preds, cnh_point$health_rat)
 p_type <- ggplotConfusionMatrix(cfm_p_type)+
   labs(subtitle = "health rating ~ NDVI * tree type")
 
+brant::brant(point_type)
+
 point_species<- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = cnh_point)
 point_species_preds <- predict(point_species, cnh_point)
 cfm_p_species <- confusionMatrix(point_species_preds, cnh_point$health_rat)
 p_species <- ggplotConfusionMatrix(cfm_p_species)+
   labs(subtitle = "health rating ~ NDVI * species")
+
+brant::brant(point_species)
 ```
 
-When used to create an ordinal logistic regression method, the point method data was unsuccessful at predicting health condition from NDVI. For ACMA, PSME and THPL, the model categorized all trees as "Fair." ACPL predicted that most trees would be in "Good" health condition (Figure \@ref(point-model-split)).
+In order to determine the impact of differentiating by species in predictive models, I ran three different models for each point selection method, moving from least to most specific: a model that only uses NDVI to predict health rating, a model that includes functional tree type as an interaction term, and a third model that includes species as an interaction term. Due to the limited sample size of the data I am working with, the following models are trained and tested on the same data. If it were to work perfectly, the model would correctly predict the health condition of a CNH tree 100% of the time. The data I use is not perfect, and the models are not perfect either. However, they are likely an idealized version of how model testing and training would work in reality. 
+With the point method data, the first model with no interaction term led to all tree points being rated as "Fair". The addition of tree type as an interaction term led to an increase in predictions of "good" health trees, and increased kappa from 0% to 15%. The overall accuracy only increased by 2%, but kappa is more informative in terms of model validity than the accuracy score. Using tree species instead of tree type further improved the kappa of the model. The number of "good" trees that were correctly predicted increased from 7 to 13, but additionally the number of "fair" trees that were correctly predicted dropped from 64 to 59, with the new predictions as "good". (Figure \@ref(point-model-split)). None of these models with the point method were able to correctly predict any trees with poor health categorization.
+
 
 ```{r point-model-split, echo = F, out.width = "90%", fig.scap = "Confusion Matrix results for Point Method models"}
 (p_all + p_type + p_species) + 
@@ -259,7 +272,7 @@ When used to create an ordinal logistic regression method, the point method data
   plot_layout(ncol = 2)
 ```
 
-```{r, include = F}
+```{r radius-modeling, include = F}
 radius_all <- polr(health_rat~sample_ndvi, Hess = TRUE, data = cnh_radius)
 radius_all_preds <- predict(radius_all, cnh_radius)
 cfm_r_all <- confusionMatrix(radius_all_preds, cnh_radius$health_rat)
@@ -279,7 +292,7 @@ r_species <- ggplotConfusionMatrix(cfm_r_species)+
   labs(subtitle = "health rating ~ NDVI * species")
 ```
 
-The radius method was slightly more successful than the point method for the model, but both coniferous species were all categorized as "Fair". The ACPL predictions are the same as they were with the point method, but ACMA has much more specificity with the radius method data (Figure \@ref(fig:radius-model-split)).
+The radius method was slightly more successful than the point method for the model, with all three method models performing better than those for the point method. From just NDVI to NDVI * tree type, there was an increase in 9 trees to good ratings. Including no species or tree type specification in the predictive model still seems to perform the worst of the three models. The main takeaway from the radius method models is that with the inclusion of species as an interaction term with the radius data, we see our first predictions of the "poor" category. The radius method does involve more pixels than the point method, and with the range in NDVI values being lower than that of the point method it makes sense that there is an increase in "poor" rated trees. However, out of the 15 reference trees with health ratings of "poor", only one was correctly predicted as such (Figure \@ref(fig:radius-model-split)).
 
 ```{r radius-model-split, echo = F, fig.scap = "Confusion matrixes for Radius data model", fig.cap = "Confusion matrixes for each species predictions with radius method data"}
 (r_all + r_type + r_species) + 
@@ -287,7 +300,7 @@ The radius method was slightly more successful than the point method for the mod
   plot_layout(ncol = 2)
 ```
 
-```{r, include = F}
+```{r lidar-modeling, include = F}
 lidar_all <- polr(health_rat~sample_ndvi, Hess = TRUE, data = cnh_lidar)
 lidar_all_preds <- predict(lidar_all, cnh_lidar)
 cfm_l_all <- confusionMatrix(lidar_all_preds, cnh_lidar$health_rat)
@@ -307,7 +320,9 @@ l_species <- ggplotConfusionMatrix(cfm_l_species)+
   labs(subtitle = "health rating ~ NDVI * species")
 ```
 
-```{r, echo = F}
+The LiDAR data was the most effective out of the three methods at predicting tree health, but also had the only occurance of a "good" tree being predicted as "poor". 
+
+```{r lidar-model-split, echo = F}
 (l_all + l_type + l_species) + 
   plot_annotation(tag_levels = "a", tag_suffix = ")", title = "LiDAR method") + 
   plot_layout(ncol = 2)
@@ -315,40 +330,22 @@ l_species <- ggplotConfusionMatrix(cfm_l_species)+
 
 A predictive model was also run with all species together, but with species as an interaction term in the formula. This showed better results than when the species were split, but it seems that most of that is due to increased overall sample size. 
 
-```{r, echo = F}
-p_all + 
-    labs(subtitle = "Point method")+
-  r_all + 
-    labs(subtitle = "Radius method")+
-  l_all +
-    labs(subtitle = "LiDAR method")+
-  plot_layout(ncol = 2) +
-  plot_annotation(title = "health rating ~ NDVI")
-
-p_type + 
-    labs(subtitle = "Point method")+
-  r_type + 
-    labs(subtitle = "Radius method")+
-  l_type +
-    labs(subtitle = "LiDAR method")+
-  plot_layout(ncol = 2) +
-  plot_annotation(title = "health rating ~ NDVI * tree type")
-
-p_species + 
-    labs(subtitle = "Point method")+
-  r_species + 
-    labs(subtitle = "Radius method")+
-  l_species +
-    labs(subtitle = "LiDAR method")+
-  plot_layout(ncol = 2) +
-  plot_annotation(title = "health rating ~ NDVI * species")
-```
-
 Due to the variation in sample sizes for each health condition category, I sampled down the data so each health category had the same number of points. This improved the results of the model by a lot. 
 
 Given the uneven number of data points available for the varying health conditions, I down-sampled each health category to the smallest number of points in a given category (point = 15, radius = 15, LiDAR = 13). When the predictive models were ran with the even category sizes, the results were statistically significant for all three pixel selection models. For the poi
 
 ```{r downsample-test, include = F}
+test_data_point <- cnh_long %>%
+  filter(method == "point") %>%
+  group_by(health_rat) %>%
+  sample_n(15)
+
+test_point <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_point) 
+preds_point <- predict(test_point, test_data_point)
+cfm_point <- confusionMatrix(preds_point, test_data_point$health_rat)
+gg_point <- ggplotConfusionMatrix(cfm_point)  +
+  labs(subtitle = "Point method")
+
 test_data_radius <- cnh_long %>%
   filter(method == "radius") %>%
   group_by(health_rat) %>%
@@ -372,9 +369,7 @@ gg_lidar <- ggplotConfusionMatrix(cfm_lidar)  +
   labs(subtitle = "LiDAR method")
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE, out.width="50%"}
-knitr::include_graphics(c("figure/test1.png", "figure/test2.png"))
-knitr::include_graphics(c("figure/test3.png", "figure/test4.png"))
-knitr::include_graphics(c("figure/test5.png", "figure/test6.png"))
+```{r, echo = F, }
+gg_point + gg_radius + gg_lidar +
+  plot_layout(ncol = 2)
 ```
-

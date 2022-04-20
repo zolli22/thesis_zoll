@@ -110,6 +110,7 @@ library(pdxTrees)
 library(ForestTools)
 library(MASS)
 library(caret)
+library(broom)
 
 # visualization packages
 library(scales)

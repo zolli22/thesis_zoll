@@ -3,14 +3,7 @@ bibliography: references.bib
 ---
 
 `r if(knitr:::is_latex_output()) '\\appendix'`
-
 `r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'`
-
-```{=html}
-<!--
-If you feel it necessary to include an appendix, it goes here.
--->
-```
 
 # Additional Data {#data}
 
@@ -53,6 +46,63 @@ If you feel it necessary to include an appendix, it goes here.
 \end{equation}
 
 
+```{r extra-graph-1, echo = F}
+cnh_long %>%
+  ggplot(aes(y = sample_ndvi, x = health_rat, color = method))+
+  scale_color_manual(values = method_pal)+
+  geom_boxplot()+
+  facet_grid(rows = vars(tree_type), cols = vars(method))+
+  labs(x = "Health categorization", y = "Sample NDVI")+
+  guides(color = "none")
+```
+
+## extra modeling graphics {-}
+```{r, echo = F}
+p_all + 
+    labs(subtitle = "Point method")+
+  r_all + 
+    labs(subtitle = "Radius method")+
+  l_all +
+    labs(subtitle = "LiDAR method")+
+  plot_layout(ncol = 2) +
+  plot_annotation(subtitle = "formula = health rating ~ NDVI")
+
+p_type + 
+    labs(subtitle = "Point method")+
+  r_type + 
+    labs(subtitle = "Radius method")+
+  l_type +
+    labs(subtitle = "LiDAR method")+
+  plot_layout(ncol = 2) +
+  plot_annotation(subtitle = "formula = health rating ~ NDVI * tree type")
+
+p_species + 
+    labs(subtitle = "Point method")+
+  r_species + 
+    labs(subtitle = "Radius method")+
+  l_species +
+    labs(subtitle = "LiDAR method")+
+  plot_layout(ncol = 2) +
+  plot_annotation(subtitle = "formula = health rating ~ NDVI * species")
+```
+
+## Radius and LiDAR model tests {-}
+
+```{r, echo = F, out.width = "85%"}
+knitr::include_graphics("figure/test1.png")
+
+knitr::include_graphics("figure/test2.png")
+
+knitr::include_graphics("figure/test3.png")
+
+knitr::include_graphics("figure/test4.png")
+
+knitr::include_graphics("figure/test5.png")
+
+knitr::include_graphics("figure/test6.png")
+```
+
+
 # Code {#code-chunks}
 
 
@@ -61,18 +111,53 @@ This second appendix includes all of the R chunks of code that were hidden throu
 ## **In Chapter** \@ref(data-methods)**:**
 
 ### Portland Tree Inventory counts and calculations {-}
-
+\footnotesize
 ```{r ref.label='counttables', results='hide', echo = TRUE}
 ```
+\normalsize
 
 ### Calculating NDVI from satellite imagery {-}
 
+\footnotesize
 ```{r ref.label='ndvi-calc', results='hide', echo = TRUE, eval = F}
 ```
+\normalsize
 
 ### LiDAR canopy delineation {-}
-
+\footnotesize
 ```{r ref.label='lidar-calc', results='hide', echo = TRUE, eval = F}
 ```
+\normalsize
 
 ## **In Chapter** \@ref(results)**:**
+
+### Model for Tree Height and Canopy Width {-}
+\footnotesize
+```{r ref.label='tree-model', results='hide', echo = TRUE, eval = F}
+```
+\normalsize
+
+### Point Method Modeling {-}
+\footnotesize
+```{r ref.label='point-modeling', results='hide', echo = TRUE, eval = F}
+```
+\normalsize
+
+### Radius Method Modeling {-}
+\footnotesize
+```{r ref.label='radius-modeling', results='hide', echo = TRUE, eval = F}
+```
+\normalsize
+
+### LiDAR Method Modeling {-}
+\footnotesize
+```{r ref.label='lidar-modeling', results='hide', echo = TRUE, eval = F}
+```
+\normalsize
+
+### Radius and LiDAR Replications {-}
+\footnotesize
+```{r ref.label='downsample-test', results='hide', echo = TRUE, eval = F}
+```
+\normalsize
+

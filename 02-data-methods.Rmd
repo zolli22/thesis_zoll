@@ -60,7 +60,7 @@ The Portland Tree Inventory Project, managed by the City of Portland's Parks & R
 
 To reduce the variability in data due to the time span of data collection, I filtered the street and park tree inventories to trees that were sampled in 2016 and 2019, respectively. For each dataset, the selected year was the year with the highest count of trees sampled (Tables \@ref(tab:streettable) and \@ref(tab:parktable)).
 
-```{r counttables, include=FALSE, tidy = TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60)}
+```{r counttables, include=FALSE, tidy = TRUE}
 street_counts<-get_pdxTrees_streets() %>%
   filter(Species %in% c("ACMA", "ACPL", "PSME", "THPL")) %>%
   mutate(year = year(Inventory_Date)) %>%
@@ -106,7 +106,7 @@ knitr::kable(
 
 The Portland park and street tree inventories include a health categorization variable of Good, Fair, Poor, or Dead. A drawback that can come with qualitative health ratings such as this one is that if a tree does not appear close to death, or perfectly healthy, it is very easy to categorize its health as "Fair", which is what we see in both the street and park tree databases. The proportion of trees rated "Fair" is extremely high, especially in the park trees inventory (Figure \@ref(fig:rating-ratios)).
 
-```{r, echo = F, message = F, warning = F, tidy = TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60)}
+```{r, echo = F, message = F, warning = F, tidy = TRUE}
 species_pal <- c("#219EBC", "#023047", "#FFB703", "#FB8500", "#586f7c")
 
 street_health <- get_pdxTrees_streets() %>%
@@ -189,7 +189,7 @@ The NDVI calculations were done using Python in PyCharm. Besides minor alteratio
 \end{equation}
 ```
 
-```{python ndvi-calc, include = FALSE, eval = FALSE, tidy = TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60)}
+```{python ndvi-calc, include = FALSE, eval = FALSE, tidy = TRUE}
 import rasterio
 import numpy
 
@@ -207,7 +207,8 @@ for i in range(len(files)):
     print(image_file)
     print(metafile)
 
-    # Load red and NIR bands - note all PlanetScope 4-band images have band order BGRN
+    # Load red and NIR bands - 
+    # note all PlanetScope 4-band images have band order BGRN
 
     with rasterio.open(image_file) as src:
         band_red = src.read(3)
@@ -278,7 +279,7 @@ knitr::include_graphics("figure/berkeley_park.png")
 
 Point Method: For the point method, I extracted the NDVI value from the pixel directly underneath the tree location point. This is the simplest of the three methods, since it obtains one NDVI value for one singular pixel. The tree location points were sourced from the street and park tree inventories and processed in QGIS (Figure \@ref(fig:point-method)). The main source of potential error with this technique is with the tree point location. If the point was placed incorrectly, the NDVI value will not be representative of the tree's greenness, or health.
 
-```{r point-method, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="CNH trees sampled in Berkeley Park", fig.align='center', echo = FALSE}
+```{r point-method, out.width = '80%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="CNH trees sampled in Berkeley Park", fig.align='center', echo = FALSE}
 knitr::include_graphics("figure/points.png")
 ```
 
@@ -288,7 +289,7 @@ The first method of tree crown delineation I used is based on the individual cro
 
 With the radius method, it involves the same risk as the point method that if the central point is incorrectly located, the values will not be representative. Additionally, average NDVI ratings obtained with this method for trees with overlapping crowns will contain NDVI pixels that belong to other trees. Previous studies have removed all overlapping tree crowns when using a radius technique, but that can severely limit sample size of available data for analysis, since especially in urban areas and on streets, most of the trees will have overlapping crowns.
 
-```{r point-radius, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="CNH trees with crown width buffer", fig.align='center', echo = FALSE}
+```{r point-radius, out.width = '80%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="CNH trees with crown width buffer", fig.align='center', echo = FALSE}
 knitr::include_graphics("figure/point_radius.png")
 ```
 
@@ -302,7 +303,7 @@ The LiDAR canopy height model was clipped to a 30 meter buffer around each selec
 
 With the 30m buffer, all other inventoried trees that are contained within the buffer were selected for inclusion as treetop location points in addition to the trees of interest (Figure \@ref(fig:buffer-points)). A minimum tree height of 20 feet was included in the algorithm options but since all sampled trees were already filtered for height requirements, this may not be necessary.
 
-```{r lidar-calc, eval = F, include = F, tidy = TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60)}
+```{r lidar-calc, eval = F, include = F, tidy = TRUE}
 library(rgdal)
 library(imager)
 library(raster)
@@ -324,26 +325,47 @@ crownsPoly <- mcws(treetops = all_ttops, CHM = EML_CHM, format = "polygons", min
 writeOGR(crownsPoly, "~/Desktop/thesis_data/lidar_crown", "canopy_delin_polygons_poly", driver = "ESRI Shapefile")
 ```
 
-```{r lidar-buffer, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="LiDAR data clipped to 30m tree buffer", fig.align='center', echo = FALSE}
+```{r lidar-buffer, out.width = '80%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="LiDAR data clipped to 30m tree buffer", fig.align='center', echo = FALSE}
 knitr::include_graphics("figure/lidar_buffer_scale.png")
 ```
 
-```{r buffer-points, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="All inventoried trees within the 30m buffer", fig.align='center', echo = FALSE}
+```{r buffer-points, out.width = '80%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="All inventoried trees within the 30m buffer", fig.align='center', echo = FALSE}
 knitr::include_graphics("figure/buffer_all_points.png")
 ```
 
-```{r, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="LiDAR tree crown delineations with selected CNH crowns", fig.align='center', echo = FALSE}
+```{r, out.width = '80%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="LiDAR tree crown delineations with selected CNH crowns", fig.align='center', echo = FALSE}
 knitr::include_graphics("figure/selected_lidar.png")
 ```
 
+
 These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figure \@ref(fig:clip-extent)). This extent was chosen to align with the sampling region of the CNH data, though it had to be shrunk slightly. 
 
-```{r clip-extent, out.width = '100%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="Geographic extent and random sampling", fig.align='center', echo = FALSE}
+```{r clip-extent, out.width = '80%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="Geographic extent and random sampling", fig.align='center', echo = FALSE}
 knitr::include_graphics("figure/extent_and_samples.png")
+```
+
+```{r, out.width = '80%', warnings=FALSE, messages=FALSE, fig.show="hold", fig.cap="LiDAR tree crown delineations with selected CNH crowns", fig.align='center', echo = FALSE}
+knitr::include_graphics("figure/layered_outputs.png")
 ```
 
 ## Modeling Tree Health
 
-To tie all of my smaller pieces of data analysis together, I created a model to predict tree health categorization from NDVI values. I used the CNH data as my training data, and the random samples of park and street trees as testing data. I THINK THIS IS WRONG I DONT KNOW HOW TO WRITE ABOUT MODELS BUT I WILL COME BACK TO THIS. MY BRAIN IS JUST DONE FOR THE NIGHT. APOLOGIES
+To tie all of my smaller pieces of data analysis together, I created a model to predict tree health categorization from NDVI values. I chose an ordinal logistic regression, which is used to model and predict the relationship between an ordinal categorical response variable and one or more explanatory variables, which can be either categorical or continuous. In order to use this type of model, I tested each model for the Proportional Odds Assumption, and 
 
-Due to the small sample size and ordinal nature of the categorization for health, I chose an ordinal logistic regression model.
+I used the CNH data as both my training and testing data. I chose to do this because of the limited sample size of CNH trees, and the uneven size of the health category ratings. Because of this, it is important to note that the model tests are an idealized version of a true model. 
+
+For each model, I created a confusion matrix to examine the validity of the model. A confusion matrix is a calculated cross-tabulation of observed and predicted classes, which in this case is health categorization, along with associated statistics. The two main statistics I use in my data analysis are overall accuracy and an un-weighted Kappa statistic. "Accuracy" refers to the sensitivity [$\textrm{Sensitivity}= \frac{\textrm{True positive}}{\textrm{True positive + False negative}}$] and specificity [$\textrm{Specificity}= \frac{\textrm{True negative}}{\textrm{True negative + False positive}}$] of the prediction. 
+
+$$
+\textrm{Accuracy}= \frac{\textrm{Sensitivity + Specificity}}{2}
+$$
+
+Kappa ($\kappa$) refers to Cohen's Kappa Statistic which is used to measure inter and intra-rater reliability for categorical items.
+
+$$
+\kappa = \frac{p_o - p_e}{1 - p_e} = \frac{1 - p_o}{1 - p_e}
+$$
+where $p_o$ is the relative observed agreement between the reference and prediction, and $p_e$ is the hypothetical probability of agreement by chance. If the two raters (in this case the reference and prediction categorizations) are in complete agreement, then kappa = 1. 
+
+
+
