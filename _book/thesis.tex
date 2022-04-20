@@ -189,17 +189,19 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \Acknowledgements{
-I want to thank a few people.
+I want to thank some people\ldots{}
 }
 
 \Dedication{
-You can have a dedication here if you wish.
+DEDICATION TESTING
+
+test
 }
 
 \Preface{
-This is an example of a thesis setup to use the reed thesis document class
-(for LaTeX) and the R bookdown package, in general.
+
 }
+
 
 \Abstract{
 The preface pretty much says it all.
@@ -207,6 +209,7 @@ The preface pretty much says it all.
 \par
 
 Second paragraph of abstract starts here.
+TESTING TESTING TESTING
 }
 
 	\usepackage{setspace}\onehalfspacing
@@ -223,12 +226,9 @@ Second paragraph of abstract starts here.
 \frontmatter % this stuff will be roman-numbered
 \pagestyle{empty} % this removes page numbers from the frontmatter
   \begin{acknowledgements}
-    I want to thank a few people.
+    I want to thank some people\ldots{}
   \end{acknowledgements}
-  \begin{preface}
-    This is an example of a thesis setup to use the reed thesis document class
-    (for LaTeX) and the R bookdown package, in general.
-  \end{preface}
+
   \hypersetup{linkcolor=black}
   \setcounter{secnumdepth}{2}
   \setcounter{tocdepth}{2}
@@ -243,13 +243,33 @@ Second paragraph of abstract starts here.
     \par
 
     Second paragraph of abstract starts here.
+    TESTING TESTING TESTING
   \end{abstract}
   \begin{dedication}
-    You can have a dedication here if you wish.
+    DEDICATION TESTING
+
+    test
   \end{dedication}
 \mainmatter % here the regular arabic numbering starts
 \pagestyle{fancyplain} % turns page numbering back on
 
+\hypertarget{list-of-abbreviations}{%
+\chapter*{List of Abbreviations}\label{list-of-abbreviations}}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+\begin{table}[h]\large
+    \centering % You could remove this to move table to the left
+    \begin{tabular}{ll}
+        \textbf{ACMA}   &  Bigleaf Maple (\textit{Acer macrophyllum, Sapindaceae})  \\
+        \textbf{ACPL}   &  Norway Maple (\textit{Acer platanoides, Sapindaceae}) \\
+        \textbf{CHM}    &  Canopy Height Model \\
+        \textbf{CNH}    &  Coupled Natural-Human (in reference to the CNH2 Project data)\\
+        \textbf{DBH}    &  Diamater at Breast Height\\
+        \textbf{LiDAR}  &  Light Detection and Ranging\\
+        \textbf{NDVI}   &  Normalized Difference Vegetation Index \\
+        \textbf{PSME}   &  Douglas Fir (\textit{Pseudotsuga menziesii, Pinaceae}) \\
+        \textbf{THPL}   &  Western Redcedar (\textit{Thuja plicata, Cupressaceae}) \\
+    \end{tabular}
+\end{table}
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
@@ -479,7 +499,7 @@ For the following examples, I use Berkeley Park, located in SE Portland, to demo
 \hypertarget{point-method}{%
 \subsection{Point method}\label{point-method}}
 
-Point Method: For the point method, I extracted the NDVI value from the pixel directly underneath the tree location point. This is the simplest of the three methods. The tree location points were sourced from the street and park tree inventories and processed in QGIS (Figure \ref{fig:point-method}).
+Point Method: For the point method, I extracted the NDVI value from the pixel directly underneath the tree location point. This is the simplest of the three methods, since it obtains one NDVI value for one singular pixel. The tree location points were sourced from the street and park tree inventories and processed in QGIS (Figure \ref{fig:point-method}). The main source of potential error with this technique is with the tree point location. If the point was placed incorrectly, the NDVI value will not be representative of the tree's greenness, or health.
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figure/points} 
@@ -491,9 +511,9 @@ Point Method: For the point method, I extracted the NDVI value from the pixel di
 \hypertarget{radius-method}{%
 \subsection{Radius method}\label{radius-method}}
 
-The first method of tree crown delineation I used is based on the individual crown width for each selected tree. In the Portland park tree inventory, crown width is measured as an east to west diameter, and a north to south diameter. To get the radius for the buffer, I took the average of both measurements and divided it by 2. For the Portland street tree inventory, crown width was not collected. I used the tree height and crown width predictive model to create crown width measurements. For each selected tree point, I created a buffer with the radius of the measured or predicted tree canopy using QGIS (Figure \ref{fig:point-radius}).
+The first method of tree crown delineation I used is based on the individual crown width for each selected tree. In the Portland park tree inventory, crown width is measured as an east to west diameter, and a north to south diameter. To get the radius for the buffer, I took the average of both measurements and divided it by 2. For the Portland street tree inventory, crown width was not collected. I used the tree height and crown width predictive model to create crown width measurements. For each selected tree point, I created a buffer with the radius of the measured or predicted tree canopy using QGIS (Figure \ref{fig:point-radius}). To get NDVI for each tree in this method, I averaged the value of all pixels in the buffer circle for each tree using QGIS.
 
-To get NDVI for each tree in this method, I averaged the value of all pixels in the buffer circle for each tree using QGIS.
+With the radius method, it involves the same risk as the point method that if the central point is incorrectly located, the values will not be representative. Additionally, average NDVI ratings obtained with this method for trees with overlapping crowns will contain NDVI pixels that belong to other trees. Previous studies have removed all overlapping tree crowns when using a radius technique, but that can severely limit sample size of available data for analysis, since especially in urban areas and on streets, most of the trees will have overlapping crowns.
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figure/point_radius} 
@@ -505,11 +525,13 @@ To get NDVI for each tree in this method, I averaged the value of all pixels in 
 \hypertarget{lidar-method}{%
 \subsection{LiDAR method}\label{lidar-method}}
 
-The LiDAR method is the most complex and involved of the three tree crown delineation methods, but theoretically, the most precise.
+The LiDAR method is the most complex and involved of the three tree crown delineation methods but has the potential to be the most precise.
 
-The \texttt{ForestTools} crown delineation algorithm is a modified watershed delineation algorithm that takes a LiDAR file input, as well as treetop location point file.
+The \texttt{ForestTools} crown delineation algorithm is a modified watershed delineation algorithm that takes a LiDAR file input, as well as treetop location point file and outputs a polygon file with predicted tree crowns. \texttt{ForestTools} also has the ability to predict treetop location points based on LiDAR data, but that functionality introduced a lot of error in my processing because it became difficult to re-associate predicted treetop points with the actual tree location points that I was analyzing.
 
-The LiDAR canopy height model was clipped to a 30 meter buffer around each selected tree point to reduce file size in the delineation processing (Figure \ref{fig:lidar-buffer}). A 30m buffer was chosen to ensure that no part of the tree canopy would be omitted from the processing. In addition to the trees selected for processing, all other inventoried trees that are contained within the 30m buffers were included as treetop location points (Figure \ref{fig:buffer-points}). A minimum tree height of 20 feet was specified, in order to reduce process time, since all sampled trees were already filtered for height requirements.
+The LiDAR canopy height model was clipped to a 30 meter buffer around each selected tree point to reduce file size in the delineation processing (Figure \ref{fig:lidar-buffer}). A 30m buffer was chosen to ensure that no part of the tree canopy would be omitted from the processing, and to include any near neighboring trees that may have canopy that overlaps with the tree of interest. In order for the algorithm to delineate tree crowns, it needs both LiDAR canopy data and location points for the potential trees for delineation. With a smaller buffer radius, the locations of neighboring trees would be omitted and the canopy delineation algorithm would compute a tree crown as much bigger than it actually is.
+
+With the 30m buffer, all other inventoried trees that are contained within the buffer were selected for inclusion as treetop location points in addition to the trees of interest (Figure \ref{fig:buffer-points}). A minimum tree height of 20 feet was included in the algorithm options but since all sampled trees were already filtered for height requirements, this may not be necessary.
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figure/lidar_buffer_scale} 
@@ -532,9 +554,9 @@ The LiDAR canopy height model was clipped to a 30 meter buffer around each selec
 
 }
 
-\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-6}
+\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-5}
 \end{figure}
-These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figure \ref{fig:clip-extent}).
+These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figure \ref{fig:clip-extent}). This extent was chosen to align with the sampling region of the CNH data, though it had to be shrunk slightly.
 \begin{figure}
 
 {\centering \includegraphics[width=1\linewidth]{figure/extent_and_samples} 
@@ -556,8 +578,8 @@ Due to the small sample size and ordinal nature of the categorization for health
 \hypertarget{canopy-width-and-tree-height-model-1}{%
 \section{Canopy Width and Tree Height Model}\label{canopy-width-and-tree-height-model-1}}
 
-I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term. I chose a third order polynomial because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species.
-The tree height model has an adjusted R-squared value of 0.78, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:height-model}). The crown width model has an adjusted R-squared value of 0.72, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:width-model-g}).
+I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term. I chose a third order polynomial because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species. While the
+The tree height model has an adjusted R-squared value of 0.78, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:height-model}). The crown width model has an adjusted R-squared value of 0.72, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:width-model-g}, \ref{tree-model-eqs}).
 \begin{figure}
 \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/height-model-1} \caption[Tree height predictive model]{Predictive model for tree height from measured DBH. A third order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.72, P <2.2e-16)}\label{fig:height-model}
 \end{figure}
@@ -569,49 +591,57 @@ The tree height model has an adjusted R-squared value of 0.78, and a P-value of 
 
 With the selection of CNH trees and 2021 NDVI data, a statistical analysis of the point value method shows that there is a statistically significant difference in the average NDVI values between health categorizations of ``Fair'' and ``Good'' (ANOVA, \(F_{2, 109} = 3.892\), \(P = 0.023\), TukeyHSD). There is a general positive correlation between NDVI and health category, specifically Fair and Good. The relationship between health and NDVI is more apparent in the two maple species, but still holds in the ``fair'' and ``good'' categories in the two coniferous species (Figure \ref{fig:point-species}).
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-species-1} \caption[Point Method NDVI and Health Rating, by Species]{NDVI extracted for CNH trees using the point method compared to CNH tree health categorization. There is a statistically significant difference between Fair and Good (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD)}\label{fig:point-species}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/point-species-1} \caption[Point Method NDVI and Health Rating, by Species]{NDVI extracted for CNH trees using the point method compared to CNH tree health categorization. There is a statistically significant difference between Fair and Good (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD)}\label{fig:point-species}
 \end{figure}
 \hypertarget{radius-method-1}{%
 \section{Radius Method}\label{radius-method-1}}
 
 With the radius method of pixel selection and crown delineation, there is a statistically significant difference in the mean NDVI values for health categories (ANOVA, \(F_{2,109}=4.923\), \(P = 0.0089\); TukeyHSD: good-poor \(P = 0.033\), good-fair \(P = 0.014\)). Similar to the point method, there is a larger difference in average NDVI between the ``fair'' and ``good'' categories than ``poor'' and ``fair'', and with the radius method, this is now a statistically significant difference (Figure \ref{fig:radius-species}).
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/radius-species-1} \caption[Radius method mean NDVI and health condition by species]{Boxplot of average NDVI from radius method and health condition, by species. The relationship berween NDVI and health category is strongest in the maples, but still somewhat aparent in the conifers. (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$)}\label{fig:radius-species}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/radius-species-1} \caption[Radius method mean NDVI and health condition by species]{Boxplot of average NDVI from radius method and health condition, by species. The relationship berween NDVI and health category is strongest in the maples, but still somewhat aparent in the conifers. (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$)}\label{fig:radius-species}
 \end{figure}
 \hypertarget{lidar-method-1}{%
 \section{LiDAR Method}\label{lidar-method-1}}
 
 There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between good and fair (ANOVA, \(F_{2,101} = 5.405\), \(P = 0.00589\), TukeyHSD). The same relationship between NDVI and health condition for the maples that was seen in the point and radius method is seen here (Figure \ref{fig:lidar-species}).
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/lidar-species-1} \caption[NDVI and health condition for LiDAR method]{Boxplot of average NDVI from LiDAR method and health condition for each species. Due to the nature of the LiDAR delineation algorithm, no crown was detected for the PSME individual with a poor health rating. The difference between good and fair average NDVIs is statistically significant (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD)}\label{fig:lidar-species}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/lidar-species-1} \caption[NDVI and health condition for LiDAR method]{Boxplot of average NDVI from LiDAR method and health condition for each species. Due to the nature of the LiDAR delineation algorithm, no crown was detected for the PSME individual with a poor health rating. The difference between good and fair average NDVIs is statistically significant (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD)}\label{fig:lidar-species}
 \end{figure}
 Another aspect of the LiDAR delineation method is the potential for data loss. Five ACMA and three PSME individuals were lost in the LiDAR crown delineation process. If this was with a very large sample size the data loss would likely not be detrimental but especially with a sample size such as mine, a loss of eight trees is a loss of 5\% of the total data, 17\% loss for ACMA, and 12\% loss for THPL.
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{cnh\_long }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{count}\NormalTok{(method, species) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =} \StringTok{"method"}\NormalTok{, }\AttributeTok{values\_from =} \StringTok{"n"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\begin{verbatim}
-# A tibble: 4 x 4
-  species point radius lidar
-  <chr>   <int>  <int> <int>
-1 ACMA       29     29    24
-2 ACPL       30     30    30
-3 PSME       25     25    22
-4 THPL       28     28    28
-\end{verbatim}
+\begin{tabular}{l|r|r|r}
+\hline
+species & point & radius & lidar\\
+\hline
+ACMA & 29 & 29 & 24\\
+\hline
+ACPL & 30 & 30 & 30\\
+\hline
+PSME & 25 & 25 & 22\\
+\hline
+THPL & 28 & 28 & 28\\
+\hline
+\end{tabular}
 \hypertarget{method-comparison}{%
 \section{Method Comparison}\label{method-comparison}}
 
 There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, \(F_{2, 325}=517.8\), \(P = <2e-16\), TukeyHSD: radius-point \(P = 0.00\), lidar-point \(P = 0.00\)). All three methods seem to show the same pattern, though the NDVI values are much higher for the point method than either of the other two methods (Figure \ref{fig:methods-all-species}). When all three methods are compared along with species, we can see that the general trend of health rating and NDVI is consistent within each species, but varies across methods (Figure \ref{fig:methods-species}). The patterns are similar between species of the same physiognomic tree type
 \begin{figure}
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/methods-all-species-1} \caption[NDVI and health rating comparison across methods]{Average NDVI values from all three pixel selection methods with CNH health rating. There is a statistically significant difference in mean NDVI between point and both radius and lidar methods. (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$)}\label{fig:methods-all-species}
+\includegraphics[width=1\linewidth]{thesis_files/figure-latex/methods-all-species-1} \caption[NDVI and health rating comparison across methods]{Average NDVI values from all three pixel selection methods with CNH health rating. There is a statistically significant difference in mean NDVI between point and both radius and lidar methods. (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$)}\label{fig:methods-all-species}
 \end{figure}
 \begin{figure}
 \includegraphics{thesis_files/figure-latex/methods-species-1} \caption[Average NDVI comparison between species and methods.]{Average NDVI for each health category, split by tree species and pixel selection method. The general trends remain the same within species, but vary among pixel selection methods.}\label{fig:methods-species}
 \end{figure}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cnh\_long }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ sample\_ndvi, }\AttributeTok{x =}\NormalTok{ health\_rat, }\AttributeTok{color =}\NormalTok{ method)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ method\_pal) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{facet\_grid}\NormalTok{(}\AttributeTok{rows =} \FunctionTok{vars}\NormalTok{(tree\_type), }\AttributeTok{cols =} \FunctionTok{vars}\NormalTok{(method)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Health categorization"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Sample NDVI"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{color =} \StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-16-1.pdf}
+
 \hypertarget{predictive-model}{%
 \section{Predictive Model}\label{predictive-model}}
 
@@ -624,60 +654,65 @@ The radius method was slightly more successful than the point method for the mod
 \includegraphics{thesis_files/figure-latex/radius-model-split-1} \caption[Confusion matrixes for Radius data model]{Confusion matrixes for each species predictions with radius method data}\label{fig:radius-model-split}
 \end{figure}
 \includegraphics{thesis_files/figure-latex/unnamed-chunk-20-1.pdf}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p\_acma }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ r\_acma }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius"}\NormalTok{) }\SpecialCharTok{+}
-\NormalTok{    l\_acma }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-1.pdf}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p\_acpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ r\_acpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius"}\NormalTok{) }\SpecialCharTok{+}
-\NormalTok{    l\_acpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-2.pdf}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p\_psme }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ r\_psme }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius"}\NormalTok{) }\SpecialCharTok{+}
-\NormalTok{    l\_psme }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-3.pdf}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{p\_thpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ r\_thpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius"}\NormalTok{) }\SpecialCharTok{+}
-\NormalTok{    l\_thpl }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{plot\_layout}\NormalTok{(}\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-4.pdf}
 
-With all the species combined, we get a slightly better picture of the impact of different pixel selection methods.
+A predictive model was also run with all species together, but with species as an interaction term in the formula. This showed better results than when the species were split, but it seems that most of that is due to increased overall sample size.
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-21-1.pdf} \includegraphics{thesis_files/figure-latex/unnamed-chunk-21-2.pdf} \includegraphics{thesis_files/figure-latex/unnamed-chunk-21-3.pdf}
 
 Due to the variation in sample sizes for each health condition category, I sampled down the data so each health category had the same number of points. This improved the results of the model by a lot.
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-24-1.pdf}
+Given the uneven number of data points available for the varying health conditions, I down-sampled each health category to the smallest number of points in a given category (point = 15, radius = 15, LiDAR = 13). When the predictive models were ran with the even category sizes, the results were statistically significant for all three pixel selection models. For the poi
 
-\hypertarget{conclusion}{%
-\chapter*{Conclusion}\label{conclusion}}
-\addcontentsline{toc}{chapter}{Conclusion}
+\includegraphics[width=0.5\linewidth]{figure/test1}
+\includegraphics[width=0.5\linewidth]{figure/test2}
+\includegraphics[width=0.5\linewidth]{figure/test3}
+\includegraphics[width=0.5\linewidth]{figure/test4}
+\includegraphics[width=0.5\linewidth]{figure/test5}
+\includegraphics[width=0.5\linewidth]{figure/test6}
 
-If we don't want Conclusion to have a chapter number next to it, we can add the \texttt{\{-\}} attribute.
+\hypertarget{discussion}{%
+\chapter{Discussion}\label{discussion}}
 
-\textbf{More info}
-
-And here's some other random info: the first paragraph after a chapter title or section head \emph{shouldn't be} indented, because indents are to tell the reader that you're starting a new paragraph. Since that's obvious after a chapter or section title, proper typesetting doesn't add an indent there.
+testing
 
 \appendix
 
-\hypertarget{additional-tables-and-figures}{%
-\chapter{Additional Tables and Figures}\label{additional-tables-and-figures}}
+\hypertarget{data}{%
+\chapter{Additional Data}\label{data}}
 
-\hypertarget{code}{%
-\chapter{Code}\label{code}}
+\hypertarget{tree-model-eqs}{%
+\section{Tree Height and Crown Width Predictive Model Equations}\label{tree-model-eqs}}
+
+\textbf{ACMA equations:} (\textit{x} = DBH)
+\begin{equation}
+\textrm{Tree Height} = 8.977 + 3.617x -0.049x^{2} + 0.001x^{3}  \\
+\end{equation}
+\begin{equation}
+\textrm{Crown Width} = 13.01 + 1.593x - 0.007x^{2} + 0.0004x^{3} \\
+\end{equation}
+\textbf{ACPL equations:} (\textit{x} = DBH)
+\begin{equation}
+\textrm{Tree Height} = 10.955+ 2.67x -0.032x^2 + 0.001x^3  \\
+\end{equation}
+\begin{equation}
+\textrm{Crown Width} = 6.445 + 2.29x - 0.009x^2 - 0.0002x^3 \\
+\end{equation}
+\textbf{PSME equations:} (\textit{x} = DBH)
+\begin{equation}
+\textrm{Tree Height} = -4.497 + 7.516x - 0.146x^2 + 0.001x^3 \\
+\end{equation}
+\begin{equation}
+\textrm{Crown Width} = 6.536 + 1.471x - 0.013x^2 + 0.0005x^3 \\
+\end{equation}
+\textbf{THPL equations:} (\textit{x} = DBH)
+\begin{equation}
+\textrm{Tree Height} = 7.311 + 3.457x - 0.0473x^2 + 0.001x^3 \\
+\end{equation}
+\begin{equation}
+\textrm{Crown Width} = 5.113 + 1.622x - 0.032x^2 + 0.0002x^3 \\
+\end{equation}
+\hypertarget{code-chunks}{%
+\chapter{Code}\label{code-chunks}}
 
 This second appendix includes all of the R chunks of code that were hidden throughout the document to help with readability and/or setup.
 
@@ -685,7 +720,8 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \section{\texorpdfstring{\textbf{In Chapter} \ref{data-methods}\textbf{:}}{In Chapter \ref{data-methods}:}}\label{in-chapter-refdata-methods}}
 
 \hypertarget{portland-tree-inventory-counts-and-calculations}{%
-\subsection{Portland Tree Inventory counts and calculations}\label{portland-tree-inventory-counts-and-calculations}}
+\subsection*{Portland Tree Inventory counts and calculations}\label{portland-tree-inventory-counts-and-calculations}}
+\addcontentsline{toc}{subsection}{Portland Tree Inventory counts and calculations}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{street\_counts }\OtherTok{\textless{}{-}} \FunctionTok{get\_pdxTrees\_streets}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
@@ -713,7 +749,8 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{calculating-ndvi-from-satellite-imagery}{%
-\subsection{Calculating NDVI from satellite imagery}\label{calculating-ndvi-from-satellite-imagery}}
+\subsection*{Calculating NDVI from satellite imagery}\label{calculating-ndvi-from-satellite-imagery}}
+\addcontentsline{toc}{subsection}{Calculating NDVI from satellite imagery}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{import rasterio}
@@ -779,7 +816,8 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \end{Highlighting}
 \end{Shaded}
 \hypertarget{lidar-canopy-delineation}{%
-\subsection{LiDAR canopy delineation}\label{lidar-canopy-delineation}}
+\subsection*{LiDAR canopy delineation}\label{lidar-canopy-delineation}}
+\addcontentsline{toc}{subsection}{LiDAR canopy delineation}
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(rgdal)}
@@ -799,6 +837,9 @@ This second appendix includes all of the R chunks of code that were hidden throu
     \AttributeTok{driver =} \StringTok{"ESRI Shapefile"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+\hypertarget{in-chapter-refresults}{%
+\section{\texorpdfstring{\textbf{In Chapter} \ref{results}\textbf{:}}{In Chapter \ref{results}:}}\label{in-chapter-refresults}}
+
 \backmatter
 
 \hypertarget{references}{%

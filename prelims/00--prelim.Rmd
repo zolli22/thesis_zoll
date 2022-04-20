@@ -1,11 +1,20 @@
-# Preliminary Content {-}
+# List of Abbreviations {-}
 
-## Acknowledgements {-}
 
-I want to thank a few people.  
+```{=tex}
+\begin{table}[h]\large
+    \centering % You could remove this to move table to the left
+    \begin{tabular}{ll}
+        \textbf{ACMA}   &  Bigleaf Maple (\textit{Acer macrophyllum, Sapindaceae})  \\
+        \textbf{ACPL}   &  Norway Maple (\textit{Acer platanoides, Sapindaceae}) \\
+        \textbf{CHM}    &  Canopy Height Model \\
+        \textbf{CNH}    &  Coupled Natural-Human (in reference to the CNH2 Project data)\\
+        \textbf{DBH}    &  Diamater at Breast Height\\
+        \textbf{LiDAR}  &  Light Detection and Ranging\\
+        \textbf{NDVI}   &  Normalized Difference Vegetation Index \\
+        \textbf{PSME}   &  Douglas Fir (\textit{Pseudotsuga menziesii, Pinaceae}) \\
+        \textbf{THPL}   &  Western Redcedar (\textit{Thuja plicata, Cupressaceae}) \\
+    \end{tabular}
+\end{table}
+```
 
-## Dedication {-}
-
-You can have a dedication here if you wish.  
-
-`r if(!knitr:::is_latex_output()) '## Abstract {-}'`

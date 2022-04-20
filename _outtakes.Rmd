@@ -175,30 +175,6 @@ writeOGR(EML_ttops, "~/Desktop/thesis stuff/thesis qgis files/LiDAR_2", "2019_tt
 knitr::write_bib(c(.packages(), "ForestTools"), "packages.bib")
 
 
-ACMA equations:
-\begin{equation}
-\mathrm{Tree Height} = 8.977 + 3.617x -0.049x^{2} + 0.001x^{3}  \\
-\mathrm{Crown Width} = 13.01 + 1.593x - 0.007x^{2} + 0.0004x^{3}
-\end{equation}
-
-ACPL equations
-\begin{equation}
-\mathrm{Tree Height} = 10.955+ 2.67x -0.032x^2 + 0.001x^3  \\
-\mathrm{Crown Width} = 6.445 + 2.29x - 0.009x^2 - 0.0002x^3
-\end{equation}
-
-PSME equations:
-\begin{equation}
-\mathrm{Tree Height} = -4.497 + 7.516x - 0.146x^2 + 0.001x^3 \\
-\mathrm{Crown Width} = 6.536 + 1.471x - 0.013x^2 + 0.0005x^3
-\end{equation}
-
-THPL equations:
-\begin{equation}
-\mathrm{Tree Height} = 7.311 + 3.457x - 0.0473x^2 + 0.001x^3 \\
-\mathrm{Crown Width} = 5.113 + 1.622x - 0.032x^2 + 0.0002x^3
-\end{equation}
-
 \vfill
 
 **Tips for Bibliographies**

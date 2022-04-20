@@ -1,11 +1,10 @@
+---
+bibliography: references.bib
+---
+
 `r if(knitr:::is_latex_output()) '\\appendix'`
 
 `r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'`
-
-# Additional Tables and Figures
-
-
-# Code
 
 ```{=html}
 <!--
@@ -13,23 +12,67 @@ If you feel it necessary to include an appendix, it goes here.
 -->
 ```
 
+# Additional Data {#data}
+
+## Tree Height and Crown Width Predictive Model Equations {#tree-model-eqs} 
+
+\textbf{ACMA equations:} (\textit{x} = DBH) 
+\begin{equation}
+\textrm{Tree Height} = 8.977 + 3.617x -0.049x^{2} + 0.001x^{3}  \\
+\end{equation}
+
+\begin{equation}
+\textrm{Crown Width} = 13.01 + 1.593x - 0.007x^{2} + 0.0004x^{3} \\
+\end{equation}
+
+\textbf{ACPL equations:} (\textit{x} = DBH) 
+\begin{equation}
+\textrm{Tree Height} = 10.955+ 2.67x -0.032x^2 + 0.001x^3  \\
+\end{equation}
+
+\begin{equation}
+\textrm{Crown Width} = 6.445 + 2.29x - 0.009x^2 - 0.0002x^3 \\
+\end{equation}
+
+\textbf{PSME equations:} (\textit{x} = DBH) 
+\begin{equation}
+\textrm{Tree Height} = -4.497 + 7.516x - 0.146x^2 + 0.001x^3 \\
+\end{equation}
+
+\begin{equation}
+\textrm{Crown Width} = 6.536 + 1.471x - 0.013x^2 + 0.0005x^3 \\
+\end{equation}
+
+\textbf{THPL equations:} (\textit{x} = DBH) 
+\begin{equation}
+\textrm{Tree Height} = 7.311 + 3.457x - 0.0473x^2 + 0.001x^3 \\
+\end{equation}
+
+\begin{equation}
+\textrm{Crown Width} = 5.113 + 1.622x - 0.032x^2 + 0.0002x^3 \\
+\end{equation}
+
+
+# Code {#code-chunks}
+
+
 This second appendix includes all of the R chunks of code that were hidden throughout the document to help with readability and/or setup.
 
 ## **In Chapter** \@ref(data-methods)**:**
 
-### Portland Tree Inventory counts and calculations
+### Portland Tree Inventory counts and calculations {-}
 
 ```{r ref.label='counttables', results='hide', echo = TRUE}
 ```
 
-### Calculating NDVI from satellite imagery
+### Calculating NDVI from satellite imagery {-}
 
 ```{r ref.label='ndvi-calc', results='hide', echo = TRUE, eval = F}
 ```
 
-### LiDAR canopy delineation
+### LiDAR canopy delineation {-}
 
 ```{r ref.label='lidar-calc', results='hide', echo = TRUE, eval = F}
 ```
 
-
+## **In Chapter** \@ref(results)**:**
