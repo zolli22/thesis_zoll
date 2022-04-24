@@ -175,6 +175,82 @@ writeOGR(EML_ttops, "~/Desktop/thesis stuff/thesis qgis files/LiDAR_2", "2019_tt
 knitr::write_bib(c(.packages(), "ForestTools"), "packages.bib")
 
 
+```{r, eval = F}
+test_data_1 <- cnh_long %>%
+  filter(method == "lidar") %>%
+  group_by(health_rat) %>%
+  sample_n(13)
+
+test_data_2 <- cnh_long %>%
+  filter(method == "lidar") %>%
+  group_by(health_rat) %>%
+  sample_n(13)
+
+test_data_3 <- cnh_long %>%
+  filter(method == "lidar") %>%
+  group_by(health_rat) %>%
+  sample_n(13)
+
+test_data_4 <- cnh_long %>%
+  filter(method == "lidar") %>%
+  group_by(health_rat) %>%
+  sample_n(13)
+
+test_data_5 <- cnh_long %>%
+  filter(method == "lidar") %>%
+  group_by(health_rat) %>%
+  sample_n(13)
+
+test_data_6 <- cnh_long %>%
+  filter(method == "lidar") %>%
+  group_by(health_rat) %>%
+  sample_n(13)
+
+test_lidar_1 <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_1) 
+preds_lidar_1 <- predict(test_lidar_1, test_data_1)
+cfm_lidar_1 <- confusionMatrix(preds_lidar_1, test_data_1$health_rat)
+
+test1 <- ggplotConfusionMatrix(cfm_lidar_1)  + 
+  labs(subtitle = "Test 1")
+
+test_lidar_2 <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_2) 
+preds_lidar_2 <- predict(test_lidar_2, test_data_2)
+cfm_lidar_2 <- confusionMatrix(preds_lidar_2, test_data_2$health_rat)
+
+test2 <- ggplotConfusionMatrix(cfm_lidar_2)  + 
+  labs(subtitle = "Test 2")
+
+test_lidar_3 <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_3) 
+preds_lidar_3 <- predict(test_lidar_3, test_data_3)
+cfm_lidar_3 <- confusionMatrix(preds_lidar_3, test_data_3$health_rat)
+
+test3 <- ggplotConfusionMatrix(cfm_lidar_3)  + 
+  labs(subtitle = "Test 3")
+
+test_lidar_4 <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_4) 
+preds_lidar_4 <- predict(test_lidar_4, test_data_4)
+cfm_lidar_4 <- confusionMatrix(preds_lidar_4, test_data_4$health_rat)
+
+test4 <-ggplotConfusionMatrix(cfm_lidar_4)  + 
+  labs(subtitle = "Test 4")
+
+test_lidar_5 <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_5) 
+preds_lidar_5 <- predict(test_lidar_5, test_data_5)
+cfm_lidar_5 <- confusionMatrix(preds_lidar_5, test_data_5$health_rat)
+
+test5 <- ggplotConfusionMatrix(cfm_lidar_5)  + 
+  labs(subtitle = "Test 5")
+
+test_lidar_6 <- polr(health_rat~sample_ndvi*species, Hess = TRUE, data = test_data_6) 
+preds_lidar_6 <- predict(test_lidar_6, test_data_6)
+cfm_lidar_6 <- confusionMatrix(preds_lidar_6, test_data_6$health_rat)
+
+test6 <- ggplotConfusionMatrix(cfm_lidar_6)  + 
+  labs(subtitle = "Test 6")
+
+```
+
+
 \vfill
 
 **Tips for Bibliographies**

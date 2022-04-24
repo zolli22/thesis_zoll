@@ -5,13 +5,13 @@ output: pdf_document
 
 # Introduction {#intro}
 
-## The Accessability of Science
+## The Accessibility of Science
 
 
 
 ## Urban Forests and Urbanization
 
-An urban forest is the total population of trees in an urban area. Urban forests are comprised of parks, street trees, landscaped boulevards, green spaces, and any other location where trees can be found in urban spaces. Urban forests are in close proximity to large or dense human populations, have a relatively high diversity of species and forest patch structures as well as both public and private ownership, and their management is often geared toward sustaining tree health and maximizing the potential benefits that trees provide [@assessin2016]. In 2011, urban forests in the United States contained around 74.4 billion trees, which is about a quarter of the total tree population [@usdaforestservice2011]. The US Census bureau reports that, in 2010, nearly 81% of Americans lived in urban areas, up from 79% 10 years earlier . The United Nations predicts that, by 2050, 68% of the world population will live in urban areas [@unitednations2018]. As urbanization continues, it becomes increasingly important for both those working to manage urban forests and residents of urban areas to understand the dynamics and health of urban forests in order to retain and protect the numerous benefits they provide.
+An urban forest is the total population of trees in an urban area. Urban forests are comprised of parks, street trees, landscaped boulevards, green spaces, and any other location where trees can be found in urban spaces. Urban forests are in close proximity to large or dense human populations, have a relatively high diversity of species and forest patch structures as well as both public and private ownership, and their management is often geared toward sustaining tree health and maximizing the potential benefits that trees provide [@assessin2016]. In 2011, urban forests in the United States contained around 74.4 billion trees, which is about a quarter of the total tree population [@usdaforestservice2011]. The US Census bureau reports that, in 2010, nearly 81% of Americans lived in urban areas, up from 79% 10 years earlier. The United Nations predicts that, by 2050, 68% of the world population will live in urban areas [@unitednations2018]. As urbanization continues, it becomes increasingly important for both those working to manage urban forests and residents of urban areas to understand the dynamics and health of urban forests in order to retain and protect the numerous benefits they provide.
 
 ## The Benefits of Urban Forests
 

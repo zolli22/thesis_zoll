@@ -30,6 +30,11 @@ The second aspect of my data and processing is the retrieval and processing of P
 
 Lastly, with the combined data from the previous three parts, I created a predictive model for predicting tree health rating based on NDVI values.
 
+```{r, echo = F, fig.cap = "Overview of methods and data process", out.width = "95%"}
+knitr::include_graphics("figure/methods-overview.png")
+```
+
+
 ## Previously Collected Field Data
 
 We collected data tree health during the summer of 2021 as part of a larger collaborative interdisciplinary project examining the relationship between various socioeconomic variables and urban tree health. For the purposes of the larger project, we selected trees from eight different neighborhoods in Portland, with four different categorizations of historic and current investment or disinvestment. The four chosen species are *Pseudotsuga menziesii, Pinaceae* (PSME), *Thuja plicata, Cupressaceae* (THPL), *Acer macrophyllum, Sapindaceae* (ACMA), and *Acer platanoides, Sapindaceae* (ACPL). They are some of the most abundant tree species in Portland, and make up a large proportion of Portland's urban forest. PSME, THPL, and ACMA are all native to the area, whereas Norway Maple is a nonnative tree species that was frequently planted in residential areas, and is now the most common street tree in Portland.
@@ -161,7 +166,7 @@ knitr::kable(
 
 For each of the chosen dates, I downloaded the available analytic product from Planet. The analytic multispectral imagery products are orthorectified, calibrated, corrected for terrain distortions, and transformed to Top of Atmosphere radiance to ensure accurate geolocation and cartographic projection.
 
-The bands in a saptellite product refer to the reflectance wavelength that is picked up by the satellite. For a 4-band satellite product, the wavelengths are split into red, green, blue, and near-infrared (NIR) bands (Table \@ref(tab:wavelength)). In the raw PlanetScope product, these 4 bands come compressed in one .tif image. In order to extract NDVI data from the imagery products, the data requires further processing.
+The bands in a satellite product refer to the reflectance wavelength that is picked up by the satellite. For a 4-band satellite product, the wavelengths are split into red, green, blue, and near-infrared (NIR) bands (Table \@ref(tab:wavelength)). In the raw PlanetScope product, these 4 bands come compressed in one .tif image. In order to extract NDVI data from the imagery products, the data requires further processing.
 
 ```{r, echo = F}
 wavelengths <- tibble("band" = c("Blue", "Green", "Red", "NIR"),

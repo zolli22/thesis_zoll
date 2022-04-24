@@ -1,5 +1,5 @@
 ---
-title: 'My Final College Paper'
+title: 'Tree Health from Space: Open Source and Accessible Categorization and Modeling of Urban Tree Health using Multispectral Satellite Imagery'
 author: 'Ingrid Tallulah Loraine Zoll'
 date: 'May 2022'
 institution: 'Reed College'
@@ -43,6 +43,18 @@ acknowledgements: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("
 dedication: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-dedication.Rmd")), collapse = "\n  ")`'   
 #   You can have a dedication here if you wish. 
 # preface: |
+
+abbreviations: 
+  ACMA: Bigleaf Maple (\textit{Acer macrophyllum, Sapindaceae})
+  ACPL: Norway Maple (\textit{Acer platanoides, Sapindaceae}) 
+  CHM: Canopy Height Model 
+  CNH: Coupled Natural-Human (in reference to the CNH2 Project data)
+  DBH: Diamater at Breast Height
+  LiDAR: Light Detection and Ranging
+  NDVI: Normalized Difference Vegetation Index 
+  PSME: Douglas Fir (\textit{Pseudotsuga menziesii, Pinaceae}) 
+  THPL: Western Redcedar (\textit{Thuja plicata, Cupressaceae}) 
+
 #  This is an example of a thesis setup to use the reed thesis document class 
 #  (for LaTeX) and the R bookdown package, in general.
   
@@ -102,6 +114,7 @@ library(tidyverse)
 
 # wrangling packages
 library(lubridate)
+library(formatR)
 
 # data packages
 library(pdxTrees)
@@ -146,10 +159,9 @@ The acknowledgments, preface, dedication, and abstract are added into the PDF
 version automatically by inputting them in the YAML at the top of this file.
 Alternatively, you can put that content in files like 00--prelim.Rmd and
 00-abstract.Rmd like done below.
--->
 
 
 ```{r eval= knitr::is_latex_output(), child=here::here("prelims", "00--prelim.Rmd")}
 
 ```
-
+-->

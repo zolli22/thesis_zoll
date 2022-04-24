@@ -113,7 +113,7 @@
   \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % To pass between YAML and LaTeX the dollar signs are added by CII
-\title{My Final College Paper}
+\title{Tree Health from Space: Open Source and Accessible Categorization and Modeling of Urban Tree Health using Multispectral Satellite Imagery}
 \author{Ingrid Tallulah Loraine Zoll}
 % The month and year that you submit your FINAL draft TO THE LIBRARY (May or December)
 \date{May 2022}
@@ -229,6 +229,21 @@ TESTING TESTING TESTING
     I want to thank some people\ldots{}
   \end{acknowledgements}
 
+\chapter*{List of Abbreviations}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ll}
+                \textbf{ACMA} & Bigleaf Maple (\textit{Acer macrophyllum, Sapindaceae}) \\
+                \textbf{ACPL} & Norway Maple (\textit{Acer platanoides, Sapindaceae}) \\
+                \textbf{CHM} & Canopy Height Model \\
+                \textbf{CNH} & Coupled Natural-Human (in reference to the CNH2 Project data) \\
+                \textbf{DBH} & Diamater at Breast Height \\
+                \textbf{LiDAR} & Light Detection and Ranging \\
+                \textbf{NDVI} & Normalized Difference Vegetation Index \\
+                \textbf{PSME} & Douglas Fir (\textit{Pseudotsuga menziesii, Pinaceae}) \\
+                \textbf{THPL} & Western Redcedar (\textit{Thuja plicata, Cupressaceae}) \\
+            \end{tabular}
+\end{table}
   \hypersetup{linkcolor=black}
   \setcounter{secnumdepth}{2}
   \setcounter{tocdepth}{2}
@@ -253,33 +268,16 @@ TESTING TESTING TESTING
 \mainmatter % here the regular arabic numbering starts
 \pagestyle{fancyplain} % turns page numbering back on
 
-\hypertarget{list-of-abbreviations}{%
-\chapter*{List of Abbreviations}\label{list-of-abbreviations}}
-\addcontentsline{toc}{chapter}{List of Abbreviations}
-\begin{table}[h]\large
-    \centering % You could remove this to move table to the left
-    \begin{tabular}{ll}
-        \textbf{ACMA}   &  Bigleaf Maple (\textit{Acer macrophyllum, Sapindaceae})  \\
-        \textbf{ACPL}   &  Norway Maple (\textit{Acer platanoides, Sapindaceae}) \\
-        \textbf{CHM}    &  Canopy Height Model \\
-        \textbf{CNH}    &  Coupled Natural-Human (in reference to the CNH2 Project data)\\
-        \textbf{DBH}    &  Diamater at Breast Height\\
-        \textbf{LiDAR}  &  Light Detection and Ranging\\
-        \textbf{NDVI}   &  Normalized Difference Vegetation Index \\
-        \textbf{PSME}   &  Douglas Fir (\textit{Pseudotsuga menziesii, Pinaceae}) \\
-        \textbf{THPL}   &  Western Redcedar (\textit{Thuja plicata, Cupressaceae}) \\
-    \end{tabular}
-\end{table}
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
 
-\hypertarget{the-accessability-of-science}{%
-\section{The Accessability of Science}\label{the-accessability-of-science}}
+\hypertarget{the-accessibility-of-science}{%
+\section{The Accessibility of Science}\label{the-accessibility-of-science}}
 
 \hypertarget{urban-forests-and-urbanization}{%
 \section{Urban Forests and Urbanization}\label{urban-forests-and-urbanization}}
 
-An urban forest is the total population of trees in an urban area. Urban forests are comprised of parks, street trees, landscaped boulevards, green spaces, and any other location where trees can be found in urban spaces. Urban forests are in close proximity to large or dense human populations, have a relatively high diversity of species and forest patch structures as well as both public and private ownership, and their management is often geared toward sustaining tree health and maximizing the potential benefits that trees provide (Robertson \& Mason, 2016). In 2011, urban forests in the United States contained around 74.4 billion trees, which is about a quarter of the total tree population (USDA Forest Service, 2011). The US Census bureau reports that, in 2010, nearly 81\% of Americans lived in urban areas, up from 79\% 10 years earlier . The United Nations predicts that, by 2050, 68\% of the world population will live in urban areas (United Nations \& Affairs, 2018). As urbanization continues, it becomes increasingly important for both those working to manage urban forests and residents of urban areas to understand the dynamics and health of urban forests in order to retain and protect the numerous benefits they provide.
+An urban forest is the total population of trees in an urban area. Urban forests are comprised of parks, street trees, landscaped boulevards, green spaces, and any other location where trees can be found in urban spaces. Urban forests are in close proximity to large or dense human populations, have a relatively high diversity of species and forest patch structures as well as both public and private ownership, and their management is often geared toward sustaining tree health and maximizing the potential benefits that trees provide (Robertson \& Mason, 2016). In 2011, urban forests in the United States contained around 74.4 billion trees, which is about a quarter of the total tree population (USDA Forest Service, 2011). The US Census bureau reports that, in 2010, nearly 81\% of Americans lived in urban areas, up from 79\% 10 years earlier. The United Nations predicts that, by 2050, 68\% of the world population will live in urban areas (United Nations \& Affairs, 2018). As urbanization continues, it becomes increasingly important for both those working to manage urban forests and residents of urban areas to understand the dynamics and health of urban forests in order to retain and protect the numerous benefits they provide.
 
 \hypertarget{the-benefits-of-urban-forests}{%
 \section{The Benefits of Urban Forests}\label{the-benefits-of-urban-forests}}
@@ -352,7 +350,9 @@ First, there is the tree data. This includes the Portland park and street tree d
 The second aspect of my data and processing is the retrieval and processing of Planetscope satellite imagery products to produce usable NDVI data files, which was done in Python. Third, are the different tree delineation methods I examine in this thesis, which include point value, radius, and LiDAR methods. This involved the processing of LiDAR and tree crown radius data, as well as obtaining and computing associated NDVI values.
 
 Lastly, with the combined data from the previous three parts, I created a predictive model for predicting tree health rating based on NDVI values.
-
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{figure/methods-overview} \caption{Overview of methods and data process}\label{fig:unnamed-chunk-2}
+\end{figure}
 \hypertarget{previously-collected-field-data}{%
 \section{Previously Collected Field Data}\label{previously-collected-field-data}}
 
@@ -447,7 +447,7 @@ Collection date & Collection time & Number of scene products & Satellite ID\\
 \end{longtable}
 For each of the chosen dates, I downloaded the available analytic product from Planet. The analytic multispectral imagery products are orthorectified, calibrated, corrected for terrain distortions, and transformed to Top of Atmosphere radiance to ensure accurate geolocation and cartographic projection.
 
-The bands in a saptellite product refer to the reflectance wavelength that is picked up by the satellite. For a 4-band satellite product, the wavelengths are split into red, green, blue, and near-infrared (NIR) bands (Table \ref{tab:wavelength}). In the raw PlanetScope product, these 4 bands come compressed in one .tif image. In order to extract NDVI data from the imagery products, the data requires further processing.
+The bands in a satellite product refer to the reflectance wavelength that is picked up by the satellite. For a 4-band satellite product, the wavelengths are split into red, green, blue, and near-infrared (NIR) bands (Table \ref{tab:wavelength}). In the raw PlanetScope product, these 4 bands come compressed in one .tif image. In order to extract NDVI data from the imagery products, the data requires further processing.
 \begin{longtable}[t]{ll}
 \caption[4-band satellite wavelength ranges]{\label{tab:wavelength}Wavelength ranges for 4-band Planetscope satellite bands}\\
 \toprule
@@ -554,7 +554,7 @@ With the 30m buffer, all other inventoried trees that are contained within the b
 
 }
 
-\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-5}
+\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-6}
 \end{figure}
 These three processes were repeated for random samples of 100 park trees and 100 street trees, though due to restrictions in file size for LiDAR processing, the sampling had to be constrained to an area of East Portland (Figure \ref{fig:clip-extent}). This extent was chosen to align with the sampling region of the CNH data, though it had to be shrunk slightly.
 \begin{figure}
@@ -571,7 +571,7 @@ These three processes were repeated for random samples of 100 park trees and 100
 
 }
 
-\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-6}
+\caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-7}
 \end{figure}
 \hypertarget{modeling-tree-health}{%
 \section{Modeling Tree Health}\label{modeling-tree-health}}
@@ -638,58 +638,40 @@ There is a statistically significant difference in NDVI values for the three dif
 \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/methods-all-species-1} \caption[NDVI and health rating comparison across methods]{Average NDVI values from all three pixel selection methods with CNH health rating. There is a statistically significant difference in mean NDVI between point and both radius and lidar methods. (ANOVA, $F_{2, 325}=517.8$, $P = <2e-16$, TukeyHSD: radius-point $P = 0.00$, lidar-point $P = 0.00$)}\label{fig:methods-all-species}
 \end{figure}
 \begin{figure}
-\includegraphics{thesis_files/figure-latex/methods-species-1} \caption[Average NDVI comparison between species and methods.]{Average NDVI for each health category, split by tree species and pixel selection method. The general trends remain the same within species, but vary among pixel selection methods.}\label{fig:methods-species}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/methods-species-1} \caption[Average NDVI comparison between species and methods.]{Average NDVI for each health category, split by functional tree type and pixel selection method. The general trends remain the same for each individual species, but vary among pixel selection methods. Importantly, the same trends can be seen for trees of the same functional type (broadleaf vs conifer). }\label{fig:methods-species}
 \end{figure}
-Another important factor to consider when comparing the three pixel selection methods is the amount of pixels used in the NDVI analysis. For the point method, each NDVI value is based off one singular point.
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{radius\_sample\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/radius\_sample\_data.csv"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{method =} \StringTok{"radius"}\NormalTok{)}
-\NormalTok{lidar\_sample\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/lidar\_sample\_data.csv"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{method =} \StringTok{"LiDAR"}\NormalTok{)}
-\NormalTok{count\_sample\_data }\OtherTok{\textless{}{-}}\NormalTok{ lidar\_sample\_data }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{bind\_rows}\NormalTok{(radius\_sample\_data)}
-\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ count\_sample\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ method, }\AttributeTok{y =}\NormalTok{ ndvi\_count,}
-    \AttributeTok{color =}\NormalTok{ species)) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{outlier.shape =} \ConstantTok{NA}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_jitterdodge}\NormalTok{(}\AttributeTok{jitter.width =} \FloatTok{0.1}\NormalTok{),}
-    \AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
-    \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Pixel selection method"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Pixel count"}\NormalTok{, }\AttributeTok{color =} \StringTok{"Tree species"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-15-1.pdf}
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ count\_sample\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ ndvi\_mean, }\AttributeTok{y =}\NormalTok{ ndvi\_count,}
-    \AttributeTok{color =}\NormalTok{ species)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
-    \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Average NDVI"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Pixel count"}\NormalTok{, }\AttributeTok{color =} \StringTok{"Tree species"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-15-2.pdf}
-
+Another important factor to consider when comparing the three pixel selection methods is the amount of pixels used in the NDVI analysis. For the point method, each NDVI value is based off one singular point. For both LiDAR and Radius methods, the NDVI used in prediction is an average of all NDVI values captured within the pixel selection method, but the number of pixels used varies between methods and species (Figure \ref{fig:ndvi-counts-graph}).
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/ndvi-counts-graph-1} \caption[Pixel counts for NDVI calculation, by method, and for sample NDVI.]{Comparison of pixel counts used in NDVI calculations. (a) Boxplot of pixel counts used for each species in the LiDAR and radius methods. For both methods, the maples had more outliers than the conifers, and THPL had the lowest average number of pixels used. (b) Pixel count and average NDVI per tree. There does not seem to be any strong statistical relationship between the number of pixels used and the sample NDVI, though this does not include any data from the point method.}\label{fig:ndvi-counts-graph}
+\end{figure}
 \hypertarget{predictive-model}{%
 \section{Predictive Model}\label{predictive-model}}
 
-In order to determine the impact of differentiating by species in predictive models, I ran three different models for each point selection method, moving from least to most specific: a model that only uses NDVI to predict health rating, a model that includes functional tree type as an interaction term, and a third model that includes species as an interaction term. Due to the limited sample size of the data I am working with, the following models are trained and tested on the same data. If it were to work perfectly, the model would correctly predict the health condition of a CNH tree 100\% of the time. The data I use is not perfect, and the models are not perfect either. However, they are likely an idealized version of how model testing and training would work in reality.
-With the point method data, the first model with no interaction term led to all tree points being rated as ``Fair''. The addition of tree type as an interaction term led to an increase in predictions of ``good'' health trees, and increased kappa from 0\% to 15\%. The overall accuracy only increased by 2\%, but kappa is more informative in terms of model validity than the accuracy score. Using tree species instead of tree type further improved the kappa of the model. The number of ``good'' trees that were correctly predicted increased from 7 to 13, but additionally the number of ``fair'' trees that were correctly predicted dropped from 64 to 59, with the new predictions as ``good''. (Figure \ref{point-model-split}). None of these models with the point method were able to correctly predict any trees with poor health categorization.
+In order to determine the impact of differentiating by species in predictive models, I ran three different models for each point selection method, moving from least to most specific: a model that only uses NDVI to predict health rating, a model that includes functional tree type as an interaction term, and a third model that includes species as an interaction term (Table \ref{tab:model-table}). Due to the limited sample size of the data I am working with, the following models are trained and tested on the same data. If it were to work perfectly, the model would correctly predict the health condition of a CNH tree 100\% of the time. The data I use is not perfect, and the models are not perfect either. However, it is important to note that they are likely an idealized version of how model testing and training would work in reality.
 
-\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-model-split-1}
+For each model, I evaluate the success and ability to predict health rating in a few different ways. First, I examine the calculated accuracy and kappa values. A higher kappa value is more important than a higher accuracy score because kappa takes into account the various sizes of the categories and the probability of the prediction occurring by chance, whereas accuracy does not. Additionally, I look at the false positives (a ``poor'' tree getting rated ``good'') and false negatives (a ``good'' tree being rated ``poor''). Both of these values should be as low as possible, but in this case a reducing the number of false positives is most important because if a tree in poor health was rated as good, it may not be included in further health analysis and will be missed when examining the spatial distribution of tree health.
 
-The radius method was slightly more successful than the point method for the model, with all three method models performing better than those for the point method. From just NDVI to NDVI * tree type, there was an increase in 9 trees to good ratings. Including no species or tree type specification in the predictive model still seems to perform the worst of the three models. The main takeaway from the radius method models is that with the inclusion of species as an interaction term with the radius data, we see our first predictions of the ``poor'' category. The radius method does involve more pixels than the point method, and with the range in NDVI values being lower than that of the point method it makes sense that there is an increase in ``poor'' rated trees. However, out of the 15 reference trees with health ratings of ``poor'', only one was correctly predicted as such (Figure \ref{fig:radius-model-split}).
+With the point method data, the first model with no interaction term led to all tree points being rated as ``Fair'' (Figure \ref{fig:point-model-split}a). The addition of tree type as an interaction term led to an increase in predictions of ``good'' health trees, and increased kappa from 0\% to 15\% (Figure \ref{fig:point-model-split}b). The overall accuracy only increased by 2\%, but kappa is more informative in terms of model validity than the accuracy score. Using tree species instead of tree type further improved the kappa of the model. The number of ``good'' trees that were correctly predicted increased from 7 to 13, but additionally the number of ``fair'' trees that were correctly predicted dropped from 64 to 59, with the new predictions as ``good'' (Figure \ref{fig:point-model-split}c). None of the model that used the data obtained by the point method were able to correctly predict any trees with poor health categorization, and in models b and c, each had one ``poor'' tree that was incorrectly predicted as ``good''.
 \begin{figure}
-\includegraphics{thesis_files/figure-latex/radius-model-split-1} \caption[Confusion matrixes for Radius data model]{Confusion matrixes for each species predictions with radius method data}\label{fig:radius-model-split}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-model-split-1} \caption[Confusion matrixes for Point method predictive models]{Confusion Matrix results for three predictive models, using point method obtained NDVI data to predict three health rating. (a) Model only using NDVI to predict health rating. (b) Model using both NDVI and functional tree type (broadleaf vs confier) to predict health rating. (c) Model using NDVI and tree species to predict health rating.}\label{fig:point-model-split}
 \end{figure}
-The LiDAR data was the most effective out of the three methods at predicting tree health, but also had the only occurance of a ``good'' tree being predicted as ``poor''.
+The models created with the data obtained through the radius method were slightly more successful than the point method for the model, with all three method models performing better than each respective model with the point method data. Including no species or tree type specification in the predictive model still seems to perform the worst of the three models, with 96\% of the sampled trees being predicted as ``fair'' (Figure \ref{fig:radius-model-split}a). Between using NDVI to NDVI and tree type as predictor variables, there was an increase in the number of trees being rated as in good health of 9 trees in total, but only 6 of those were additional correct predictions (Figure \ref{fig:radius-model-split}b). The main takeaway from the radius method models is that with the inclusion of species as an interaction term with the radius data, we see our first predictions of the ``poor'' category. The radius method does involve more pixels than the point method, and with the range in NDVI values being lower than that of the point method it makes sense that there is an increase in ``poor'' rated trees. However, out of the 15 reference trees with health ratings of ``poor'', only one was correctly predicted as such (Figure \ref{fig:radius-model-split}c).
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/radius-model-split-1} \caption[Confusion matrixes for Radius method predictive models]{Confusion matrixes for each species predictions with radius method data. (a) Model using only NDVI to predict health rating. (b) Model with the addition of functional tree type as a predictor. (c) Model using tree species as a variable when predicting tree health rating.}\label{fig:radius-model-split}
+\end{figure}
+The LiDAR data was the most effective at predicting tree health across all three pixel selection methods. With the first model using only NDVI to predict health rating, more trees were correctly predicted as ``good'' than the same model with the other two methods (Figure \ref{fig:lidar-model-split}a). With the addition of tree type as a predictor variable, the number of correctly predicted ``good'' trees increased, but most importantly, the number of ``fair'' trees predicted as ``good'' remained the same where with the other two methods, that count had increased as well. However, this model also included a ``good'' tree being predicted as ``poor'' which no other variations of the models did (Figure \ref{fig:lidar-model-split}b). The last model with species as an interaction term was the most effective of all 9 models, with the highest accuracy and kappa, as well as the smallest p-value (Figure \ref{fig:lidar-model-split}c).
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/lidar-model-split-1} \caption[Confusion matrixes for LiDAR method predictive models]{Confusion matrixes for each species predictions with LiDAR method obtained NDVI values. (a) Model using NDVI to predict tree health category. (b) Model using functional tree type in addition to NDVI for health prediction. (c) Model with species as a predictor variable for NDVI based tree health category.}\label{fig:lidar-model-split}
+\end{figure}
+Given the uneven number of data points available for the varying health conditions, I down-sampled each health rating to the smallest number of points in a given category (Point = 15, Radius = 15, LiDAR = 13). When the predictive models were ran with the even category sizes, the results were statistically significant for all three pixel selection models. The point and radius method models correctly predicted the health ratings for most of the ``poor'' and ``good'' rated trees but not for ``fair'' rated trees, which is the opposite of what we saw with the previous models. The LiDAR model had the highest proportion of correctly predicted health ratings across all three health categories (Figure \ref{fig:final-model-small}).
 
-\includegraphics{thesis_files/figure-latex/lidar-model-split-1.pdf}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/final-model-small-1}
 
-A predictive model was also run with all species together, but with species as an interaction term in the formula. This showed better results than when the species were split, but it seems that most of that is due to increased overall sample size.
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/species-health-fig-1}
 
-Due to the variation in sample sizes for each health condition category, I sampled down the data so each health category had the same number of points. This improved the results of the model by a lot.
+To ensure that the results of the downsampled LiDAR data model were not caused by the random downsampling, I ran the model 6 times with different random samples each time (Figure \ref{fig:lidar-model-test}). Given the results of all the models and the performance of the downsampled LiDAR model, I used that model with the randomly selected park and street trees to predict their health categorizations.
 
-Given the uneven number of data points available for the varying health conditions, I down-sampled each health category to the smallest number of points in a given category (point = 15, radius = 15, LiDAR = 13). When the predictive models were ran with the even category sizes, the results were statistically significant for all three pixel selection models. For the poi
-
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-16-1.pdf}
+\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/final-lidar-plot-1}
 
 \hypertarget{discussion}{%
 \chapter{Discussion}\label{discussion}}
@@ -734,22 +716,37 @@ testing
 \end{equation}
 \includegraphics{thesis_files/figure-latex/extra-graph-1-1.pdf}
 
-\hypertarget{extra-modeling-graphics}{%
-\section*{extra modeling graphics}\label{extra-modeling-graphics}}
-\addcontentsline{toc}{section}{extra modeling graphics}
+\hypertarget{additional-model-information}{%
+\section*{Additional Model Information}\label{additional-model-information}}
+\addcontentsline{toc}{section}{Additional Model Information}
+\begin{longtable}[t]{llllr}
+\caption[Summary of results from various predictive models]{\label{tab:model-table}For each predictive model for tree health, this table contains the pixel selection method and predictors used, as well as the resulting accuracy, kappa, and p-value calculated in the confusion matrixes.}\\
+\toprule
+NDVI pixel method & Predictors & Accuracy & Kappa & P-value\\
+\midrule
+Point method & NDVI & 61\% & 0\% & 0.54120\\
+Radius method & NDVI & 61\% & 3\% & 0.54120\\
+LiDAR method & NDVI & 63\% & 10\% & 0.38400\\
+Point method & NDVI * tree type & 63\% & 15\% & 0.31630\\
+Radius method & NDVI * tree type & 63\% & 16\% & 0.31630\\
+\addlinespace
+LiDAR method & NDVI * tree type & 67\% & 23\% & 0.13340\\
+Point method & NDVI * species & 64\% & 23\% & 0.25040\\
+Radius method & NDVI * species & 64\% & 24\% & 0.25040\\
+LiDAR method & NDVI * species & 68\% & 33\% & 0.09396\\
+\bottomrule
+\end{longtable}
+\hypertarget{model-confusion-matrixes-organized-by-model-equation}{%
+\section*{Model Confusion Matrixes, organized by model equation}\label{model-confusion-matrixes-organized-by-model-equation}}
+\addcontentsline{toc}{section}{Model Confusion Matrixes, organized by model equation}
 
-\includegraphics{thesis_files/figure-latex/unnamed-chunk-17-1.pdf} \includegraphics{thesis_files/figure-latex/unnamed-chunk-17-2.pdf} \includegraphics{thesis_files/figure-latex/unnamed-chunk-17-3.pdf}
+\includegraphics{thesis_files/figure-latex/unnamed-chunk-16-1.pdf} \includegraphics{thesis_files/figure-latex/unnamed-chunk-16-2.pdf} \includegraphics{thesis_files/figure-latex/unnamed-chunk-16-3.pdf}
 
-\hypertarget{radius-and-lidar-model-tests}{%
-\section*{Radius and LiDAR model tests}\label{radius-and-lidar-model-tests}}
-\addcontentsline{toc}{section}{Radius and LiDAR model tests}
+\hypertarget{lidar-model-tests}{%
+\section*{LiDAR model tests}\label{lidar-model-tests}}
+\addcontentsline{toc}{section}{LiDAR model tests}
 
-\includegraphics[width=0.85\linewidth]{figure/test1}
-\includegraphics[width=0.85\linewidth]{figure/test2}
-\includegraphics[width=0.85\linewidth]{figure/test3}
-\includegraphics[width=0.85\linewidth]{figure/test4}
-\includegraphics[width=0.85\linewidth]{figure/test5}
-\includegraphics[width=0.85\linewidth]{figure/test6}
+\includegraphics[width=1\linewidth]{figure/test}
 
 \hypertarget{code-chunks}{%
 \chapter{Code}\label{code-chunks}}
@@ -777,6 +774,7 @@ This second appendix includes all of the R chunks of code that were hidden throu
     \FunctionTok{rename}\NormalTok{(}\AttributeTok{Count\_2016 =}\NormalTok{ n) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2016}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
+
 \NormalTok{park\_counts }\OtherTok{\textless{}{-}} \FunctionTok{get\_pdxTrees\_parks}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
@@ -790,8 +788,6 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year)}
 \end{Highlighting}
 \end{Shaded}
-\normalsize
-
 \hypertarget{calculating-ndvi-from-satellite-imagery}{%
 \subsection*{Calculating NDVI from satellite imagery}\label{calculating-ndvi-from-satellite-imagery}}
 \addcontentsline{toc}{subsection}{Calculating NDVI from satellite imagery}
@@ -862,8 +858,6 @@ This second appendix includes all of the R chunks of code that were hidden throu
         \FunctionTok{dst.write\_band}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FunctionTok{ndvi.astype}\NormalTok{(rasterio.float32))}
 \end{Highlighting}
 \end{Shaded}
-\normalsize
-
 \hypertarget{lidar-canopy-delineation}{%
 \subsection*{LiDAR canopy delineation}\label{lidar-canopy-delineation}}
 \addcontentsline{toc}{subsection}{LiDAR canopy delineation}
@@ -875,21 +869,24 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \FunctionTok{library}\NormalTok{(imager)}
 \FunctionTok{library}\NormalTok{(raster)}
 \FunctionTok{library}\NormalTok{(ForestTools)}
+
 \FunctionTok{options}\NormalTok{(}\AttributeTok{rgdal\_show\_exportToProj4\_warnings =} \StringTok{"none"}\NormalTok{)}
+
 \DocumentationTok{\#\# Loading raster data}
 \NormalTok{EML\_CHM }\OtherTok{\textless{}{-}} \FunctionTok{raster}\NormalTok{(}\StringTok{"\textasciitilde{}Desktop/thesis\_data/lidar\_crown/clipped\_lidar.tif"}\NormalTok{)}
+
 \DocumentationTok{\#\# Loading tree points}
 \NormalTok{all\_ttops }\OtherTok{\textless{}{-}} \FunctionTok{shapefile}\NormalTok{(}\StringTok{"\textasciitilde{}Desktop/thesis\_data/lidar\_crown/all\_tree\_points\_for\_delin.tif"}\NormalTok{)}
+
 \CommentTok{\# delineate tree crowns inputs: my tree points, LiDAR data}
 \NormalTok{crownsPoly }\OtherTok{\textless{}{-}} \FunctionTok{mcws}\NormalTok{(}\AttributeTok{treetops =}\NormalTok{ all\_ttops, }\AttributeTok{CHM =}\NormalTok{ EML\_CHM, }\AttributeTok{format =} \StringTok{"polygons"}\NormalTok{,}
     \AttributeTok{minHeight =} \DecValTok{20}\NormalTok{, }\AttributeTok{verbose =} \ConstantTok{TRUE}\NormalTok{)}
+
 \CommentTok{\# export file}
 \FunctionTok{writeOGR}\NormalTok{(crownsPoly, }\StringTok{"\textasciitilde{}/Desktop/thesis\_data/lidar\_crown"}\NormalTok{, }\StringTok{"canopy\_delin\_polygons\_poly"}\NormalTok{,}
     \AttributeTok{driver =} \StringTok{"ESRI Shapefile"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\normalsize
-
 \hypertarget{in-chapter-refresults}{%
 \section{\texorpdfstring{\textbf{In Chapter} \ref{results}\textbf{:}}{In Chapter \ref{results}:}}\label{in-chapter-refresults}}
 
@@ -905,20 +902,26 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \NormalTok{my\_park }\OtherTok{\textless{}{-}}\NormalTok{ pdxTrees}\SpecialCharTok{::}\FunctionTok{get\_pdxTrees\_parks}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACPL"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"ACMA"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{crown\_width =}\NormalTok{ (Crown\_Width\_EW }\SpecialCharTok{+}\NormalTok{ Crown\_Width\_NS)}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+
 \CommentTok{\# create model for heights}
 \NormalTok{heights }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Tree\_Height }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(DBH, }\AttributeTok{degree =} \DecValTok{3}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T) }\SpecialCharTok{*}
 \NormalTok{    Species, }\AttributeTok{data =}\NormalTok{ my\_park)}
+
 \CommentTok{\# create model for crown width}
 \NormalTok{cr\_width }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(crown\_width }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(DBH, }\AttributeTok{degree =} \DecValTok{3}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T) }\SpecialCharTok{*}
 \NormalTok{    Species, }\AttributeTok{data =}\NormalTok{ my\_park)}
+
 \CommentTok{\# load street data, filter to relevant species}
 \NormalTok{my\_street }\OtherTok{\textless{}{-}}\NormalTok{ pdxTrees}\SpecialCharTok{::}\FunctionTok{get\_pdxTrees\_streets}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACPL"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"ACMA"}\NormalTok{))}
+
 \CommentTok{\# run street trees through both models}
 \NormalTok{my\_street }\OtherTok{\textless{}{-}}\NormalTok{ my\_street }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{width\_preds =} \FunctionTok{predict}\NormalTok{(cr\_width, my\_street, }\AttributeTok{se.fit =} \ConstantTok{FALSE}\NormalTok{),}
         \AttributeTok{height\_preds =} \FunctionTok{predict}\NormalTok{(heights, my\_street, }\AttributeTok{se.fit =}\NormalTok{ F))}
+
 \CommentTok{\# export data file write\_csv(my\_street, \textquotesingle{}my\_street.csv\textquotesingle{})}
+
 \CommentTok{\# graphing}
 \NormalTok{p\_height\_model }\OtherTok{\textless{}{-}}\NormalTok{ my\_park }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(DBH), }\AttributeTok{y =}\NormalTok{ Tree\_Height, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
@@ -926,24 +929,25 @@ This second appendix includes all of the R chunks of code that were hidden throu
     \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =}\NormalTok{ F, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(x,}
         \AttributeTok{degree =} \DecValTok{3}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Park trees"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"Tree Height Measurement"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{color =} \StringTok{"none"}\NormalTok{)}
+
 \NormalTok{p\_width\_model }\OtherTok{\textless{}{-}}\NormalTok{ my\_park }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(DBH), }\AttributeTok{y =}\NormalTok{ crown\_width, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
     \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
     \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =}\NormalTok{ F, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(x,}
         \AttributeTok{degree =} \DecValTok{3}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Park trees"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"Canopy Width Measurement"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{color =} \StringTok{"none"}\NormalTok{)}
+
 \NormalTok{s\_height\_preds }\OtherTok{\textless{}{-}}\NormalTok{ my\_street }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(DBH), }\AttributeTok{y =}\NormalTok{ height\_preds, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
     \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
     \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Street trees"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Tree Height Prediction"}\NormalTok{)}
+
 \NormalTok{s\_width\_preds }\OtherTok{\textless{}{-}}\NormalTok{ my\_street }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(DBH), }\AttributeTok{y =}\NormalTok{ width\_preds, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
     \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
     \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Street trees"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Canopy Width Prediction"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\normalsize
-
 \hypertarget{point-method-modeling}{%
 \subsection*{Point Method Modeling}\label{point-method-modeling}}
 \addcontentsline{toc}{subsection}{Point Method Modeling}
@@ -954,24 +958,30 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \NormalTok{point\_all }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{data =}\NormalTok{ cnh\_point)}
 \NormalTok{point\_all\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(point\_all, cnh\_point)}
 \NormalTok{cfm\_p\_all }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(point\_all\_preds, cnh\_point}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{p\_all }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_p\_all) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI"}\NormalTok{)}
+
 \NormalTok{brant}\SpecialCharTok{::}\FunctionTok{brant}\NormalTok{(point\_all)}
+
 \NormalTok{point\_type }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ tree\_type, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ cnh\_point)}
 \NormalTok{point\_type\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(point\_type, cnh\_point)}
 \NormalTok{cfm\_p\_type }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(point\_type\_preds, cnh\_point}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{p\_type }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_p\_type) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI * tree type"}\NormalTok{)}
+
 \NormalTok{brant}\SpecialCharTok{::}\FunctionTok{brant}\NormalTok{(point\_type)}
+
 \NormalTok{point\_species }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ species, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ cnh\_point)}
 \NormalTok{point\_species\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(point\_species, cnh\_point)}
 \NormalTok{cfm\_p\_species }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(point\_species\_preds, cnh\_point}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{p\_species }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_p\_species) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI * species"}\NormalTok{)}
+
 \NormalTok{brant}\SpecialCharTok{::}\FunctionTok{brant}\NormalTok{(point\_species)}
 \end{Highlighting}
 \end{Shaded}
-\normalsize
-
 \hypertarget{radius-method-modeling}{%
 \subsection*{Radius Method Modeling}\label{radius-method-modeling}}
 \addcontentsline{toc}{subsection}{Radius Method Modeling}
@@ -983,20 +993,22 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \NormalTok{radius\_all\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(radius\_all, cnh\_radius)}
 \NormalTok{cfm\_r\_all }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(radius\_all\_preds, cnh\_radius}\SpecialCharTok{$}\NormalTok{health\_rat)}
 \NormalTok{r\_all }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_r\_all) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI"}\NormalTok{)}
+
 \NormalTok{radius\_type }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ tree\_type, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ cnh\_radius)}
 \NormalTok{radius\_type\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(radius\_type, cnh\_radius)}
 \NormalTok{cfm\_r\_type }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(radius\_type\_preds, cnh\_radius}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{r\_type }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_r\_type) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI * tree type"}\NormalTok{)}
+
 \NormalTok{radius\_species }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ species, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ cnh\_radius)}
 \NormalTok{radius\_species\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(radius\_species, cnh\_radius)}
 \NormalTok{cfm\_r\_species }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(radius\_species\_preds, cnh\_radius}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{r\_species }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_r\_species) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI * species"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\normalsize
-
 \hypertarget{lidar-method-modeling}{%
 \subsection*{LiDAR Method Modeling}\label{lidar-method-modeling}}
 \addcontentsline{toc}{subsection}{LiDAR Method Modeling}
@@ -1007,21 +1019,24 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \NormalTok{lidar\_all }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{data =}\NormalTok{ cnh\_lidar)}
 \NormalTok{lidar\_all\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lidar\_all, cnh\_lidar)}
 \NormalTok{cfm\_l\_all }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(lidar\_all\_preds, cnh\_lidar}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{l\_all }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_l\_all) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI"}\NormalTok{)}
+
 \NormalTok{lidar\_type }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ tree\_type, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ cnh\_lidar)}
 \NormalTok{lidar\_type\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lidar\_type, cnh\_lidar)}
 \NormalTok{cfm\_l\_type }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(lidar\_type\_preds, cnh\_lidar}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{l\_type }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_l\_type) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI * tree type"}\NormalTok{)}
+
 \NormalTok{lidar\_species }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ species, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ cnh\_lidar)}
 \NormalTok{lidar\_species\_preds }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lidar\_species, cnh\_lidar)}
 \NormalTok{cfm\_l\_species }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(lidar\_species\_preds, cnh\_lidar}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{l\_species }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_l\_species) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"health rating \textasciitilde{} NDVI * species"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\normalsize
-
 \hypertarget{radius-and-lidar-replications}{%
 \subsection*{Radius and LiDAR Replications}\label{radius-and-lidar-replications}}
 \addcontentsline{toc}{subsection}{Radius and LiDAR Replications}
@@ -1029,37 +1044,46 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \footnotesize
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
 \NormalTok{test\_data\_point }\OtherTok{\textless{}{-}}\NormalTok{ cnh\_long }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(method }\SpecialCharTok{==} \StringTok{"point"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{group\_by}\NormalTok{(health\_rat) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{sample\_n}\NormalTok{(}\DecValTok{15}\NormalTok{)}
+
 \NormalTok{test\_point }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ species, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ test\_data\_point)}
 \NormalTok{preds\_point }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(test\_point, test\_data\_point)}
 \NormalTok{cfm\_point }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(preds\_point, test\_data\_point}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{gg\_point }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_point) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Point method"}\NormalTok{)}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{7}\NormalTok{)}
 \NormalTok{test\_data\_radius }\OtherTok{\textless{}{-}}\NormalTok{ cnh\_long }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(method }\SpecialCharTok{==} \StringTok{"radius"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{group\_by}\NormalTok{(health\_rat) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{sample\_n}\NormalTok{(}\DecValTok{15}\NormalTok{)}
+
 \NormalTok{test\_radius }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ species, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ test\_data\_radius)}
 \NormalTok{preds\_radius }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(test\_radius, test\_data\_radius)}
 \NormalTok{cfm\_radius }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(preds\_radius, test\_data\_radius}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{gg\_radius }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_radius) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Radius method"}\NormalTok{)}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{9}\NormalTok{)}
 \NormalTok{test\_data\_lidar }\OtherTok{\textless{}{-}}\NormalTok{ cnh\_long }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(method }\SpecialCharTok{==} \StringTok{"lidar"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{group\_by}\NormalTok{(health\_rat) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{sample\_n}\NormalTok{(}\DecValTok{13}\NormalTok{)}
+
 \NormalTok{test\_lidar }\OtherTok{\textless{}{-}} \FunctionTok{polr}\NormalTok{(health\_rat }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sample\_ndvi }\SpecialCharTok{*}\NormalTok{ species, }\AttributeTok{Hess =} \ConstantTok{TRUE}\NormalTok{,}
     \AttributeTok{data =}\NormalTok{ test\_data\_lidar)}
 \NormalTok{preds\_lidar }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(test\_lidar, test\_data\_lidar)}
 \NormalTok{cfm\_lidar }\OtherTok{\textless{}{-}} \FunctionTok{confusionMatrix}\NormalTok{(preds\_lidar, test\_data\_lidar}\SpecialCharTok{$}\NormalTok{health\_rat)}
+
 \NormalTok{gg\_lidar }\OtherTok{\textless{}{-}} \FunctionTok{ggplotConfusionMatrix}\NormalTok{(cfm\_lidar) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"LiDAR method"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-\normalsize
-
 \backmatter
 
 \hypertarget{references}{%
