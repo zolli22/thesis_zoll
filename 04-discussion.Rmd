@@ -1,4 +1,71 @@
 # Discussion {#discussion}
 
+## Canopy Width and Tree Height Model
 
-testing
+The second order polynomial model for predicting tree height based on
+DBH and tree species had statistical significance for the ACMA and PSME
+predictions, but not for ACPL or THPL. This is likely due to the similar
+average DBH and tree height values between ACPL and PSME. While the
+average DBH values for ACMA and PSME are very similar, the average
+height values are extremely different, with the average PSME individual
+standing twice as tall as the average ACMA individual (Table
+\@ref(tab:tree-stats-table)). An issue with the second degree model is
+the decrease in predicted tree height. This decrease is not seen in the
+park tree model, but the street tree height predictions for all species
+show a visible decrease after the inflection point of the model. Given
+that the tree height predictions were only used for filtering out trees
+below 25 feet in height, an extremely precise model was not necessary
+for the purposes of this thesis.
+
+The second order polynomial model for predicting canopy width based on
+DBH and tree species was statistically significant for all species.
+There is consistent variation in the average crown width measurements
+between all species (Table \@ref(tab:tree-stats-table)). With the
+visualization of the street tree canopy width predictions, the only
+extreme decrease after the model inflection point is seen in the ACPL
+predictions. The canopy width model played a larger role in this thesis
+than the tree height model because it was essential for the radius
+method of pixel selection for all street trees.
+
+## Pixel Selection
+
+The three pixel selection methods (point, radius, and LiDAR) were used
+to help answer the question "which pixels are we using?"
+
+```{r layered-outputs-2, out.width = "90%", fig.cap = "Point, Radius, and LiDAR pixel selection methods for Berkeley Park with numbered trees", fig.scap = "Pixel selection method comparison with numbered trees"}
+include_graphics("figure/layered_outputs_2.png")
+
+```
+
+The point method is the simplest method, obtaining a single NDVI value
+from the individual pixel that spatially contains an individual tree
+location point. The statistically significant difference in the NDVI
+values for trees categorized as **fair** and **good** seems to be
+primarily driven by the THPL data.
+
+Given that only one pixel value is used to represent the NDVI of an
+entire tree in the point method, that single pixel likely misrepresents
+the health of the tree. If the location point is incorrect, the NDVI
+value may not belong to the tree of interest. The pixel method NDVI
+values statistically significantly higher than the NDVI values obtained
+through the other two pixel selection methods. This can be attributed to
+the use of a single pixel rather than an average of pixel NDVI values.
+The approximated center of the tree represented by the tree location
+point will generally be greener than pixels on the edge because the NDVI
+value for a pixel is the average NDVI for all data within that pixel,
+and the central pixel likely contains mostly tree canopy, and ideally
+little to no information on ground cover surrounding the tree. This is
+emphasized in figure \@ref(fig:layered-outputs-2), which highlights the
+large variance in pixel selection extent for the three methods and how
+much data is missed by the point method. What is missed by the point
+method is overcompensated by the radius method.
+
+The radius method averages the NDVI values of pixels within a buffered
+circle with the size defined by the measured or predicted tree canopy
+width. The radius method data had a statistically significant difference
+in average NDVI values between **good** and **poor** categorized trees
+as well as **good** and **fair** categorized trees. There is a larger
+difference between **fair** and **good** than **fair** and **poor**,
+which is also seen in the point method data.
+
+## Predicting Tree Health

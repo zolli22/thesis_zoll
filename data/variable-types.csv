@@ -1,0 +1,53 @@
+Variable name,Street trees,Park trees,CNH2 trees
+Location (lat/long),x,x,x
+Family,x,x,x
+Genus,x,x,x
+Species,x,x,x
+DBH,x,x,x
+Inventory Date,x,x,x
+Health Condition,x,x,x
+Common name,x,x,x
+Tree height,,x,x
+Crown width,,x,x
+Park name,,x,x
+Volunteer or Staff?,x,x,
+Functional type,x,x,
+Scientific name,x,x,x
+Mature size (S/M/L),x,x,
+Native (Y/N),,x,
+Edible (Y/N),x,x,
+Nuisance (Y/N),,x,
+Structural value,,x,
+Carbon storage (lb),,x,
+Carbon storage (value),,x,
+Carbon sequestration (lb),,x,
+Carbon sequestration (value),,x,
+Stormwater (ft),,x,
+Stormwater (value),,x,
+Pollution removal (value),,x,
+Pollution removal (oz),,x,
+Total annual services,,x,
+Origin,,x,
+Species factoid,,x,
+Site type,x,,x
+Site width,x,,
+Wires (Y/N),x,,
+Site development,x,,
+Site size,x,,
+Address,x,,
+Neighborhood,x,,x
+Canopy base height,,,x
+Leaf area index,,,x
+% canopy missing or dead,,,x
+Foliage scorching,,,x
+"Evidence of injury, infestation, or disease",,,x
+Foliage chrorophyll content,,,x
+Chlorophyll fluorescence,,,x
+Stomatal conductance,,,x
+"Temperature (canopy, bole, air, ground)",,,x
+Wind speed,,,x
+Light level,,,x
+Ground cover type,,,x
+Evidence of watering,,,x
+Presence of buildings within 25m,,,x
+Nearest neighbor,,,x

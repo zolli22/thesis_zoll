@@ -2,8 +2,8 @@
 bibliography: references.bib
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(message = F, warning = F, tidy = TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60))
+```{r setup-2, include=FALSE}
+knitr::opts_chunk$set(message = F, warning = F, fig.align='center')
 ```
 
 ```{r, echo = F}
@@ -18,39 +18,56 @@ method_pal <- c("#FBCF9D", "#7dcfb6", "#f79256")
 
 ## Canopy Width and Tree Height Model
 
-I used a third order polynomial regression to predict both tree height and crown width from tree DBH. In order to account for expected differences between species, I included species as an interaction term. I chose a third order polynomial because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species. While the 
-The tree height model has an adjusted R-squared value of 0.78, and a P-value of < 2.2e-16 (Figure \@ref(fig:height-model)). The crown width model has an adjusted R-squared value of 0.72, and a P-value of < 2.2e-16 (Figure \@ref(fig:width-model-g), \@ref(tree-model-eqs)).
+<!-- Why a 3rd order polynomial? Was it just the best statistical relationship? Superficially, that seems like an overfit to me, because I can’t think of a biological reason that the growth relationship would go through multiple inflection points like that? And any curve that shows a decrease in height over a certain DBH threshold seems like it indicates a problem with the model to me.  -->
 
-```{r tree-model, include = F, cache=TRUE}
+I used a second order polynomial regression to predict both tree height and crown width from tree DBH. There are numerous expected differences between the species due to functional tree type. For example, the average DBJ for ACMA and PSME are relatively close, but the average height for a PSME individual is nearly twice as tall as an ACMA (Table \@ref(tab:tree-stats-table)). Because of this, DBH would have a very different effect on the outcome of both models depending on the species of the tree. I included species as an interaction term in the model to account for these expected differences between species, meaning that both DBH and species were used to predict crown width and tree height. I tested a linear model as well as second and third order polynomial models for both predictive models (Figures \@ref(fig:test-height-model), \@ref(fig:test-width-model)). A second order polynomial was chosen for the predictive models because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species. 
+
+```{r, include = F}
 # load park data, filter to relevant species, and get average crown width.
 my_park <- pdxTrees::get_pdxTrees_parks() %>%
   filter(Species %in% c('ACPL', 'THPL', 'PSME', 'ACMA')) %>%
   mutate(crown_width = (Crown_Width_EW+Crown_Width_NS)/2)
+```
 
+```{r  tree-stats-table, echo = F, results = 'asis'}
+kable(my_park %>% 
+  group_by(Species) %>%
+  summarise(mean(DBH), mean(Tree_Height), mean(crown_width)),
+  booktabs = TRUE, col.names = c("Species", "Avg. DBH", "Avg. Tree Height", "Avg. Crown Width"),
+  caption = "Average physiological measurements for selected species in the Park Trees database.",
+  caption.short = "Physiological Tree Measurements", digits = 2)
+```
+
+
+The tree height model has an adjusted R-squared value of 0.7834, and a P-value of < 2.2e-16 (Figure \@ref(fig:height-model), Appendix \@ref(tree-model-eqs)). This model was most effective for ACMA and PSME, but was not statistically significant for ACPL or THPL. The crown width model has an adjusted R-squared value of 0.7269, and a P-value of < 2.2e-16 (Figure \@ref(fig:width-model-g), Appendix \@ref(tree-model-eqs)). The coefficients for the canopy width model had statistically significant p-values for all species. 
+
+```{r tree-model, include = F, cache=TRUE}
 # create model for heights
-heights <- lm(Tree_Height ~ poly(DBH, degree = 3, raw = T) * Species, data = my_park)
+heights <- lm(Tree_Height ~ poly(DBH, degree = 2, raw = T) * Species, data = my_park)
+summary(heights)
 
 # create model for crown width
-cr_width <- lm(crown_width ~ poly(DBH, degree = 3, raw = T) * Species, data = my_park)
+cr_width <- lm(crown_width ~ poly(DBH, degree = 2, raw = T) * Species, data = my_park)
+summary(cr_width)
 
 # load street data, filter to relevant species
 my_street <- pdxTrees::get_pdxTrees_streets() %>%
   filter(Species %in% c('ACPL', 'THPL', 'PSME', 'ACMA'))
 
 # run street trees through both models
-my_street <- my_street %>%
+my_street_2 <- my_street %>%
   mutate(width_preds = predict(cr_width, my_street, se.fit = FALSE), 
          height_preds = predict(heights, my_street, se.fit = F))
 
 # export data file
-# write_csv(my_street, "my_street.csv")
+# write_csv(my_street, "data/my_street_2.csv")
 
 # graphing
 p_height_model <- my_park %>% 
   ggplot(aes(x = sqrt(DBH), y = Tree_Height, color = Species)) +
   geom_point(alpha = .1)+
   scale_color_manual(values = species_pal)+
-  geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 3, raw = T))+
+  geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 2, raw = T))+
   labs(subtitle = "Park trees", y = "Tree Height Measurement")+
   guides(color = "none")
 
@@ -58,29 +75,31 @@ p_width_model <- my_park %>%
   ggplot(aes(x = sqrt(DBH), y = crown_width, color = Species)) +
   geom_point(alpha = .1)+
   scale_color_manual(values = species_pal)+
-  geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 3, raw = T))+
+  geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 2, raw = T))+
   labs(subtitle = "Park trees", y = "Canopy Width Measurement")+
   guides(color = "none")
 
-s_height_preds <- my_street %>% 
+s_height_preds <- my_street_2 %>% 
   ggplot(aes(x = sqrt(DBH), y = height_preds, color = Species)) +
   geom_point(alpha = .3)+
   scale_color_manual(values = species_pal)+
   labs(subtitle = "Street trees", y = "Tree Height Prediction")
 
-s_width_preds <- my_street %>% 
+s_width_preds <- my_street_2 %>% 
   ggplot(aes(x = sqrt(DBH), y = width_preds, color = Species)) +
   geom_point(alpha = .3)+
   scale_color_manual(values = species_pal)+
   labs(subtitle = "Street trees", y = "Canopy Width Prediction")
 ```
 
-```{r height-model, echo = F, fig.scap="Tree height predictive model", out.width= "80%", fig.cap = "Predictive model for tree height from measured DBH. A third order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.72, P <2.2e-16)"}
-p_height_model + s_height_preds 
+```{r height-model, echo = F, fig.scap="Tree height predictive model", out.width= "80%", fig.cap = "Predictive model for tree height from measured DBH. A second order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.7834, P < 2.2e-16)"}
+p_height_model + s_height_preds +
+  plot_annotation(title = "Tree Height Model and Predictions")
 ```
 
-```{r width-model-g, echo = F, fig.scap="Crown width predictive model", out.width = "80%", fig.cap = "Third order polynomial model for predicting tree crown width based on measured DBH and species, with predictions for street trees. (R-squared = 0.72,  P <2.2e-16)"}
-p_width_model + s_width_preds
+```{r width-model-g, echo = F, fig.scap="Crown width predictive model", out.width = "80%", fig.cap = "Second order polynomial model for predicting tree crown width based on measured DBH and species, with predictions for street trees. (R-squared = 0.7269,  P < 2.2e-16)"}
+p_width_model + s_width_preds +
+  plot_annotation(title = "Crown Width Model and Predictions")
 ```
 
 ## Point Method
@@ -94,21 +113,23 @@ cnh_point <- read_csv("data/cnh_point.csv") %>%
                                TRUE ~ "conifer"))
 ```
 
-With the selection of CNH trees and 2021 NDVI data, a statistical analysis of the point value method shows that there is a statistically significant difference in the average NDVI values between health categorizations of "Fair" and "Good" (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD). There is a general positive correlation between NDVI and health category, specifically Fair and Good. The relationship between health and NDVI is more apparent in the two maple species, but still holds in the "fair" and "good" categories in the two coniferous species (Figure \@ref(fig:point-species)). 
+With the selection of CNH trees and 2021 NDVI data, a statistical analysis of the point value method shows that there is a statistically significant difference in NDVI values between health categorizations of **fair** and **good** (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD). There is a general positive correlation between NDVI and health category, specifically **fair** and **good**. The relationship between health and NDVI is more apparent in the two maple species, but still holds in the **fair** and **good** categories in the two coniferous species (Figure \@ref(fig:point-species)). 
 
 ```{r, include = F}
 summary(aov(sample_ndvi ~ health_rat, data = cnh_point))
 TukeyHSD(aov(sample_ndvi ~ health_rat, data = cnh_point))
 ```
 
-```{r point-species, echo = F, out.width = "100%", fig.scap = "Point Method NDVI and Health Rating, by Species", fig.cap="NDVI extracted for CNH trees using the point method compared to CNH tree health categorization. There is a statistically significant difference between Fair and Good (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD)"}
+(ref:my-caption-1) NDVI extracted for CNH trees using the point method compared to CNH tree health categorization. There is a statistically significant difference between **fair** and **good** (ANOVA, $F_{2, 109} = 3.892$, $P = 0.023$, TukeyHSD)
+
+```{r point-species, echo = F, out.width = "100%", fig.scap = "Point Method NDVI and Health Rating, by Species", fig.cap="(ref:my-caption-1)"}
 cnh_point %>%
   ggplot(aes(x = health_rat, y = sample_ndvi))+
   scale_color_manual(values = species_pal)+
   geom_boxplot()+
   geom_point(aes(color = species), alpha = .2, size = 3)+
   facet_wrap(~species)+
-  labs(x = "Health Rating", y = "Mean NDVI")
+  labs(x = "Health Rating", y = "NDVI", title = "Point Method NDVI and Health Rating for CNH trees")
 ```
 
 
@@ -123,22 +144,21 @@ cnh_radius <- read_csv("data/cnh_radius.csv") %>%
                                TRUE ~ "conifer"))
 ```
 
-With the radius method of pixel selection and crown delineation, there is a statistically significant difference in the mean NDVI values for health categories (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$). Similar to the point method, there is a larger difference in average NDVI between the "fair" and "good" categories than "poor" and "fair", and with the radius method, this is now a statistically significant difference (Figure \@ref(fig:radius-species)). 
+With the radius method of pixel selection and crown delineation, there is a statistically significant difference in the mean NDVI values for health categories (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: **good-poor** $P = 0.033$, **good-fair** $P = 0.014$). Similar to the point method, there is a larger difference in average NDVI between the **fair** vs **good** categories than **poor** vs **fair**, which is statistically significant in the radius method results (Figure \@ref(fig:radius-species)). 
 
 ```{r, include = F}
 summary(aov(sample_ndvi ~ health_rat, data = cnh_radius))
 TukeyHSD(aov(sample_ndvi ~ health_rat, data = cnh_radius))
 ```
 
-```{r radius-species, echo = F, fig.scap = "Radius method mean NDVI and health condition by species", fig.cap = "Boxplot of average NDVI from radius method and health condition, by species. The relationship berween NDVI and health category is strongest in the maples, but still somewhat aparent in the conifers. (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$)", out.width = "100%"}
+```{r radius-species, echo = F, fig.scap = "Radius method mean NDVI and health condition by species", fig.cap = "Boxplot of average NDVI from radius method and health condition, by species. The relationship between NDVI and health category is strongest in the maples, but still somewhat aparent in the conifers. (ANOVA, $F_{2,109}=4.923$, $P = 0.0089$; TukeyHSD: good-poor $P = 0.033$, good-fair $P = 0.014$)", out.width = "100%"}
 cnh_radius %>%
   ggplot(aes(x = health_rat, y = sample_ndvi))+
   scale_color_manual(values = species_pal)+
   geom_boxplot()+
   geom_point(aes(color = species), alpha = .2, size = 3)+
   facet_wrap(~species)+
-  theme_minimal()+
-  labs(x = "Health Rating", y = "Mean NDVI")
+  labs(x = "Health Rating", y = "Mean NDVI", title = "Radius Method NDVI and Health Rating for CNH Trees")
 ```
 
 ## LiDAR Method
@@ -152,29 +172,30 @@ cnh_lidar <- read_csv("data/cnh_lidar.csv") %>%
                                TRUE ~ "conifer"))
 ```
 
-There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between good and fair (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD). The same relationship between NDVI and health condition for the maples that was seen in the point and radius method is seen here (Figure \@ref(fig:lidar-species)). 
+There is a statistically significant difference in NDVI between health categories for the LiDAR method, specifically between **good** and **fair** (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD). The same relationship between NDVI and health condition for the maples that was seen in the point and radius method is seen here (Figure \@ref(fig:lidar-species)). 
 
 ```{r, include = F}
 summary(aov(sample_ndvi ~ health_rat, data = cnh_lidar))
 TukeyHSD(aov(sample_ndvi ~ health_rat, data = cnh_lidar))
 ```
 
-```{r lidar-species, echo = F, out.width = "100%", fig.scap = "NDVI and health condition for LiDAR method", fig.cap = "Boxplot of average NDVI from LiDAR method and health condition for each species. Due to the nature of the LiDAR delineation algorithm, no crown was detected for the PSME individual with a poor health rating. The difference between good and fair average NDVIs is statistically significant (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD)"}
+(ref:my-cap-2) Boxplot of average NDVI from LiDAR method and health condition for each species. Due to the nature of the LiDAR delineation algorithm, no crown was detected for the PSME individual with a **poor** health rating. The difference between **good** and **fair** average NDVIs is statistically significant (ANOVA, $F_{2,101} = 5.405$, $P = 0.00589$, TukeyHSD)
+
+```{r lidar-species, echo = F, out.width = "100%", fig.scap = "NDVI and health condition for LiDAR method", fig.cap = "(ref:my-cap-2)"}
 cnh_lidar %>%
   ggplot(aes(x = health_rat, y = sample_ndvi))+
   scale_color_manual(values = species_pal)+
   geom_boxplot()+
   geom_point(aes(color = species), alpha = .2, size = 3)+
   facet_wrap(~species)+
-  theme_minimal()+
-  labs(x = "Health Rating", y = "Mean NDVI")
+  labs(x = "Health Rating", y = "Mean NDVI", title = "LiDAR Method NDVI and Health Rating for CNH Trees")
 ```
 
 Another aspect of the LiDAR delineation method is the potential for data loss. Five ACMA and three PSME individuals were lost in the LiDAR crown delineation process. If this was with a very large sample size the data loss would likely not be detrimental but especially with a sample size such as mine, a loss of eight trees is a loss of 5% of the total data, 17% loss for ACMA, and 12% loss for THPL.  
 
 ## Method Comparison
 
-There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, $F_{2, 325}=517.8$, $P < 2e-16$; TukeyHSD, radius-point $P = 0.00$, lidar-point $P = 0.00$). When the species are clumped, the three methods show very similar patterns, though the NDVI values are higher for the point method than either of the other two methods (Figure \@ref(fig:methods-all-species)). When all three methods are compared along with species, we can see that the general trend of health rating and NDVI is consistent within each species, but varies across methods (Figure \@ref(fig:methods-species)). Additionally, the pattern between health rating and NDVI is also very similar between trees of the same functional type. Because of the similarities in health patter, I included additional testing examining the difference in species specificity addition versus functional type separation.
+There is a statistically significant difference in NDVI values for the three different pixel selection methods (ANOVA, $F_{2, 325}=517.8$, $P < 2e-16$; TukeyHSD, radius-point $P = 0.00$, lidar-point $P = 0.00$). When the species are clumped, the three methods show very similar patterns, though the NDVI values are higher for the point method than either of the other two methods (Figure \@ref(fig:methods-all-species)). When all three methods are compared along with species, we can see that the general trend of health rating and NDVI is consistent within each species, but varies across methods (Figure \@ref(fig:methods-species)). Additionally, the pattern between health rating and NDVI is also very similar between trees of the same functional type. Because of these similarities in health rating and NDVI values for trees belonging to the same functional type, I included additional testing examining the difference in species specificity addition versus functional type separation.
 
 ```{r, include = F}
 cnh_long <- cnh_point %>%
@@ -280,15 +301,17 @@ summary(point_species)
 cfm_p_species$overall
 ```
 
-In order to determine the impact of differentiating by species in predictive models, I ran three different models for each point selection method, moving from least to most specific: a model that only uses NDVI to predict health rating, a model that includes functional tree type as an interaction term, and a third model that includes species as an interaction term (Table \@ref(tab:model-table)). Due to the limited sample size of the data I am working with, the following models are trained and tested on the same data. If it were to work perfectly, the model would correctly predict the health condition of a CNH tree 100% of the time. The data I use is not perfect, and the models are not perfect either. However, it is important to note that they are likely an idealized version of how model testing and training would work in reality. 
+In order to determine the impact of differentiating by species in predictive models, I ran three different models for each point selection method, moving from least to most specific: a model that only uses NDVI to predict health rating, a model that includes functional tree type as an interaction term, and a third model that includes species as an interaction term (Table \@ref(tab:model-table)). Due to the limited sample size of the data I am working with, the following models are trained and tested on the same data. If it were to work perfectly, the model would correctly predict the health condition of a CNH tree 100% of the time. 
+<!-- The data I use is not perfect, and the models are not perfect either.  -->
+However, it is important to note that they are likely an idealized version of how model testing and training would work in reality. 
 
-For each model, I evaluate the success and ability to predict health rating in a few different ways. First, I examine the calculated accuracy and kappa values. A higher kappa value is more important than a higher accuracy score because kappa takes into account the various sizes of the categories and the probability of the prediction occurring by chance, whereas accuracy does not. Additionally, I look at the false positives (a "poor" tree getting rated "good") and false negatives (a "good" tree being rated "poor"). Both of these values should be as low as possible, but in this case a reducing the number of false positives is most important because if a tree in poor health was rated as good, it may not be included in further health analysis and will be missed when examining the spatial distribution of tree health.
+For each model, I evaluate the success and ability to predict health rating in a few different ways. First, I examine the calculated accuracy and kappa values. A higher kappa value is more important than a higher accuracy score because kappa takes into account the various sizes of the categories and the probability of the prediction occurring by chance, whereas accuracy does not. Additionally, I look at the false positives (a **poor** tree getting rated **good**) and false negatives (a **good** tree being rated **poor**). Both of these values should be as low as possible, but in this case reducing the number of false positives is most important because if a tree in **poor** health was rated as **good**, it may not be included in further health analysis and will be missed when examining the spatial distribution of tree health.
 
-With the point method data, the first model with no interaction term led to all tree points being rated as "Fair" (Figure \@ref(fig:point-model-split)a). The addition of tree type as an interaction term led to an increase in predictions of "good" health trees, and increased kappa from 0% to 15% (Figure \@ref(fig:point-model-split)b). The overall accuracy only increased by 2%, but kappa is more informative in terms of model validity than the accuracy score. Using tree species instead of tree type further improved the kappa of the model. The number of "good" trees that were correctly predicted increased from 7 to 13, but additionally the number of "fair" trees that were correctly predicted dropped from 64 to 59, with the new predictions as "good" (Figure \@ref(fig:point-model-split)c). None of the model that used the data obtained by the point method were able to correctly predict any trees with poor health categorization, and in models b and c, each had one "poor" tree that was incorrectly predicted as "good". 
+With the point method data, the first model with no interaction term led to all tree points being rated as **fair** (Figure \@ref(fig:point-model-split)a). The addition of tree type as an interaction term led to an increase in predictions of **good** health trees, and increased kappa from 0% to 15% (Figure \@ref(fig:point-model-split)b). The overall accuracy only increased by 2%, but kappa is more informative in terms of model validity than the accuracy score. Using tree species instead of tree type further improved the kappa of the model. The number of **good** trees that were correctly predicted increased from 7 to 13, but additionally the number of **fair** trees that were correctly predicted dropped from 64 to 59, with the new predictions as **good** (Figure \@ref(fig:point-model-split)c). None of the model that used the data obtained by the point method were able to correctly predict any trees with **poor** health categorization, and in models b and c, each had one **poor** tree that was incorrectly predicted as **good**. 
 
 ```{r point-model-split, echo = F, out.width = "90%", fig.scap = "Confusion matrixes for Point method predictive models", fig.cap = "Confusion Matrix results for three predictive models, using point method obtained NDVI data to predict three health rating. (a) Model only using NDVI to predict health rating. (b) Model using both NDVI and functional tree type (broadleaf vs confier) to predict health rating. (c) Model using NDVI and tree species to predict health rating."}
 (p_all + p_type + p_species) + 
-  plot_annotation(tag_levels = "a", tag_suffix = ")", title = "Point method") + 
+  plot_annotation(tag_levels = "a", tag_suffix = ")", title = "Confusion Matrixes for Point Method NDVI Models") + 
   plot_layout(ncol = 2)
 ```
 
@@ -325,11 +348,13 @@ summary(radius_species)
 cfm_r_species$overall
 ```
 
-The models created with the data obtained through the radius method were slightly more successful than the point method for the model, with all three method models performing better than each respective model with the point method data. Including no species or tree type specification in the predictive model still seems to perform the worst of the three models, with 96% of the sampled trees being predicted as "fair" (Figure \@ref(fig:radius-model-split)a). Between using NDVI to NDVI and tree type as predictor variables, there was an increase in the number of trees being rated as in good health of 9 trees in total, but only 6 of those were additional correct predictions (Figure \@ref(fig:radius-model-split)b). The main takeaway from the radius method models is that with the inclusion of species as an interaction term with the radius data, we see our first predictions of the "poor" category. The radius method does involve more pixels than the point method, and with the range in NDVI values being lower than that of the point method it makes sense that there is an increase in "poor" rated trees. However, out of the 15 reference trees with health ratings of "poor", only one was correctly predicted as such (Figure \@ref(fig:radius-model-split)c).
+<!-- The models created with the data obtained through the radius method were slightly more successful than the point method for the model, with all three method models performing better than each respective model with the point method data.  -->
+
+Including no species or tree type specification in the predictive model still seems to perform the worst of the three models, with 96% of the sampled trees being predicted as **fair** (Figure \@ref(fig:radius-model-split)a). Between using NDVI to NDVI and tree type as predictor variables, there was an increase in the number of trees being rated as in **good** health of 9 trees in total, but only 6 of those were additional correct predictions (Figure \@ref(fig:radius-model-split)b). The main takeaway from the radius method models is that with the inclusion of species as an interaction term with the radius data, we see our first predictions of the **poor** category. The radius method does involve more pixels than the point method, and with the range in NDVI values being lower than that of the point method it makes sense that there is an increase in **poor** rated trees. However, out of the 15 reference trees with health ratings of **poor**, only one was correctly predicted as such (Figure \@ref(fig:radius-model-split)c).
 
 ```{r radius-model-split, echo = F, out.width = "90%", fig.scap = "Confusion matrixes for Radius method predictive models", fig.cap = "Confusion matrixes for each species predictions with radius method data. (a) Model using only NDVI to predict health rating. (b) Model with the addition of functional tree type as a predictor. (c) Model using tree species as a variable when predicting tree health rating."}
 (r_all + r_type + r_species) + 
-  plot_annotation(tag_levels = "a", tag_suffix = ")", title = "Radius method") + 
+  plot_annotation(tag_levels = "a", tag_suffix = ")", title = "Confusion Matrixes for Radius Method NDVI Models") + 
   plot_layout(ncol = 2)
 ```
 
@@ -367,16 +392,16 @@ summary(lidar_species)
 cfm_l_species$overall
 ```
 
-The LiDAR data was the most effective at predicting tree health across all three pixel selection methods. With the first model using only NDVI to predict health rating, more trees were correctly predicted as "good" than the same model with the other two methods (Figure \@ref(fig:lidar-model-split)a). With the addition of tree type as a predictor variable, the number of correctly predicted "good" trees increased, but most importantly, the number of "fair" trees predicted as "good" remained the same where with the other two methods, that count had increased as well. However, this model also included a "good" tree being predicted as "poor" which no other variations of the models did (Figure \@ref(fig:lidar-model-split)b). The last model with species as an interaction term was the most effective of all 9 models, with the highest accuracy and kappa, as well as the smallest p-value (Figure \@ref(fig:lidar-model-split)c). 
+The LiDAR data was the most effective at predicting tree health across all three pixel selection methods. With the first model using only NDVI to predict health rating, more trees were correctly predicted as **good** than the same model with the other two methods (Figure \@ref(fig:lidar-model-split)a). With the addition of tree type as a predictor variable, the number of correctly predicted **good** trees increased, but most importantly, the number of **fair** trees predicted as **good** remained the same where with the other two methods, that count had increased as well. However, this model also included a **good** tree being predicted as **poor** which no other variations of the models did (Figure \@ref(fig:lidar-model-split)b). The last model with species as an interaction term was the most effective of all 9 models, with the highest accuracy and kappa, as well as the smallest p-value (Figure \@ref(fig:lidar-model-split)c). 
 
 
 ```{r lidar-model-split, echo = F, out.width = "90%", fig.scap = "Confusion matrixes for LiDAR method predictive models", fig.cap = "Confusion matrixes for each species predictions with LiDAR method obtained NDVI values. (a) Model using NDVI to predict tree health category. (b) Model using functional tree type in addition to NDVI for health prediction. (c) Model with species as a predictor variable for NDVI based tree health category."}
 (l_all + l_type + l_species) + 
-  plot_annotation(tag_levels = "a", tag_suffix = ")", title = "LiDAR method") + 
+  plot_annotation(tag_levels = "a", tag_suffix = ")", title = "Confusion Matrixes for LiDAR Method NDVI Models") + 
   plot_layout(ncol = 2)
 ```
 
-Given the uneven number of data points available for the varying health conditions, I down-sampled each health rating to the smallest number of points in a given category (Point = 15, Radius = 15, LiDAR = 13). When the predictive models were ran with the even category sizes, the results were statistically significant for all three pixel selection models. The point and radius method models correctly predicted the health ratings for most of the "poor" and "good" rated trees but not for "fair" rated trees, which is the opposite of what we saw with the previous models. The LiDAR model had the highest proportion of correctly predicted health ratings across all three health categories (Figure \@ref(fig:final-model-small)).
+Given the uneven number of data points available for the varying health conditions, I down-sampled each health rating to the smallest number of points in a given category (Point = 15, Radius = 15, LiDAR = 13). When the predictive models were ran with the even category sizes, the results were statistically significant for all three pixel selection models. The point and radius method models correctly predicted the health ratings for most of the **poor** and **good** rated trees but not for **fair** rated trees, which is the opposite of what we saw with the previous models. The LiDAR model had the highest proportion of correctly predicted health ratings across all three health categories (Figure \@ref(fig:final-model-small)).
 
 ```{r downsample-test, include = F, cache=TRUE}
 set.seed(2)
@@ -430,20 +455,10 @@ summary(test_lidar)
 cfm_lidar$overall
 ```
 
-```{r final-model-small, echo = F, out.width = "90%"}
+```{r final-model-small, echo = F, out.width = "90%", fig.cap = "Confusion matrixes for downsampled predictive models"}
 gg_point + gg_radius + gg_lidar +
   plot_layout(ncol = 2)
 ```
-
-```{r species-health-fig, echo = F, out.width = "90%"}
-ggplot(test_data_lidar, aes(fill = species, x = health_rat))+
-  geom_bar()+
-  scale_fill_manual(values = species_pal)+
-  labs(x = "Health rating", y = "Count")
-```
-
-
-To ensure that the results of the downsampled LiDAR data model were not caused by the random downsampling, I ran the model 6 times with different random samples each time (Figure \@ref(fig:lidar-model-test)). Given the results of all the models and the performance of the downsampled LiDAR model, I used that model with the randomly selected park and street trees to predict their health categorizations.
 
 ```{r final-lidar-model, include = F, cache = T}
 lidar_final_data <- lidar_sample_data %>%
@@ -457,7 +472,9 @@ lidar_final_data_2 <- lidar_final_data %>%
   mutate(condition = case_when(condition == "Good" ~ "good",
                                condition == "Fair" ~ "fair",
                                condition == "Poor" ~ "poor")) %>%
-  mutate(condition = fct_relevel(condition, levels = c("poor", "fair", "good")))
+  mutate(condition = fct_relevel(condition, levels = c("poor", "fair", "good"))) %>%
+  mutate(preds = fct_relevel(preds, levels = c("poor", "fair", "good")))
+
 
 final_cfm <- confusionMatrix(final_lidar_preds, lidar_final_data_2$condition)
 final_plot <- ggplotConfusionMatrix(final_cfm) 
@@ -469,6 +486,16 @@ lidar_final_data_2 %>%
   count(species, preds) 
 ```
 
+```{r final-lidar-counts, echo = F}
+kable(lidar_final_data %>% count(species),
+             booktabs = TRUE, longtable = TRUE,
+  col.names = c("Species", "Count"),
+  caption = 'Counts of each species in stratified random sample of park and street trees after LiDAR processing and NDVI calculation.',
+  caption.short = 'Species counts post LiDAR processing')
+```
+
+To ensure that the results of the downsampled LiDAR data model were not caused by the random downsampling, I ran the model 6 times with different random samples each time (Appendix \@ref(fig:lidar-model-tests-extra)). While the values did differ, the p-value for the model was significant for each test. I used the final downsampled LiDAR model to predict health rating for a random sample of 100 park and 100 street trees, with LiDAR calculated NDVI values. Due to the data loss in the LiDAR processing, the final data set contains 175 trees (85 street trees, 90 park trees) (Table \@ref(tab:final-lidar-counts)). This data was input into the final LiDAR model, created with the downsampled data. A health rating was predicted based on NDVI and tree species. The resulting health predictions were graphed along with sample NDVI (Figure \@ref(fig: final-lidar-plot)). For ACMA, there is a clear relationship between sample NDVI and health prediction which matches that seen in earlier data analysis. For ACPL, there is a large difference between the NDVI of **fair** and **good** trees, which also appears for PSME. for the THPL predictions, the average NDVI for **poor** trees is higher than those for **fair** trees. 
+
 ```{r final-lidar-plot, echo = F, out.width = "90%"}
 lidar_final_data_2 %>%
   ggplot(aes(x = preds, y = sample_ndvi, color = species))+
@@ -478,4 +505,9 @@ lidar_final_data_2 %>%
   facet_wrap(~species)+
   labs(x = "Predicted health rating", y = "Average NDVI", title = "LiDAR Model Results")
 ```
+
+
+
+
+
 

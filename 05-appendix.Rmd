@@ -7,55 +7,117 @@ bibliography: references.bib
 
 # Additional Data {#data}
 
+## Variable types
+
+```{r var-type-table, echo = F}
+var_types <- read_csv("data/var-types.csv") %>%
+  arrange(`Variable name`)
+
+kable(var_types,
+      booktabs = TRUE, longtable = TRUE, caption = "")
+```
+
+
+## Model Tests
+```{r, echo = F, cache=TRUE}
+# graphing
+testmodel_h_1 <- my_park %>% 
+  ggplot(aes(x = sqrt(DBH), y = Tree_Height, color = Species)) +
+  geom_point(alpha = .1)+
+  scale_color_manual(values = species_pal)+
+  geom_smooth(method = "lm", se = F, formula = y ~ x)+
+  labs(subtitle = "y ~ x", y = "Tree Height Measurement")+
+  guides(color = "none")
+
+testmodel_h_2 <- my_park %>% 
+  ggplot(aes(x = sqrt(DBH), y = Tree_Height, color = Species)) +
+  geom_point(alpha = .1)+
+  scale_color_manual(values = species_pal)+
+  geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 2, raw = T))+
+  labs(subtitle = "y ~ poly(x, 2)", y = "Tree Height Measurement")+
+  guides(color = "none")
+
+testmodel_h_3 <- my_park %>% 
+  ggplot(aes(x = sqrt(DBH), y = Tree_Height, color = Species)) +
+  geom_point(alpha = .1)+
+  scale_color_manual(values = species_pal)+
+  geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 3, raw = T))+
+  labs(subtitle = "y ~ poly(x, 3)", y = "Tree Height Measurement")
+
+testmodel_w_1 <- my_park %>% 
+  ggplot(aes(x = sqrt(DBH), y = crown_width, color = Species)) +
+  geom_point(alpha = .1)+
+  scale_color_manual(values = species_pal)+
+  geom_smooth(method = "lm", se = F, formula = y ~ x)+
+  labs(subtitle = "y ~ x", y = "Canopy Width Measurement")+
+  guides(color = "none")
+
+testmodel_w_2 <- my_park %>% 
+  ggplot(aes(x = sqrt(DBH), y = crown_width, color = Species)) +
+  geom_point(alpha = .1)+
+  scale_color_manual(values = species_pal)+
+  geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 2, raw = T))+
+  labs(subtitle = "y ~ poly(x, 2)", y = "Canopy Width Measurement")+
+  guides(color = "none")
+
+testmodel_w_3 <- my_park %>% 
+  ggplot(aes(x = sqrt(DBH), y = crown_width, color = Species)) +
+  geom_point(alpha = .1)+
+  scale_color_manual(values = species_pal)+
+  geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 3, raw = T))+
+  labs(subtitle = "y ~ poly(x, 3)", y = "Canopy Width Measurement")
+```
+
+```{r test-height-model, fig.cap = "Predicting tree height from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.", fig.scap = "Model tests for tree height predictions"}
+testmodel_h_1 + testmodel_h_2 + testmodel_h_3 +
+  plot_annotation(title = "Model testing for Tree Height predictions", caption = "x = DBH, y = tree height")
+```
+
+```{r test-width-model, fig.cap = "Predicting canopy width from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.", fig.scap = "Model tests for tree canopy width predictions"}
+testmodel_w_1 + testmodel_w_2 + testmodel_w_3 +
+  plot_annotation(title = "Model testing for Canopy Width predictions", caption = "x = DBH, y = canopy width")
+```
+
+
 ## Tree Height and Crown Width Predictive Model Equations {#tree-model-eqs} 
 
 \textbf{ACMA equations:} (\textit{x} = DBH) 
 \begin{equation}
-\textrm{Tree Height} = 8.977 + 3.617x -0.049x^{2} + 0.001x^{3}  \\
+\textrm{Tree Height} = 12.308 + 3.139x -0.032x^{2}  \\
 \end{equation}
 
 \begin{equation}
-\textrm{Crown Width} = 13.01 + 1.593x - 0.007x^{2} + 0.0004x^{3} \\
+\textrm{Crown Width} = 12.117 + 1.721x - 0.0122x^{2} \\
 \end{equation}
 
 \textbf{ACPL equations:} (\textit{x} = DBH) 
 \begin{equation}
-\textrm{Tree Height} = 10.955+ 2.67x -0.032x^2 + 0.001x^3  \\
+\textrm{Tree Height} = -1.359 - 0.464x + 0.000203x^2 \\
 \end{equation}
 
 \begin{equation}
-\textrm{Crown Width} = 6.445 + 2.29x - 0.009x^2 - 0.0002x^3 \\
+\textrm{Crown Width} = -7.155 + 0.894x - 0.0153x^2 \\
 \end{equation}
 
 \textbf{PSME equations:} (\textit{x} = DBH) 
 \begin{equation}
-\textrm{Tree Height} = -4.497 + 7.516x - 0.146x^2 + 0.001x^3 \\
+\textrm{Tree Height} = 0.2448 + 1.916x - 0.0187x^2 \\
 \end{equation}
 
 \begin{equation}
-\textrm{Crown Width} = 6.536 + 1.471x - 0.013x^2 + 0.0005x^3 \\
+\textrm{Crown Width} = -4.640583 - 0.3867x + 0.0046x^2 \\
 \end{equation}
 
 \textbf{THPL equations:} (\textit{x} = DBH) 
 \begin{equation}
-\textrm{Tree Height} = 7.311 + 3.457x - 0.0473x^2 + 0.001x^3 \\
+\textrm{Tree Height} = -3.5146 - 0.0388x + 0.00178x^2 \\
 \end{equation}
 
 \begin{equation}
-\textrm{Crown Width} = 5.113 + 1.622x - 0.032x^2 + 0.0002x^3 \\
+\textrm{Crown Width} = -4.953 - 0.5939x + 0.00512x^2 \\
 \end{equation}
 
-```{r extra-graph-1, echo = F}
-cnh_long %>%
-  ggplot(aes(y = sample_ndvi, x = health_rat, color = method))+
-  scale_color_manual(values = method_pal)+
-  geom_boxplot()+
-  facet_grid(rows = vars(tree_type), cols = vars(method))+
-  labs(x = "Health categorization", y = "Sample NDVI")+
-  guides(color = "none")
-```
-
-## Additional Model Information {-}
+## Additional Information on Health Predictive Model 
 ```{r model-table, echo = F, results='asis'}
 model_variations <- read_csv("data/model_variations.csv") %>%
     dplyr::select(-6, -7) %>%
@@ -69,7 +131,7 @@ knitr::kable(model_variations,
   caption.short = 'Summary of results from various predictive models')
 ```
 
-## Model Confusion Matrixes, organized by model equation {-}
+## Model Confusion Matrixes, organized by model equation
 ```{r, echo = F}
 p_all + 
     labs(subtitle = "Point method")+
@@ -99,15 +161,20 @@ p_species +
   plot_annotation(subtitle = "formula = health rating ~ NDVI * species")
 ```
 
-
-## LiDAR model tests {-}
-```{r lidar-model-test, echo = F, out.width = "100%"}
+## LiDAR model tests {#lidar-model-tests-extra}
+```{r lidar-model-test, echo = F, out.width = "100%", fig.scap = "Confusion matrixes for LiDAR predictive model tests"}
 knitr::include_graphics("figure/test.png")
 ```
 
+## Predicted Health Rating and Species Counts
+
+```{r preds-counts, echo = F, out.width = "90%", fig.cap = "Graph of species counts for LiDAR health predictions"}
+ggplot(lidar_final_data_2, aes(x = preds, fill = species))+
+  geom_bar(position = "dodge")+
+  scale_fill_manual(values = species_pal)
+```
 
 # Code {#code-chunks}
-
 
 This second appendix includes all of the R chunks of code that were hidden throughout the document to help with readability and/or setup.
 

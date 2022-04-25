@@ -1,5 +1,6 @@
 ---
-title: 'Tree Health from Space: Open Source and Accessible Categorization and Modeling of Urban Tree Health using Multispectral Satellite Imagery'
+title: 'Tree Health from Space:'
+subtitle: 'Open Source and Accessible Categorization and Modeling of Urban Tree Health using Multispectral Satellite Imagery'
 author: 'Ingrid Tallulah Loraine Zoll'
 date: 'May 2022'
 institution: 'Reed College'
