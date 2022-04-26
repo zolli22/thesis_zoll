@@ -113,7 +113,7 @@
   \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % To pass between YAML and LaTeX the dollar signs are added by CII
-\title{Tree Health from Space: \\[1ex] Open Source and Accessible Categorization and Modeling of Urban Tree Health using Multispectral Satellite Imagery}
+\title{Tree Health from Space: \\[1ex] Modeling Urban Tree Health using Multispectral Satellite Imagery in Portland, OR}
 \author{Ingrid Tallulah Loraine Zoll}
 % The month and year that you submit your FINAL draft TO THE LIBRARY (May or December)
 \date{May 2022}
@@ -189,13 +189,26 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \Acknowledgements{
-I want to thank some people\ldots{}
+Aaron and Anna
+
+Mama and Nic
+
+Papa and Katherine
+To my siblings: Forest, thank you for being the coolest big brother I could ever want. Anna, I am so glad that you have become part of my life - the strawberry earrings you made me have become my good luck charm this year. Sabina, thank you for the facetime calls and the junior high drama updates. Wren, thank you for the funny faces and your constant sweet encouragement. Vivian, thank you for the beanie babies and the drawings you sent me.
+
+Mr.~Sirovy and Mr.~Ruff
+
+KBott
+
+Elin and Victoria, Cayden and Brendan
+
+Mila
+
+Myself!
 }
 
 \Dedication{
-DEDICATION TESTING
-
-test
+To those who speak for the trees
 }
 
 \Preface{
@@ -204,12 +217,7 @@ test
 
 
 \Abstract{
-The preface pretty much says it all.
-
-\par
-
-Second paragraph of abstract starts here.
-TESTING TESTING TESTING
+Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide. Due to the size of urban forests and the time consuming practice of field health assessments, recent research into tree health has turned to satellite imagery as a tool for evaluating tree health. This thesis tests three different tree canopy delineation techniques to determine which is the most effective for obtaining tree health information on four key species in Portland: \emph{Acer macrophyllum}, \emph{Acer platanoides}, \emph{Pseudotsuga menziesii}, and \emph{Thuja plicata}. With field data collected in the summer of 2021, I created a predictive model for tree health categorization based on the Normalized Difference Vegetation Index.
 }
 
 	\usepackage{setspace}\onehalfspacing
@@ -226,7 +234,22 @@ TESTING TESTING TESTING
 \frontmatter % this stuff will be roman-numbered
 \pagestyle{empty} % this removes page numbers from the frontmatter
   \begin{acknowledgements}
-    I want to thank some people\ldots{}
+    Aaron and Anna
+
+    Mama and Nic
+
+    Papa and Katherine
+    To my siblings: Forest, thank you for being the coolest big brother I could ever want. Anna, I am so glad that you have become part of my life - the strawberry earrings you made me have become my good luck charm this year. Sabina, thank you for the facetime calls and the junior high drama updates. Wren, thank you for the funny faces and your constant sweet encouragement. Vivian, thank you for the beanie babies and the drawings you sent me.
+
+    Mr.~Sirovy and Mr.~Ruff
+
+    KBott
+
+    Elin and Victoria, Cayden and Brendan
+
+    Mila
+
+    Myself!
   \end{acknowledgements}
 
 \chapter*{List of Abbreviations}
@@ -238,9 +261,12 @@ TESTING TESTING TESTING
                 \textbf{CHM} & Canopy Height Model \\
                 \textbf{CNH} & Coupled Natural-Human (in reference to the CNH2 Project data) \\
                 \textbf{DBH} & Diamater at Breast Height \\
+                \textbf{GIS} & Geographic Information System \\
                 \textbf{LiDAR} & Light Detection and Ranging \\
                 \textbf{NDVI} & Normalized Difference Vegetation Index \\
                 \textbf{PSME} & Douglas Fir (\textit{Pseudotsuga menziesii, Pinaceae}) \\
+                \textbf{QGIS} & Quantum Geographic Information System \\
+                \textbf{RLIS} & Regional Land Information System \\
                 \textbf{THPL} & Western Redcedar (\textit{Thuja plicata, Cupressaceae}) \\
             \end{tabular}
 \end{table}
@@ -253,23 +279,18 @@ TESTING TESTING TESTING
 
   \listoffigures
   \begin{abstract}
-    The preface pretty much says it all.
-
-    \par
-
-    Second paragraph of abstract starts here.
-    TESTING TESTING TESTING
+    Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide. Due to the size of urban forests and the time consuming practice of field health assessments, recent research into tree health has turned to satellite imagery as a tool for evaluating tree health. This thesis tests three different tree canopy delineation techniques to determine which is the most effective for obtaining tree health information on four key species in Portland: \emph{Acer macrophyllum}, \emph{Acer platanoides}, \emph{Pseudotsuga menziesii}, and \emph{Thuja plicata}. With field data collected in the summer of 2021, I created a predictive model for tree health categorization based on the Normalized Difference Vegetation Index.
   \end{abstract}
   \begin{dedication}
-    DEDICATION TESTING
-
-    test
+    To those who speak for the trees
   \end{dedication}
 \mainmatter % here the regular arabic numbering starts
 \pagestyle{fancyplain} % turns page numbering back on
 
 \hypertarget{intro}{%
 \chapter{Introduction}\label{intro}}
+
+This thesis looks at \ldots{}
 
 \hypertarget{the-accessibility-of-science}{%
 \section{The Accessibility of Science}\label{the-accessibility-of-science}}
@@ -490,21 +511,21 @@ Portland Urban Forestry estimates that Portland's street trees produce
 an estimated \$28.6 million annually in environmental and aesthetic
 benefits, with a full replacement value of \$753 million (DiSalvo et al., 2017).
 Portland's inventoried park trees have an estimated worth of \$128
-million (Portland Urban Forestry, 2019). While Portland's tree inventories
-are spectacular resources which help shed light on the urban tree
-population in Portland and the benefits it can provide, there are
-limitations to the information available through the inventories.
+million (Portland Urban Forestry, 2019).
 
-One drawback of the inventories is that volunteers were only able to
-inventory trees on public land, which excluded any trees growing in
-yards or other privately owned areas. Since only developed portions of
-parks were inventoried, roughly 98\% of Portland's park trees, which are
-in natural and ``undeveloped areas'', were not inventoried . Additionally,
-since the inventories were collected over a 9 year period, the collected
-health assessments for many trees are no longer reliable or
-representative of present day conditions. They represent data from a
-range of 9 years and in the 11 years since inventory collection began
-much has changed.
+While Portland's tree inventories are spectacular resources which help
+shed light on the urban tree population in Portland and the benefits it
+can provide, there are limitations to the information available through
+the inventories. One drawback of the inventories is that volunteers were
+only able to inventory trees on public land, which excluded any trees
+growing in yards or other privately owned areas. Since only developed
+portions of parks were inventoried, roughly 98\% of Portland's park
+trees, which are in natural and ``undeveloped areas'', were not
+inventoried . Additionally, since the inventories were collected over a
+9 year period, the collected health assessments for many trees are no
+longer reliable or representative of present day conditions. They
+represent data from a range of 9 years and in the 11 years since
+inventory collection began much has changed.
 
 Measuring urban tree health through field surveys can be extremely time
 and labor intensive. It requires the collection of detailed data on
@@ -517,8 +538,8 @@ study period. Remote sensing data from satellite imagery can be used to
 locate and map trees in both urban and rural areas, as well as monitor
 tree health.
 
-\hypertarget{remote-sensing}{%
-\section{Remote Sensing}\label{remote-sensing}}
+\hypertarget{remote-sensing-in-urban-landscapes}{%
+\section{Remote Sensing in Urban Landscapes}\label{remote-sensing-in-urban-landscapes}}
 
 While the term ``remote sensing'' was first used in the 1960s, the first
 aerial images were taken in the 1850s from hot air balloons. Later,
@@ -535,29 +556,29 @@ purposes. Capturing aerial images from planes was the primary method of
 capturing images of the earth's surface until the early 1960s. Since the
 first satellite was launched in 1957, the technical capabilities of
 satellites has greatly increased, along with the types and applications
-of satellite-collected data (Khorram, 2012).
+of satellite-collected data (Khorram, 2012). Within the field of forestry
+and ecology, remote sensing has numerous applications, from measuring
+the cover and structure of vegetation, to examining biodiversity and
+soil characteristics of specific areas. Additionally, remote sensing
+measurements can be used to calculate and monitor changes in forest
+density, which is critical for determining the fuel load and forest
+health in regards to fire risk.
 
-Within the field of forestry and ecology, remote sensing has numerous
-applications, from measuring the cover and structure of vegetation, to
-examining biodiversity and soil characteristics of specific areas.
-Additionally, remote sensing measurements can be used to calculate and
-monitor changes in forest density, which is critical for determining the
-fuel load and forest health in regards to fire risk. One of the most
-commonly used remote sensing metrics used to measure forest health is
-the Normalized Difference Vegetation Index (NDVI), which is calculated
-from the red and near infrared (NIR) bands from remote sensing imagery.
-Vegetation that is photo-synthetically active absorbs most of the red
-light and reflects much of the near infrared light. Conversely,
-vegetation that is dead or stressed reflects more red light and absorbs
-more near infrared light. Biologically, NDVI can be interpreted as the
-fraction of absorbed photo-synthetically active radiation. A value
-closer to 1 indicates vegetation that is more photo-synthetically active
-and greener, which can be used as a proxy for vegetation health. NDVI is
-not a diagnostic tool of vegetation health, but can be used as an
-indicator of health for further analysis. Studies have shown that NDVI
-is highly correlated with chlorophyll content. Specifically, NDVI has a
-near-linear relationship to the chlorophyll content of soybean crops
-(Myneni, Hall, Sellers, \& Marshak, 1995; Tucker, 1979).
+One of the most commonly used remote sensing metrics used to measure
+forest health is the Normalized Difference Vegetation Index (NDVI),
+which is calculated from the red and near infrared (NIR) bands from
+remote sensing imagery (Section \ref{ndvi-calc-methods}). Vegetation
+that is photosynthetically active absorbs most of the red light and
+reflects much of the near infrared light. Conversely, vegetation that is
+dead or stressed reflects more red light and absorbs more near infrared
+light. Biologically, NDVI can be interpreted as the fraction of absorbed
+photosynthetically active radiation. A value closer to 1 indicates
+vegetation that is more photo-synthetically active and greener, which
+can be used as a proxy for vegetation health. NDVI is not a diagnostic
+tool of vegetation health, but can be used as an indicator of health for
+further analysis. Studies have shown that NDVI is highly correlated with
+chlorophyll content. Specifically, NDVI has a near-linear relationship
+to the chlorophyll content of soybean crops (Myneni, Hall, Sellers, \& Marshak, 1995; Tucker, 1979).
 
 Especially when the goal is monitoring tree health changes over time,
 remote sensing data eliminates the need for repeated sampling over long
@@ -655,12 +676,8 @@ research accessible to all.
 \hypertarget{data-methods}{%
 \chapter{Data Resources and Methods}\label{data-methods}}
 
-\hypertarget{overview}{%
-\section{Overview}\label{overview}}
-
 For this thesis, the data resources and processing components can be
 split into four main sections (Figure \ref{fig:methods-overview-fig}).
-
 First, there is the tree data which is used to answer the question
 ``Where are the trees?'' This includes the Portland park and street tree
 databases, and the subset of those trees that were selected for health
@@ -683,11 +700,9 @@ NDVI data files, which was done in Python. Third, are the different tree
 delineation methods I examine in this thesis, which include point value,
 radius, and LiDAR methods. This involved the processing of LiDAR and
 tree crown radius data, as well as obtaining and computing associated
-NDVI values.
-
-Lastly, with the combined data from the previous three parts, I created
-a predictive model for predicting tree health rating based on NDVI
-values.
+NDVI values. Lastly, with the combined data from the previous three
+parts, I created a predictive model for predicting tree health rating
+based on NDVI values.
 \begin{figure}
 
 {\centering \includegraphics[width=0.95\linewidth]{figure/methods-overview} 
@@ -738,16 +753,16 @@ categorization was also removed. The final CNH dataset for my analysis
 contained 112 trees (Table \ref{tab:cnh-tree-counts}).
 \begin{table}
 
-\caption[Final CNH Tree counts]{\label{tab:cnh-tree-counts}Founts of species for final CNH tree dataset}
+\caption[Final CNH Tree counts]{\label{tab:unnamed-chunk-1}Counts of species for final CNH tree dataset}
 \centering
-\begin{tabular}[t]{lr}
+\begin{tabular}[t]{lllr}
 \toprule
-Species code & Number collected\\
+Common name & Scientific name & Species code & Number collected\\
 \midrule
-ACMA & 29\\
-ACPL & 30\\
-PSME & 25\\
-THPL & 28\\
+Bigleaf Maple & *Acer macrophyllum* & ACMA & 29\\
+Norway Maple & *Acer platanoides* & ACPL & 30\\
+Douglas Fir & *Pseudotsuga menziesii* & PSME & 25\\
+Western Redcedar & *Thuja plicata* & THPL & 28\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -770,26 +785,27 @@ on 216,750 street trees of 145 genera. The park tree inventory,
 collected from 2017 to 2019, contains data on 25,740 park trees of 116
 genera. While many of the collected variables differ between the two
 inventories, they both include data on location, tree identification,
-DBH, and a visual assessment of the trees health which was rated as
-\textbf{good}, \textbf{fair}, \textbf{poor}, or dead (Table \ref{tab:var-type-table}).
+tree diameter at breast height (DBH), and a visual assessment of the
+trees health which was rated as \textbf{good}, \textbf{fair}, \textbf{poor}, or dead
+(Table \ref{tab:var-type-table}).
 
 To reduce the variability in data due to the time span of data
 collection, I filtered the street and park tree inventories to trees
 that were sampled in 2016 and 2019, respectively. For each dataset, the
 selected year was the year with the highest count of trees sampled
-(Tables \ref{tab:streettable} and \ref{tab:parktable}).
+(Tables \ref{tab:streettable} and \ref{tab:parktable}) (McConville, 2020).
 \begin{table}
 
 \caption[Species counts in Street Trees Database]{\label{tab:streettable}Species counts in the Portland Street Trees Database}
 \centering
-\begin{tabular}[t]{llrr}
+\begin{tabular}[t]{lrr}
 \toprule
-Species code & Scientific name & Collected in 2016 & Total in inventory\\
+Species code & Collected in 2016 & Total in inventory\\
 \midrule
-ACPL & Acer platanoides & 4373 & 19209\\
-THPL & Thuja plicata & 578 & 1341\\
-ACMA & Acer macrophyllum & 1306 & 2609\\
-PSME & Pseudotsuga menziesii & 1254 & 3141\\
+ACPL & 4373 & 19209\\
+THPL & 578 & 1341\\
+ACMA & 1306 & 2609\\
+PSME & 1254 & 3141\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -797,14 +813,14 @@ PSME & Pseudotsuga menziesii & 1254 & 3141\\
 
 \caption[Species counts in Park Trees Database]{\label{tab:parktable}Species counts in the Portland Park Trees Database}
 \centering
-\begin{tabular}[t]{llrr}
+\begin{tabular}[t]{lrr}
 \toprule
-Species code & Scientific name & Collected in 2019 & Total in inventory\\
+Species code & Collected in 2019 & Total in inventory\\
 \midrule
-ACPL & Acer platanoides & 411 & 1502\\
-THPL & Thuja plicata & 331 & 964\\
-PSME & Pseudotsuga menziesii & 3237 & 6783\\
-ACMA & Acer macrophyllum & 256 & 490\\
+ACPL & 411 & 1502\\
+THPL & 331 & 964\\
+PSME & 3237 & 6783\\
+ACMA & 256 & 490\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -825,7 +841,7 @@ rated \textbf{fair} is extremely high, especially in the park trees inventory
 \caption{Distribution of Health Ratings in the Portland Tree Inventories}\label{fig:rating-ratios}
 \end{figure}
 \hypertarget{canopy-width-and-tree-height-model}{%
-\section{Canopy width and tree height model}\label{canopy-width-and-tree-height-model}}
+\subsection{Canopy width and tree height model}\label{canopy-width-and-tree-height-model}}
 
 The park tree dataset contains measurements for tree height, canopy
 width, and DBH, but the street tree dataset only contains measurements
@@ -833,11 +849,33 @@ for DBH. Canopy width and tree height are both important factors for
 tree selection and canopy delineation. Using RStudio, I created a
 statistical model to predict tree height and crown width based on tree
 DBH and species, in order to be able to use the same pixel selection
-methods for both the park and street tree inventories.
+methods for both the park and street tree inventories (Section
+\ref{canopy-model-results}).
 
 \hypertarget{satellite-imagery}{%
 \section{Satellite Imagery}\label{satellite-imagery}}
 
+The multispectral satellite imagery used in this thesis was accessed
+through Planet Labs Education and Research Program, which provides
+limited non-commercial access to PlanetScope satellite imagery for those
+with a college or university email address. The available imagery had a
+pixel resolution of 3 meters, and a 4-band product (RGB-NIR). The bands
+in a satellite product refer to the reflectance wavelength that is
+picked up by the satellite. For a 4-band satellite product, the
+wavelengths are split into red, green, blue, and near-infrared (NIR)
+bands (Table \ref{tab:wavelength}). In the raw PlanetScope product,
+these 4 bands come compressed in one \texttt{.tif} image.
+\begin{longtable}[t]{ll}
+\caption[4-band satellite wavelength ranges]{\label{tab:wavelength}Wavelength ranges for 4-band Planetscope satellite bands}\\
+\toprule
+Band name & Wavelength range\\
+\midrule
+Blue & 455 - 515 nm\\
+Green & 500 - 590 nm\\
+Red & 590 - 670 nm\\
+NIR & 780 - 860 nm\\
+\bottomrule
+\end{longtable}
 PlanetScope satellite imagery (Planet Labs, 3m resolution, 4-band
 RGB-NIR) was used for vegetation index calculation. PlanetScope, also
 known as the Flock, is a constellation of approximately 130 satellites .
@@ -846,7 +884,12 @@ newest batch of satellites were launched in January 2022. PlanetScope,
 operated by Planet, is a constellation of approximately 130 satellites,
 able to image the entire land surface of the Earth every day (a daily
 collection capacity of 200 million km\(^2\)/day). PlanetScope images are
-approximately 3 meters per pixel resolution ({``Planet imagery product specifications,''} 2022).
+approximately 3 meters per pixel resolution ({``Planet imagery product specifications,''} 2022). A
+downloaded satellite product for an area of interest is comprised of
+multiple scene products. Each scene product is an individual image of a
+swath of land that is at least partially contained within the area of
+interest. (Figures \ref{fig:2016-swath}, \ref{fig:2019-swath},
+\ref{fig:2021-swath}).
 
 I downloaded satellite images corresponding to the summers of when the
 data was collected (2016, 2019, and 2021). Images were first filtered
@@ -858,7 +901,7 @@ cover and maximum coverage of the area of study. The final selected
 images were taken between 6:30 and 7pm on 6 July 2016, 31 July 2019, and
 26 July 2021 (Table \ref{tab:sat-products}).
 \begin{longtable}[t]{llrl}
-\caption{\label{tab:sat-products}Satellite product specifications}\\
+\caption[Satellite product specifications]{\label{tab:sat-products}Satellite product specifications for PlanetScope multispectral satellite image products}\\
 \toprule
 Collection date & Collection time & Number of scene products & Satellite ID\\
 \midrule
@@ -873,26 +916,8 @@ orthorectified, calibrated, corrected for terrain distortions, and
 transformed to Top of Atmosphere radiance to ensure accurate geolocation
 and cartographic projection.
 
-The bands in a satellite product refer to the reflectance wavelength
-that is picked up by the satellite. For a 4-band satellite product, the
-wavelengths are split into red, green, blue, and near-infrared (NIR)
-bands (Table \ref{tab:wavelength}). In the raw PlanetScope product,
-these 4 bands come compressed in one .tif image. In order to extract
-NDVI data from the imagery products, the data requires further
-processing.
-\begin{longtable}[t]{ll}
-\caption[4-band satellite wavelength ranges]{\label{tab:wavelength}Wavelength ranges for 4-band Planetscope satellite bands}\\
-\toprule
-Band name & Wavelength range\\
-\midrule
-Blue & 455 - 515 nm\\
-Green & 500 - 590 nm\\
-Red & 590 - 670 nm\\
-NIR & 780 - 860 nm\\
-\bottomrule
-\end{longtable}
-\hypertarget{ndvi-calculation}{%
-\section{NDVI calculation}\label{ndvi-calculation}}
+\hypertarget{ndvi-calc-methods}{%
+\section{NDVI calculation}\label{ndvi-calc-methods}}
 
 The NDVI calculations were done using Python in PyCharm. Besides minor
 alterations, the processing code came from Planet's instructions on
@@ -948,12 +973,12 @@ further reducing the sample size.
 
 In this thesis, I test three different methods of pixel selection for
 NDVI analysis. First, I test a ``point method'' which uses the NDVI value
-directly below an inventoried trees location point. Second, I use crown
-width measurements and predictions to create a variable radius method,
-and average the NDVI pixels within the created circle. Lastly, I use a
-LiDAR created canopy height model for Portland's urban canopy with
-\texttt{ForestTools} canopy delineation algorithm to create canopy polygons for
-NDVI analysis.
+from a single pixel directly below an inventoried trees location point.
+Second, I use crown width measurements and predictions to create a
+variable radius method, and average the NDVI pixels within the created
+circle. Lastly, I use a LiDAR created canopy height model for Portland's
+urban canopy with \texttt{ForestTools} canopy delineation algorithm to create
+canopy polygons for NDVI analysis (Plowright \& Roussel, 2021).
 
 For the following examples, I use Berkeley Park, located in SE Portland,
 to demonstrate the different delineation techniques. We sampled 6 CNH
@@ -1121,20 +1146,18 @@ more explanatory variables, which can be either categorical or
 continuous. In order to use this type of model, I tested each model for
 the Proportional Odds Assumption, and
 
-I used the CNH data as both my training and testing data. I chose to do
-this because of the limited sample size of CNH trees, and the uneven
-size of the health category ratings. Because of this, it is important to
-note that the model tests are an idealized version of a true model.
-
 For each model, I created a confusion matrix to examine the validity of
 the model. A confusion matrix is a calculated cross-tabulation of
 observed and predicted classes, which in this case is health
 categorization, along with associated statistics. The two main
 statistics I use in my data analysis are overall accuracy and an
 un-weighted Kappa statistic. ``Accuracy'' refers to the sensitivity
-{[}\(\textrm{Sensitivity}= \frac{\textrm{True positive}}{\textrm{True positive + False negative}}\){]}
+
+\[\textrm{Sensitivity}= \frac{\textrm{True positive}}{\textrm{True positive + False negative}}\]
+
 and specificity
-{[}\(\textrm{Specificity}= \frac{\textrm{True negative}}{\textrm{True negative + False positive}}\){]}
+
+\[\textrm{Specificity}= \frac{\textrm{True negative}}{\textrm{True negative + False positive}}\]
 of the prediction.
 
 \[
@@ -1148,14 +1171,37 @@ measure inter and intra-rater reliability for categorical items.
 \kappa = \frac{p_o - p_e}{1 - p_e} = \frac{1 - p_o}{1 - p_e}
 \] where \(p_o\) is the relative observed agreement between the reference
 and prediction, and \(p_e\) is the hypothetical probability of agreement
-by chance. If the two raters (in this case the reference and prediction
+by chance.
+
+For \(k\) categories, \(N\) observations to categorize and \(n_{ki}\) the
+number of times rater \(i\) predicted category \(k\):
+
+\[
+p_e = \frac{1}{N^2}\sum{n_{k1}n_{k2}}
+\]
+
+\[
+p_e = \sum_{k}\widehat{p_{k12}} = \sum_{k} \widehat{p_{k1}}\widehat{p_{k2}} = \sum_{k}\frac{n_{k1}}{N}\frac{n_{k2}}{N} = \frac{1}{N^2}\sum{n_{k1}n_{k2}}
+\]
+
+Where \(\widehat{p_{k12}}\) is the estimated probability that both raters
+1 and 2 will classify the same item as category \(k\), while
+\(\widehat{p_{k1}}\) is the estimated probabilities that rater 1 will
+classify an item as category \(k\). This is based on the assumption that
+the rating of the two raters are independent. \(\widehat{p_{k1}}\) is
+estimated from the number of items classified as category \(k\) by rater 1
+(\(n_{k1}\)) divided by the total number of items for classification
+(\(N\)):\(\widehat{p_{k1}}=\frac{n_{k2}}{N}\). These equations and
+relationships are the same for rater 2.
+
+If the two raters (in this case the reference and prediction
 categorizations) are in complete agreement, then kappa = 1.
 
 \hypertarget{results}{%
 \chapter{Results}\label{results}}
 
-\hypertarget{canopy-width-and-tree-height-model-1}{%
-\section{Canopy Width and Tree Height Model}\label{canopy-width-and-tree-height-model-1}}
+\hypertarget{canopy-model-results}{%
+\section{Canopy Width and Tree Height Model}\label{canopy-model-results}}
 
 I used a second order polynomial regression to predict both tree height and crown width from tree DBH. There are numerous expected differences between the species due to functional tree type. For example, the average DBJ for ACMA and PSME are relatively close, but the average height for a PSME individual is nearly twice as tall as an ACMA (Table \ref{tab:tree-stats-table}). Because of this, DBH would have a very different effect on the outcome of both models depending on the species of the tree. I included species as an interaction term in the model to account for these expected differences between species, meaning that both DBH and species were used to predict crown width and tree height. I tested a linear model as well as second and third order polynomial models for both predictive models (Figures \ref{fig:test-height-model}, \ref{fig:test-width-model}). A second order polynomial was chosen for the predictive models because it not only encapsulated the relationship between DBH and tree height as well as DBH and canopy width, but it also was the most accurate when modeling the individual species.
 \begin{table}
@@ -1173,7 +1219,9 @@ THPL & 18.11 & 50.14 & 24.14\\
 \bottomrule
 \end{tabular}
 \end{table}
-The tree height model has an adjusted R-squared value of 0.7834, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:height-model}, Appendix \ref{tree-model-eqs}). This model was most effective for ACMA and PSME, but was not statistically significant for ACPL or THPL. The crown width model has an adjusted R-squared value of 0.7269, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:width-model-g}, Appendix \ref{tree-model-eqs}). The coefficients for the canopy width model had statistically significant p-values for all species.
+The tree height model has an adjusted R-squared value of 0.7834, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:height-model}, Appendix \ref{tree-model-eqs}). This model was most effective for ACMA and PSME, but was not statistically significant for ACPL or THPL. This is likely due to the similar average DBH and tree height values between ACPL and PSME. While the average DBH values for ACMA and PSME are very similar, the average height values are extremely different, with the average PSME individual standing twice as tall as the average ACMA individual (Table \ref{tab:tree-stats-table}). An issue with the second degree model is the decrease in predicted tree height. This decrease is not seen in the park tree model, but the street tree height predictions for all species show a visible decrease after the inflection point of the model. Given that the tree height predictions were only used for filtering out trees below 25 feet in height, an extremely precise model was not necessary for the purposes of this thesis.
+
+The crown width model has an adjusted R-squared value of 0.7269, and a P-value of \textless{} 2.2e-16 (Figure \ref{fig:width-model-g}, Appendix \ref{tree-model-eqs}). The coefficients for the canopy width model had statistically significant p-values for all species. There is consistent variation in the average crown width measurements between all species (Table \ref{tab:tree-stats-table}). With the visualization of the street tree canopy width predictions, the only extreme decrease after the model inflection point is seen in the ACPL predictions. The canopy width model played a larger role in this thesis than the tree height model because it was essential for the radius method of pixel selection for all street trees.
 \begin{figure}
 
 {\centering \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/height-model-1} 
@@ -1264,7 +1312,10 @@ Another important factor to consider when comparing the three pixel selection me
 \hypertarget{predictive-model}{%
 \section{Predictive Model}\label{predictive-model}}
 
-In order to determine the impact of differentiating by species in predictive models, I ran three different models for each point selection method, moving from least to most specific: a model that only uses NDVI to predict health rating, a model that includes functional tree type as an interaction term, and a third model that includes species as an interaction term (Table \ref{tab:model-table}). Due to the limited sample size of the data I am working with, the following models are trained and tested on the same data. If it were to work perfectly, the model would correctly predict the health condition of a CNH tree 100\% of the time.
+In order to determine the impact of differentiating by species in predictive models, I ran three different models for each point selection method, moving from least to most specific: a model that only uses NDVI to predict health rating, a model that includes functional tree type as an interaction term, and a third model that includes species as an interaction term (Table \ref{tab:model-table}). Due to the limited sample size of the data I am working with, the following models are trained and tested on the same data, which is the CNH tree data collected summer 2021. I chose to do
+this because of the limited sample size of CNH trees, and the uneven
+size of the health category ratings. Because of this, it is important to
+note that the model tests are an idealized version of a true model.
 However, it is important to note that they are likely an idealized version of how model testing and training would work in reality.
 
 For each model, I evaluate the success and ability to predict health rating in a few different ways. First, I examine the calculated accuracy and kappa values. A higher kappa value is more important than a higher accuracy score because kappa takes into account the various sizes of the categories and the probability of the prediction occurring by chance, whereas accuracy does not. Additionally, I look at the false positives (a \textbf{poor} tree getting rated \textbf{good}) and false negatives (a \textbf{good} tree being rated \textbf{poor}). Both of these values should be as low as possible, but in this case reducing the number of false positives is most important because if a tree in \textbf{poor} health was rated as \textbf{good}, it may not be included in further health analysis and will be missed when examining the spatial distribution of tree health.
@@ -1316,42 +1367,19 @@ PSME & 49\\
 THPL & 39\\
 \bottomrule
 \end{longtable}
-To ensure that the results of the downsampled LiDAR data model were not caused by the random downsampling, I ran the model 6 times with different random samples each time (Appendix \ref{fig:lidar-model-tests-extra}). While the values did differ, the p-value for the model was significant for each test. I used the final downsampled LiDAR model to predict health rating for a random sample of 100 park and 100 street trees, with LiDAR calculated NDVI values. Due to the data loss in the LiDAR processing, the final data set contains 175 trees (85 street trees, 90 park trees) (Table \ref{tab:final-lidar-counts}). This data was input into the final LiDAR model, created with the downsampled data. A health rating was predicted based on NDVI and tree species. The resulting health predictions were graphed along with sample NDVI (Figure @ref(fig: final-lidar-plot)). For ACMA, there is a clear relationship between sample NDVI and health prediction which matches that seen in earlier data analysis. For ACPL, there is a large difference between the NDVI of \textbf{fair} and \textbf{good} trees, which also appears for PSME. for the THPL predictions, the average NDVI for \textbf{poor} trees is higher than those for \textbf{fair} trees.
+To ensure that the results of the downsampled LiDAR data model were not caused by the random downsampling, I ran the model 6 times with different random samples each time (Appendix \ref{fig:lidar-model-test}). While the values did differ, the p-value for the model was significant for each test. I used the final downsampled LiDAR model to predict health rating for a random sample of 100 park and 100 street trees, with LiDAR calculated NDVI values. Due to the data loss in the LiDAR processing, the final data set contains 175 trees (85 street trees, 90 park trees) (Table \ref{tab:final-lidar-counts}). This data was input into the final LiDAR model, created with the downsampled data. A health rating was predicted based on NDVI and tree species. The resulting health predictions were graphed along with sample NDVI (Figure @ref(fig: final-lidar-plot)). For ACMA, there is a clear relationship between sample NDVI and health prediction which matches that seen in earlier data analysis. For ACPL, there is a large difference between the NDVI of \textbf{fair} and \textbf{good} trees, which also appears for PSME. for the THPL predictions, the average NDVI for \textbf{poor} trees is higher than those for \textbf{fair} trees.
 \begin{center}\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/final-lidar-plot-1} \end{center}
 
 \hypertarget{discussion}{%
 \chapter{Discussion}\label{discussion}}
 
-\hypertarget{canopy-width-and-tree-height-model-2}{%
-\section{Canopy Width and Tree Height Model}\label{canopy-width-and-tree-height-model-2}}
+\hypertarget{limitations-of-satellite-imaging}{%
+\section{Limitations of Satellite Imaging}\label{limitations-of-satellite-imaging}}
 
-The second order polynomial model for predicting tree height based on
-DBH and tree species had statistical significance for the ACMA and PSME
-predictions, but not for ACPL or THPL. This is likely due to the similar
-average DBH and tree height values between ACPL and PSME. While the
-average DBH values for ACMA and PSME are very similar, the average
-height values are extremely different, with the average PSME individual
-standing twice as tall as the average ACMA individual (Table
-\ref{tab:tree-stats-table}). An issue with the second degree model is
-the decrease in predicted tree height. This decrease is not seen in the
-park tree model, but the street tree height predictions for all species
-show a visible decrease after the inflection point of the model. Given
-that the tree height predictions were only used for filtering out trees
-below 25 feet in height, an extremely precise model was not necessary
-for the purposes of this thesis.
+While the use of satellite imaging for urban ecology applications
 
-The second order polynomial model for predicting canopy width based on
-DBH and tree species was statistically significant for all species.
-There is consistent variation in the average crown width measurements
-between all species (Table \ref{tab:tree-stats-table}). With the
-visualization of the street tree canopy width predictions, the only
-extreme decrease after the model inflection point is seen in the ACPL
-predictions. The canopy width model played a larger role in this thesis
-than the tree height model because it was essential for the radius
-method of pixel selection for all street trees.
-
-\hypertarget{pixel-selection}{%
-\section{Pixel Selection}\label{pixel-selection}}
+\hypertarget{effect-of-tree-delineation-and-pixel-selection-techniques}{%
+\section{Effect of Tree Delineation and Pixel Selection Techniques}\label{effect-of-tree-delineation-and-pixel-selection-techniques}}
 
 The three pixel selection methods (point, radius, and LiDAR) were used
 to help answer the question ``which pixels are we using?''
@@ -1388,27 +1416,66 @@ and the central pixel likely contains mostly tree canopy, and ideally
 little to no information on ground cover surrounding the tree. This is
 emphasized in figure \ref{fig:layered-outputs-2}, which highlights the
 large variance in pixel selection extent for the three methods and how
-much data is missed by the point method. What is missed by the point
-method is overcompensated by the radius method.
+much data is missed by the point method. The radius method averages the
+NDVI values of pixels within a buffered circle with the size defined by
+the measured or predicted tree canopy width.
 
-The radius method averages the NDVI values of pixels within a buffered
-circle with the size defined by the measured or predicted tree canopy
-width. The radius method data had a statistically significant difference
-in average NDVI values between \textbf{good} and \textbf{poor} categorized trees
-as well as \textbf{good} and \textbf{fair} categorized trees. There is a larger
+The radius method data had a statistically significant difference in
+average NDVI values between \textbf{good} and \textbf{poor} categorized trees as
+well as \textbf{good} and \textbf{fair} categorized trees. There is a larger
 difference between \textbf{fair} and \textbf{good} than \textbf{fair} and \textbf{poor},
 which is also seen in the point method data.
 
-\hypertarget{predicting-tree-health}{%
-\section{Predicting Tree Health}\label{predicting-tree-health}}
+\hypertarget{evaluation-of-tree-health-predictions}{%
+\section{Evaluation of Tree Health Predictions}\label{evaluation-of-tree-health-predictions}}
+
+\hypertarget{other-factors-for-tree-health}{%
+\section{Other Factors for Tree Health}\label{other-factors-for-tree-health}}
+
+While this thesis presents one picture of
+
+\hypertarget{open-source-data-and-accessible-science}{%
+\section{Open Source Data and Accessible Science}\label{open-source-data-and-accessible-science}}
+
+When beginning this thesis, a large goal of mine was to use only open
+source and freely accessible data sources and programs. For the most
+part, I was able to meet this goal. The satellite data I used was
+accessed through PlanetScope's Education and Research Program, which
+provided me with limited, non-commercial access to PlanetScope satellite
+imagery. This is accessible after a short application, provided that the
+applicant has a college or university email address. Both the street and
+park tree inventories were publicly available through Portland's GIS
+opendata site, and the LiDAR canopy height model was available through
+Portland's Regional Land Information System (RLIS). The one processing
+task I was not able to do on an open source software was the file
+conversion of the LiDAR CHM. It is only available for download as a File
+Geodatabase, which is a proprietary ArcGIS file type. In order to be
+able to utilize it in QGIS, which is an opensource GIS software, I had
+to open the CHM file in ArcGIS through Reed's institutional access, and
+export it as a \texttt{.tif} file type. This is unfortunate, because it is very
+possible for Portland's RLIS site to host the canopy height model in a
+different format. While many of the data sources I used were openly
+accessible, throughout this process it became apparent that the
+processing techniques were not. I had to use three different platforms
+(RStudio, QGIS, and Python) to conduct the work for this thesis.
+
+While relative to many context, satellite imagery with a 3m pixel size
+is relatively high resolution. Unfortunately, in the field of urban
+ecology, it is
+
+\hypertarget{future-directions}{%
+\section{Future Directions}\label{future-directions}}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
 
 \appendix
 
 \hypertarget{data}{%
-\chapter{Additional Data}\label{data}}
+\chapter{Supplementary Data}\label{data}}
 
-\hypertarget{variable-types}{%
-\section{Variable types}\label{variable-types}}
+\hypertarget{variable-types-for-tree-inventories}{%
+\section{Variable types for tree inventories}\label{variable-types-for-tree-inventories}}
 \begin{longtable}[t]{llll}
 \caption{\label{tab:var-type-table}}\\
 \toprule
@@ -1478,6 +1545,32 @@ Wind speed & - & - & x\\
 Wires (Y/N) & x & - & -\\
 \bottomrule
 \end{longtable}
+\hypertarget{scene-products-and-satellite-swaths}{%
+\section{Scene products and satellite swaths}\label{scene-products-and-satellite-swaths}}
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{figure/2016-bands} 
+
+}
+
+\caption{Satellite scene product swaths for 2016 PlanetScope data}\label{fig:2016-swath}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{figure/2019-bands} 
+
+}
+
+\caption{Satellite scene product swaths for 2019 PlanetScope data}\label{fig:2019-swath}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=0.75\linewidth]{figure/2021-bands} 
+
+}
+
+\caption{Satellite scene product swaths for 2021 PlanetScope data}\label{fig:2021-swath}
+\end{figure}
 \hypertarget{model-tests}{%
 \section{Model Tests}\label{model-tests}}
 \begin{Shaded}
@@ -1511,29 +1604,25 @@ Wires (Y/N) & x & - & -\\
 \hypertarget{tree-model-eqs}{%
 \section{Tree Height and Crown Width Predictive Model Equations}\label{tree-model-eqs}}
 
-\textbf{ACMA equations:} (\textit{x} = DBH)
-\begin{equation}
+\textbf{ACMA equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = 12.308 + 3.139x -0.032x^{2}  \\
 \end{equation}
 \begin{equation}
 \textrm{Crown Width} = 12.117 + 1.721x - 0.0122x^{2} \\
 \end{equation}
-\textbf{ACPL equations:} (\textit{x} = DBH)
-\begin{equation}
+\textbf{ACPL equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = -1.359 - 0.464x + 0.000203x^2 \\
 \end{equation}
 \begin{equation}
 \textrm{Crown Width} = -7.155 + 0.894x - 0.0153x^2 \\
 \end{equation}
-\textbf{PSME equations:} (\textit{x} = DBH)
-\begin{equation}
+\textbf{PSME equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = 0.2448 + 1.916x - 0.0187x^2 \\
 \end{equation}
 \begin{equation}
 \textrm{Crown Width} = -4.640583 - 0.3867x + 0.0046x^2 \\
 \end{equation}
-\textbf{THPL equations:} (\textit{x} = DBH)
-\begin{equation}
+\textbf{THPL equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = -3.5146 - 0.0388x + 0.00178x^2 \\
 \end{equation}
 \begin{equation}
@@ -1558,14 +1647,8 @@ Radius method & NDVI * species & 64\% & 24\% & 0.25040\\
 LiDAR method & NDVI * species & 68\% & 33\% & 0.09396\\
 \bottomrule
 \end{longtable}
-\hypertarget{model-confusion-matrixes-organized-by-model-equation}{%
-\section{Model Confusion Matrixes, organized by model equation}\label{model-confusion-matrixes-organized-by-model-equation}}
-\begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-17-1} \end{center}
-\begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-17-2} \end{center}
-\begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-17-3} \end{center}
-
-\hypertarget{lidar-model-tests-extra}{%
-\section{LiDAR model tests}\label{lidar-model-tests-extra}}
+\hypertarget{lidar-model-tests}{%
+\section{LiDAR model tests}\label{lidar-model-tests}}
 \begin{center}\includegraphics[width=1\linewidth]{figure/test} \end{center}
 
 \hypertarget{predicted-health-rating-and-species-counts}{%
@@ -1581,7 +1664,8 @@ LiDAR method & NDVI * species & 68\% & 33\% & 0.09396\\
 \hypertarget{code-chunks}{%
 \chapter{Code}\label{code-chunks}}
 
-This second appendix includes all of the R chunks of code that were hidden throughout the document to help with readability and/or setup.
+This second appendix includes all of the R chunks of code that were
+hidden throughout the document to help with readability and/or setup.
 
 \hypertarget{in-chapter-refdata-methods}{%
 \section{\texorpdfstring{\textbf{In Chapter} \ref{data-methods}\textbf{:}}{In Chapter \ref{data-methods}:}}\label{in-chapter-refdata-methods}}
@@ -1596,7 +1680,7 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \NormalTok{street\_counts }\OtherTok{\textless{}{-}} \FunctionTok{get\_pdxTrees\_streets}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Species, Scientific, year) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{add\_count}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
@@ -1608,7 +1692,7 @@ This second appendix includes all of the R chunks of code that were hidden throu
 \NormalTok{park\_counts }\OtherTok{\textless{}{-}} \FunctionTok{get\_pdxTrees\_parks}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ACMA"}\NormalTok{, }\StringTok{"ACPL"}\NormalTok{, }\StringTok{"PSME"}\NormalTok{, }\StringTok{"THPL"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(Inventory\_Date)) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Species, Scientific\_Name, year) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{add\_count}\NormalTok{(Species, year) }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
@@ -1976,6 +2060,9 @@ Lazarus, M., Chandler, C., \& Erickson, P. (2013). A core framework and scenario
 \leavevmode\vadjust pre{\hypertarget{ref-markman}{}}%
 Markman, A. (2018, October 11). Why people aren{'}t motivated to address climate change. \emph{Harvard Business Review}. Retrieved from \url{https://hbr.org/2018/10/why-people-arent-motivated-to-address-climate-change}
 
+\leavevmode\vadjust pre{\hypertarget{ref-R-pdxTrees}{}}%
+McConville, K. (2020). \emph{pdxTrees: Data package of portland, oregon trees}. Retrieved from \url{https://github.com/mcconvil/pdxTrees}
+
 \leavevmode\vadjust pre{\hypertarget{ref-moore1979}{}}%
 Moore, G. K. (1979). What is a picture worth? A history of remote sensing / quelle est la valeur d'une image? Un tour d'horizon de télédétection. \emph{Hydrological Sciences Bulletin}, \emph{24}(4), 477--485. http://doi.org/\href{https://doi.org/10.1080/02626667909491887}{10.1080/02626667909491887}
 
@@ -1999,6 +2086,9 @@ Planet. (n.d.). Calculate an NDVI in Python: Learn to calculate a vegetation ind
 
 \leavevmode\vadjust pre{\hypertarget{ref-planetlabs2022}{}}%
 Planet imagery product specifications. (2022). Retrieved from \url{https://assets.planet.com/docs/Planet_Combined_Imagery_Product_Specs_letter_screen.pdf}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-ForestTools}{}}%
+Plowright, A., \& Roussel, J.-R. (2021). \emph{ForestTools: Analyzing remotely sensed forest data}. Retrieved from \url{https://github.com/andrew-plowright/ForestTools}
 
 \leavevmode\vadjust pre{\hypertarget{ref-portlandurbanforestry2019}{}}%
 Portland Urban Forestry. (2019). Inventory findings 2019. Retrieved from \url{https://www.portland.gov/trees/get-involved/tree-summit}

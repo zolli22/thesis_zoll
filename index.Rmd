@@ -1,6 +1,6 @@
 ---
 title: 'Tree Health from Space:'
-subtitle: 'Open Source and Accessible Categorization and Modeling of Urban Tree Health using Multispectral Satellite Imagery'
+subtitle: 'Modeling Urban Tree Health using Multispectral Satellite Imagery in Portland, OR' 
 author: 'Ingrid Tallulah Loraine Zoll'
 date: 'May 2022'
 institution: 'Reed College'
@@ -44,27 +44,30 @@ acknowledgements: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("
 dedication: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-dedication.Rmd")), collapse = "\n  ")`'   
 #   You can have a dedication here if you wish. 
 # preface: |
-
 abbreviations: 
   ACMA: Bigleaf Maple (\textit{Acer macrophyllum, Sapindaceae})
   ACPL: Norway Maple (\textit{Acer platanoides, Sapindaceae}) 
   CHM: Canopy Height Model 
   CNH: Coupled Natural-Human (in reference to the CNH2 Project data)
   DBH: Diamater at Breast Height
+  GIS: Geographic Information System
   LiDAR: Light Detection and Ranging
   NDVI: Normalized Difference Vegetation Index 
   PSME: Douglas Fir (\textit{Pseudotsuga menziesii, Pinaceae}) 
+  QGIS: Quantum Geographic Information System
+  RLIS: Regional Land Information System
   THPL: Western Redcedar (\textit{Thuja plicata, Cupressaceae}) 
 
 #  This is an example of a thesis setup to use the reed thesis document class 
 #  (for LaTeX) and the R bookdown package, in general.
   
 # Specify the location of the bibliography below
-bibliography: bib/thesis.bib
+bibliography: bib/references.bib
 # Download your specific csl file and refer to it in the line below.
 csl: csl/apa.csl
 lot: true
 lof: true
+nocite: '@*'
 ---
 
 <!--
@@ -153,16 +156,3 @@ ggplotConfusionMatrix <- function(m){
 knitr::opts_chunk$set(message = F, warning = F, tidy = T)
 ```
 
-
-
-<!--
-The acknowledgments, preface, dedication, and abstract are added into the PDF
-version automatically by inputting them in the YAML at the top of this file.
-Alternatively, you can put that content in files like 00--prelim.Rmd and
-00-abstract.Rmd like done below.
-
-
-```{r eval= knitr::is_latex_output(), child=here::here("prelims", "00--prelim.Rmd")}
-
-```
--->

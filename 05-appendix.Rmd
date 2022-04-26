@@ -1,13 +1,18 @@
 ---
 bibliography: references.bib
+output: pdf_document
+nocite: '@*'
 ---
 
 `r if(knitr:::is_latex_output()) '\\appendix'`
-`r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'`
 
-# Additional Data {#data}
+`r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'` 
 
-## Variable types
+<!-- All your figures/section headers here should be referenced in the main text. Figures all need captions etc. Probably easiest to do at the very end. -->
+
+# Supplementary Data {#data}
+
+## Variable types for tree inventories
 
 ```{r var-type-table, echo = F}
 var_types <- read_csv("data/var-types.csv") %>%
@@ -17,8 +22,20 @@ kable(var_types,
       booktabs = TRUE, longtable = TRUE, caption = "")
 ```
 
+## Scene products and satellite swaths
+
+```{r 2016-swath, out.width = "75%", fig.cap = "Satellite scene product swaths for 2016 PlanetScope data", echo = F}
+include_graphics("figure/2016-bands.png")
+```
+```{r 2019-swath, out.width = "75%", fig.cap = "Satellite scene product swaths for 2019 PlanetScope data", echo = F}
+include_graphics("figure/2019-bands.png")
+```
+```{r 2021-swath, out.width = "75%", fig.cap = "Satellite scene product swaths for 2021 PlanetScope data", echo = F}
+include_graphics("figure/2021-bands.png")
+```
 
 ## Model Tests
+
 ```{r, echo = F, cache=TRUE}
 # graphing
 testmodel_h_1 <- my_park %>% 
@@ -67,57 +84,55 @@ testmodel_w_3 <- my_park %>%
   geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 3, raw = T))+
   labs(subtitle = "y ~ poly(x, 3)", y = "Canopy Width Measurement")
 ```
-
 ```{r test-height-model, fig.cap = "Predicting tree height from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.", fig.scap = "Model tests for tree height predictions"}
 testmodel_h_1 + testmodel_h_2 + testmodel_h_3 +
   plot_annotation(title = "Model testing for Tree Height predictions", caption = "x = DBH, y = tree height")
 ```
-
 ```{r test-width-model, fig.cap = "Predicting canopy width from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.", fig.scap = "Model tests for tree canopy width predictions"}
 testmodel_w_1 + testmodel_w_2 + testmodel_w_3 +
   plot_annotation(title = "Model testing for Canopy Width predictions", caption = "x = DBH, y = canopy width")
 ```
 
+## Tree Height and Crown Width Predictive Model Equations {#tree-model-eqs}
 
-## Tree Height and Crown Width Predictive Model Equations {#tree-model-eqs} 
-
-\textbf{ACMA equations:} (\textit{x} = DBH) 
-\begin{equation}
+\textbf{ACMA equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = 12.308 + 3.139x -0.032x^{2}  \\
 \end{equation}
 
+```{=tex}
 \begin{equation}
 \textrm{Crown Width} = 12.117 + 1.721x - 0.0122x^{2} \\
 \end{equation}
-
-\textbf{ACPL equations:} (\textit{x} = DBH) 
-\begin{equation}
+```
+\textbf{ACPL equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = -1.359 - 0.464x + 0.000203x^2 \\
 \end{equation}
 
+```{=tex}
 \begin{equation}
 \textrm{Crown Width} = -7.155 + 0.894x - 0.0153x^2 \\
 \end{equation}
-
-\textbf{PSME equations:} (\textit{x} = DBH) 
-\begin{equation}
+```
+\textbf{PSME equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = 0.2448 + 1.916x - 0.0187x^2 \\
 \end{equation}
 
+```{=tex}
 \begin{equation}
 \textrm{Crown Width} = -4.640583 - 0.3867x + 0.0046x^2 \\
 \end{equation}
-
-\textbf{THPL equations:} (\textit{x} = DBH) 
-\begin{equation}
+```
+\textbf{THPL equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = -3.5146 - 0.0388x + 0.00178x^2 \\
 \end{equation}
 
+```{=tex}
 \begin{equation}
 \textrm{Crown Width} = -4.953 - 0.5939x + 0.00512x^2 \\
 \end{equation}
+```
+## Additional Information on Health Predictive Model
 
-## Additional Information on Health Predictive Model 
 ```{r model-table, echo = F, results='asis'}
 model_variations <- read_csv("data/model_variations.csv") %>%
     dplyr::select(-6, -7) %>%
@@ -131,37 +146,8 @@ knitr::kable(model_variations,
   caption.short = 'Summary of results from various predictive models')
 ```
 
-## Model Confusion Matrixes, organized by model equation
-```{r, echo = F}
-p_all + 
-    labs(subtitle = "Point method")+
-  r_all + 
-    labs(subtitle = "Radius method")+
-  l_all +
-    labs(subtitle = "LiDAR method")+
-  plot_layout(ncol = 2) +
-  plot_annotation(subtitle = "formula = health rating ~ NDVI")
+## LiDAR model tests
 
-p_type + 
-    labs(subtitle = "Point method")+
-  r_type + 
-    labs(subtitle = "Radius method")+
-  l_type +
-    labs(subtitle = "LiDAR method")+
-  plot_layout(ncol = 2) +
-  plot_annotation(subtitle = "formula = health rating ~ NDVI * tree type")
-
-p_species + 
-    labs(subtitle = "Point method")+
-  r_species + 
-    labs(subtitle = "Radius method")+
-  l_species +
-    labs(subtitle = "LiDAR method")+
-  plot_layout(ncol = 2) +
-  plot_annotation(subtitle = "formula = health rating ~ NDVI * species")
-```
-
-## LiDAR model tests {#lidar-model-tests-extra}
 ```{r lidar-model-test, echo = F, out.width = "100%", fig.scap = "Confusion matrixes for LiDAR predictive model tests"}
 knitr::include_graphics("figure/test.png")
 ```
@@ -176,49 +162,65 @@ ggplot(lidar_final_data_2, aes(x = preds, fill = species))+
 
 # Code {#code-chunks}
 
-This second appendix includes all of the R chunks of code that were hidden throughout the document to help with readability and/or setup.
+This second appendix includes all of the R chunks of code that were
+hidden throughout the document to help with readability and/or setup.
 
 ## **In Chapter** \@ref(data-methods)**:**
 
-### Portland Tree Inventory counts and calculations {-}
+### Portland Tree Inventory counts and calculations {.unnumbered}
+
 \footnotesize
+
 ```{r ref.label='counttables', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
 
-### Calculating NDVI from satellite imagery {-}
+### Calculating NDVI from satellite imagery {.unnumbered}
+
 \footnotesize
+
 ```{r ref.label='ndvi-calc', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
 
-### LiDAR canopy delineation {-}
+### LiDAR canopy delineation {.unnumbered}
+
 \footnotesize
+
 ```{r ref.label='lidar-calc', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
 
 ## **In Chapter** \@ref(results)**:**
 
-### Model for Tree Height and Canopy Width {-}
+### Model for Tree Height and Canopy Width {.unnumbered}
+
 \footnotesize
+
 ```{r ref.label='tree-model', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
 
-### Point Method Modeling {-}
+### Point Method Modeling {.unnumbered}
+
 \footnotesize
+
 ```{r ref.label='point-modeling', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
 
-### Radius Method Modeling {-}
+### Radius Method Modeling {.unnumbered}
+
 \footnotesize
+
 ```{r ref.label='radius-modeling', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
 
-### LiDAR Method Modeling {-}
+### LiDAR Method Modeling {.unnumbered}
+
 \footnotesize
+
 ```{r ref.label='lidar-modeling', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
 
-### Radius and LiDAR Replications {-}
+### Radius and LiDAR Replications {.unnumbered}
+
 \footnotesize
+
 ```{r ref.label='downsample-test', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
-

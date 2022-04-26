@@ -1,33 +1,28 @@
+---
+bibliography: references.bib
+output: pdf_document
+nocite: '@*'
+---
+
 # Discussion {#discussion}
 
-## Canopy Width and Tree Height Model
+<!--# Start with an intro paragraph (before any subsection) summarizing the results.  -->
 
-The second order polynomial model for predicting tree height based on
-DBH and tree species had statistical significance for the ACMA and PSME
-predictions, but not for ACPL or THPL. This is likely due to the similar
-average DBH and tree height values between ACPL and PSME. While the
-average DBH values for ACMA and PSME are very similar, the average
-height values are extremely different, with the average PSME individual
-standing twice as tall as the average ACMA individual (Table
-\@ref(tab:tree-stats-table)). An issue with the second degree model is
-the decrease in predicted tree height. This decrease is not seen in the
-park tree model, but the street tree height predictions for all species
-show a visible decrease after the inflection point of the model. Given
-that the tree height predictions were only used for filtering out trees
-below 25 feet in height, an extremely precise model was not necessary
-for the purposes of this thesis.
+<!--# Move the sentences describing the results (first few sentences of each paragraph) up to the Results section. Then summarize them here in 1-2 sentences and make the connections across subsections here. (Effect of filtering trees <25 ft, crown width model vs. tree height model, etc.) -->
 
-The second order polynomial model for predicting canopy width based on
-DBH and tree species was statistically significant for all species.
-There is consistent variation in the average crown width measurements
-between all species (Table \@ref(tab:tree-stats-table)). With the
-visualization of the street tree canopy width predictions, the only
-extreme decrease after the model inflection point is seen in the ACPL
-predictions. The canopy width model played a larger role in this thesis
-than the tree height model because it was essential for the radius
-method of pixel selection for all street trees.
+<!--# Perhaps have a section about "limitations of satellite imaging" rather than a subsection of the height model? -->
 
-## Pixel Selection
+<!--# "Pixel Selection" should be renamed to something is more focused on the discussion point(s) - "Effect of tree delineation techniques"? -->
+
+<!--# This is where you can put your work in context. Maybe a subsection on "other factors that determine tree health". -->
+
+<!--# You will want a subsection on open source and accessibility here.  -->
+
+## Limitations of Satellite Imaging
+
+While the use of satellite imaging for urban ecology applications
+
+## Effect of Tree Delineation and Pixel Selection Techniques
 
 The three pixel selection methods (point, radius, and LiDAR) were used
 to help answer the question "which pixels are we using?"
@@ -57,15 +52,50 @@ and the central pixel likely contains mostly tree canopy, and ideally
 little to no information on ground cover surrounding the tree. This is
 emphasized in figure \@ref(fig:layered-outputs-2), which highlights the
 large variance in pixel selection extent for the three methods and how
-much data is missed by the point method. What is missed by the point
-method is overcompensated by the radius method.
+much data is missed by the point method. The radius method averages the
+NDVI values of pixels within a buffered circle with the size defined by
+the measured or predicted tree canopy width.
 
-The radius method averages the NDVI values of pixels within a buffered
-circle with the size defined by the measured or predicted tree canopy
-width. The radius method data had a statistically significant difference
-in average NDVI values between **good** and **poor** categorized trees
-as well as **good** and **fair** categorized trees. There is a larger
+The radius method data had a statistically significant difference in
+average NDVI values between **good** and **poor** categorized trees as
+well as **good** and **fair** categorized trees. There is a larger
 difference between **fair** and **good** than **fair** and **poor**,
 which is also seen in the point method data.
 
-## Predicting Tree Health
+## Evaluation of Tree Health Predictions
+
+## Other Factors for Tree Health
+
+While this thesis presents one picture of
+
+## Open Source Data and Accessible Science
+
+When beginning this thesis, a large goal of mine was to use only open
+source and freely accessible data sources and programs. For the most
+part, I was able to meet this goal. The satellite data I used was
+accessed through PlanetScope's Education and Research Program, which
+provided me with limited, non-commercial access to PlanetScope satellite
+imagery. This is accessible after a short application, provided that the
+applicant has a college or university email address. Both the street and
+park tree inventories were publicly available through Portland's GIS
+opendata site, and the LiDAR canopy height model was available through
+Portland's Regional Land Information System (RLIS). The one processing
+task I was not able to do on an open source software was the file
+conversion of the LiDAR CHM. It is only available for download as a File
+Geodatabase, which is a proprietary ArcGIS file type. In order to be
+able to utilize it in QGIS, which is an opensource GIS software, I had
+to open the CHM file in ArcGIS through Reed's institutional access, and
+export it as a `.tif` file type. This is unfortunate, because it is very
+possible for Portland's RLIS site to host the canopy height model in a
+different format. While many of the data sources I used were openly
+accessible, throughout this process it became apparent that the
+processing techniques were not. I had to use three different platforms
+(RStudio, QGIS, and Python) to conduct the work for this thesis.
+
+While relative to many context, satellite imagery with a 3m pixel size
+is relatively high resolution. Unfortunately, in the field of urban
+ecology, it is
+
+## Future Directions
+
+## Conclusion

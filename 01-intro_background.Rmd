@@ -1,11 +1,18 @@
 ---
 bibliography: references.bib
 output: pdf_document
+nocite: '@*'
 ---
 
 # Introduction {#intro}
 
+This thesis looks at ... 
+
+<!--# Could start with a short paragraph (before the subsections) laying out the thesis. “This thesis looks at…” Something likey your first few slides of the sparkle talk. -->
+
 ## The Accessibility of Science
+
+<!--# When you write this section - it might go well near the END of the Introduction. -->
 
 On July 16, 2020, twitter user @reviewer2grumpyreviewer22020 shared a
 screenshot of Nature's posting of an article titled "The growing
@@ -42,8 +49,6 @@ include_graphics("figure/science_inaccessable.jpeg")
 ```
 
 ## Urban Forests and Urbanization
-
-<!--#  topic sentance ??? kinda BS imo -->
 
 <!--# Section seems a little sparse and choppy. Might also be worth including some brief summary discussion of Portland’s urban forest in particular. -->
 
@@ -230,21 +235,21 @@ Portland Urban Forestry estimates that Portland's street trees produce
 an estimated \$28.6 million annually in environmental and aesthetic
 benefits, with a full replacement value of \$753 million [@disalvo2017].
 Portland's inventoried park trees have an estimated worth of \$128
-million [@portlandurbanforestry2019]. While Portland's tree inventories
-are spectacular resources which help shed light on the urban tree
-population in Portland and the benefits it can provide, there are
-limitations to the information available through the inventories.
+million [@portlandurbanforestry2019].
 
-One drawback of the inventories is that volunteers were only able to
-inventory trees on public land, which excluded any trees growing in
-yards or other privately owned areas. Since only developed portions of
-parks were inventoried, roughly 98% of Portland's park trees, which are
-in natural and "undeveloped areas", were not inventoried . Additionally,
-since the inventories were collected over a 9 year period, the collected
-health assessments for many trees are no longer reliable or
-representative of present day conditions. They represent data from a
-range of 9 years and in the 11 years since inventory collection began
-much has changed.
+While Portland's tree inventories are spectacular resources which help
+shed light on the urban tree population in Portland and the benefits it
+can provide, there are limitations to the information available through
+the inventories. One drawback of the inventories is that volunteers were
+only able to inventory trees on public land, which excluded any trees
+growing in yards or other privately owned areas. Since only developed
+portions of parks were inventoried, roughly 98% of Portland's park
+trees, which are in natural and "undeveloped areas", were not
+inventoried . Additionally, since the inventories were collected over a
+9 year period, the collected health assessments for many trees are no
+longer reliable or representative of present day conditions. They
+represent data from a range of 9 years and in the 11 years since
+inventory collection began much has changed.
 
 Measuring urban tree health through field surveys can be extremely time
 and labor intensive. It requires the collection of detailed data on
@@ -257,7 +262,9 @@ study period. Remote sensing data from satellite imagery can be used to
 locate and map trees in both urban and rural areas, as well as monitor
 tree health.
 
-## Remote Sensing
+## Remote Sensing in Urban Landscapes
+
+<!--# Remote Sensing in Urban Landscapes? Or Remote Sensing in Ecology? Could narrow the focus of this section header. Remote Sensing for Vegetation? -->
 
 <!--# Starts abrupt. Need a sentence introducing and defining RS. Also the sentence about soybean chlorophyll is interesting, but seems a little out of place without some discussion of other plants. I’d add a sentence and source about using NDVI for tree monitoring after that one.  -->
 
@@ -280,29 +287,29 @@ purposes. Capturing aerial images from planes was the primary method of
 capturing images of the earth's surface until the early 1960s. Since the
 first satellite was launched in 1957, the technical capabilities of
 satellites has greatly increased, along with the types and applications
-of satellite-collected data [@khorram2012].
+of satellite-collected data [@khorram2012]. Within the field of forestry
+and ecology, remote sensing has numerous applications, from measuring
+the cover and structure of vegetation, to examining biodiversity and
+soil characteristics of specific areas. Additionally, remote sensing
+measurements can be used to calculate and monitor changes in forest
+density, which is critical for determining the fuel load and forest
+health in regards to fire risk.
 
-Within the field of forestry and ecology, remote sensing has numerous
-applications, from measuring the cover and structure of vegetation, to
-examining biodiversity and soil characteristics of specific areas.
-Additionally, remote sensing measurements can be used to calculate and
-monitor changes in forest density, which is critical for determining the
-fuel load and forest health in regards to fire risk. One of the most
-commonly used remote sensing metrics used to measure forest health is
-the Normalized Difference Vegetation Index (NDVI), which is calculated
-from the red and near infrared (NIR) bands from remote sensing imagery.
-Vegetation that is photo-synthetically active absorbs most of the red
-light and reflects much of the near infrared light. Conversely,
-vegetation that is dead or stressed reflects more red light and absorbs
-more near infrared light. Biologically, NDVI can be interpreted as the
-fraction of absorbed photo-synthetically active radiation. A value
-closer to 1 indicates vegetation that is more photo-synthetically active
-and greener, which can be used as a proxy for vegetation health. NDVI is
-not a diagnostic tool of vegetation health, but can be used as an
-indicator of health for further analysis. Studies have shown that NDVI
-is highly correlated with chlorophyll content. Specifically, NDVI has a
-near-linear relationship to the chlorophyll content of soybean crops
-[@tucker1979; @myneni1995].
+One of the most commonly used remote sensing metrics used to measure
+forest health is the Normalized Difference Vegetation Index (NDVI),
+which is calculated from the red and near infrared (NIR) bands from
+remote sensing imagery (Section \@ref(ndvi-calc-methods)). Vegetation
+that is photosynthetically active absorbs most of the red light and
+reflects much of the near infrared light. Conversely, vegetation that is
+dead or stressed reflects more red light and absorbs more near infrared
+light. Biologically, NDVI can be interpreted as the fraction of absorbed
+photosynthetically active radiation. A value closer to 1 indicates
+vegetation that is more photo-synthetically active and greener, which
+can be used as a proxy for vegetation health. NDVI is not a diagnostic
+tool of vegetation health, but can be used as an indicator of health for
+further analysis. Studies have shown that NDVI is highly correlated with
+chlorophyll content. Specifically, NDVI has a near-linear relationship
+to the chlorophyll content of soybean crops [@tucker1979; @myneni1995].
 
 Especially when the goal is monitoring tree health changes over time,
 remote sensing data eliminates the need for repeated sampling over long
@@ -317,7 +324,9 @@ scale [@xiao2005].
 
 <!--# Really good discussion. I’d just like a little more at the end, about how your approach is an improvement. I think you’ve correctly identified the drawbacks of their studies, but you just kinda allude to how yours is better–spell it out more directly for readers, and say a little more about what you did here–I know it will be in methods, but without a little more info here it’s kind of unclear. -->
 
-<!--# Previous work section should say more about the different crown delineation methods and also about using species vs. functional types vs ignoring this information. For example, there is not much discussion of the lidar-based methods and the single pixel method. Also, did Fang et al. (2020) consider species or did they treat all trees the same? Where does this idea that species will improve model performance come from? The level of detail of your review of the methods of the first two main papers in this section is good. Maybe just add another couple papers to flesh out the crown delineation approaches and how incorporating species might improve things.   -->
+<!--# Previous work section should say more about the different crown delineation methods and also about using species vs. functional types vs ignoring this information. For example, there is not much discussion of the lidar-based methods and the single pixel method. Also, did Fang et al. (2020) consider species or did they treat all trees the same? Where does this idea that species will improve model performance come from? The level of detail of your review of the methods of the first two main papers in this section is good. Maybe just add another couple papers to flesh out the crown delineation approaches and how incorporating species might improve things.  -->
+
+<!--# Specify that you are replicating the methodology HERE in Portland. You can also mention that previous field work (again you can forward-cite) manually classified trees with a health rating. Then, mention where this thesis takes the work. -->
 
 @xiao2005 used multispectral remote sensing data paired with field
 collected tree health data with the goal of mapping tree health on the
@@ -383,7 +392,7 @@ analysis is unknown.
 
 <!--# Some of what I said about 1.6 could also be here. The other thing that’s not clear to me from these two sections is how the second study handled species? Did they use single NDVI thresholds for all species, or do species-based calculations? You don’t really mention species when discussing their studies (just physiognomic type), but then include it as an important aspect of your thesis. It is important, and if those studies didn’t discuss it, then you should highlight that when discussing those studies.  -->
 
-<!--# Since you go into some detail about the other studies in 1.6,  I’d soften the language about “replicating” their work. You used pretty different methodology in a number of places. I’d say something like “build on” or “an approach inspired by”, or something like that.  -->
+<!--# Since you go into some detail about the other studies in 1.6, I’d soften the language about “replicating” their work. You used pretty different methodology in a number of places. I’d say something like “build on” or “an approach inspired by”, or something like that.  -->
 
 Based on the assumptions that tree health can be approximated using
 satellite spectral data, specifically NDVI, this thesis aims to

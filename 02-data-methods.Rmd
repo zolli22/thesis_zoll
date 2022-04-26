@@ -1,10 +1,10 @@
 ---
 bibliography: references.bib
+output: pdf_document
+nocite: '@*'
 ---
 
 # Data Resources and Methods {#data-methods}
-
-<!-- Required to number equations in HTML files -->
 
 ```{=html}
 <script type="text/x-mathjax-config">
@@ -23,13 +23,12 @@ library(lubridate)
 library(tidyverse)
 ```
 
-## Overview
+<!--# I’m not sure what the Reed standard is for this stuff, but this section reads a little informal in tone to me. I’d probably take most of it out of first person. In the previous section you say “this thesis” and I think that sounds right. I’d also add a bit more detail to the 2nd and 3rd data-type sections and make them separate paragraphs. -->
 
-<!-- I’m not sure what the Reed standard is for this stuff, but this section reads a little informal in tone to me. I’d probably take most of it out of first person. In the previous section you say “this thesis” and I think that sounds right. I’d also add a bit more detail to the 2nd and 3rd data-type sections and make them separate paragraphs.  -->
+<!--# Remind us what CNH stands for. -->
 
 For this thesis, the data resources and processing components can be
 split into four main sections (Figure \@ref(fig:methods-overview-fig)).
-
 First, there is the tree data which is used to answer the question
 "Where are the trees?" This includes the Portland park and street tree
 databases, and the subset of those trees that were selected for health
@@ -52,11 +51,9 @@ NDVI data files, which was done in Python. Third, are the different tree
 delineation methods I examine in this thesis, which include point value,
 radius, and LiDAR methods. This involved the processing of LiDAR and
 tree crown radius data, as well as obtaining and computing associated
-NDVI values.
-
-Lastly, with the combined data from the previous three parts, I created
-a predictive model for predicting tree health rating based on NDVI
-values.
+NDVI values. Lastly, with the combined data from the previous three
+parts, I created a predictive model for predicting tree health rating
+based on NDVI values.
 
 ```{r methods-overview-fig, echo = F, fig.cap = "Overview of methods and data process", out.width = "95%"}
 knitr::include_graphics("figure/methods-overview.png")
@@ -67,6 +64,8 @@ knitr::include_graphics("figure/methods-overview.png")
 <!-- You should probably also include the common names of the species when you introduce them. I also have some basic analysis on the abundance of those species in the inventories, if you want to include some summary stats let me know and I’ll dig them up.  -->
 
 <!-- Just a general comment–you go back and forth between “park and street trees” in some places, and just “street trees” in others. I’d anticipate some questions from your committee about this distinction. I haven’t written it up yet, but my discussion would be something about how we initially stratified the study by park & street trees, to investigate weather that might impact health (due to either proximity to cars/pavement or different maintenance regimes…). But our results showed no significant differences in health between park & street trees, so they were batched together for further analysis.  -->
+
+<!--# Perhaps specify who “we” means here. -->
 
 We collected data tree health during the summer of 2021 as part of a
 larger collaborative interdisciplinary project examining the
@@ -106,15 +105,23 @@ from further analysis. Any tree individual that did not contain a health
 categorization was also removed. The final CNH dataset for my analysis
 contained 112 trees (Table \@ref(tab:cnh-tree-counts)).
 
-```{r cnh-tree-counts, echo = F, message = F, warning = F}
+```{r cnh-tree-counts, include = F}
+scientific_names <- c("*Acer macrophyllum*","*Acer platanoides*","*Pseudotsuga menziesii*", "*Thuja plicata*")
+common_names <- c("Bigleaf Maple", "Norway Maple", "Douglas Fir", "Western Redcedar")
+
 cnh_counts <- read_csv("data/cnh_point.csv") %>%
   filter(!is.na(health_rat)) %>%
-  count(species)
+  count(species) %>%
+  bind_cols(sci = scientific_names) %>%
+  bind_cols(com = common_names) %>%
+  dplyr::select(4, 3, 1, 2)
+```
 
+```{r, echo = F, results = 'asis'}
 knitr::kable(
   cnh_counts, booktabs = TRUE, 
-  col.names = c("Species code", "Number collected"),
-  caption = 'Founts of species for final CNH tree dataset',
+  col.names = c("Common name", "Scientific name","Species code", "Number collected"),
+  caption = 'Counts of species for final CNH tree dataset',
   caption.short = 'Final CNH Tree counts'
 )
 ```
@@ -135,20 +142,21 @@ on 216,750 street trees of 145 genera. The park tree inventory,
 collected from 2017 to 2019, contains data on 25,740 park trees of 116
 genera. While many of the collected variables differ between the two
 inventories, they both include data on location, tree identification,
-DBH, and a visual assessment of the trees health which was rated as
-**good**, **fair**, **poor**, or dead (Table \@ref(tab:var-type-table)).
+tree diameter at breast height (DBH), and a visual assessment of the
+trees health which was rated as **good**, **fair**, **poor**, or dead
+(Table \@ref(tab:var-type-table)).
 
 To reduce the variability in data due to the time span of data
 collection, I filtered the street and park tree inventories to trees
 that were sampled in 2016 and 2019, respectively. For each dataset, the
 selected year was the year with the highest count of trees sampled
-(Tables \@ref(tab:streettable) and \@ref(tab:parktable)).
+(Tables \@ref(tab:streettable) and \@ref(tab:parktable)) [@R-pdxTrees].
 
 ```{r counttables, include=FALSE, tidy = TRUE}
 street_counts<-get_pdxTrees_streets() %>%
   filter(Species %in% c("ACMA", "ACPL", "PSME", "THPL")) %>%
   mutate(year = year(Inventory_Date)) %>%
-  dplyr::select(Species, Scientific, year) %>%
+  dplyr::select(Species, year) %>%
   add_count(Species, year) %>%
   distinct() %>%
   group_by(Species) %>%
@@ -160,7 +168,7 @@ street_counts<-get_pdxTrees_streets() %>%
 park_counts <-get_pdxTrees_parks() %>%
   filter(Species %in% c("ACMA", "ACPL", "PSME", "THPL")) %>%
   mutate(year = year(Inventory_Date)) %>%
-  dplyr::select(Species, Scientific_Name, year) %>%
+  dplyr::select(Species, year) %>%
   add_count(Species, year) %>%
   distinct() %>%
   group_by(Species) %>%
@@ -173,7 +181,7 @@ park_counts <-get_pdxTrees_parks() %>%
 ```{r streettable, results='asis', echo = FALSE}
 knitr::kable(
   street_counts, booktabs = TRUE, 
-  col.names = c("Species code", "Scientific name", "Collected in 2016", "Total in inventory"),
+  col.names = c("Species code", "Collected in 2016", "Total in inventory"),
   caption = 'Species counts in the Portland Street Trees Database',
   caption.short = 'Species counts in Street Trees Database'
 )
@@ -182,7 +190,7 @@ knitr::kable(
 ```{r parktable, results='asis', echo = FALSE}
 knitr::kable(
   park_counts, booktabs = TRUE, 
-  col.names = c("Species code", "Scientific name", "Collected in 2019", "Total in inventory"),
+  col.names = c("Species code",  "Collected in 2019", "Total in inventory"),
   caption = 'Species counts in the Portland Park Trees Database',
   caption.short = 'Species counts in Park Trees Database'
 )
@@ -224,9 +232,9 @@ park_health <- get_pdxTrees_parks() %>%
 street_health + park_health
 ```
 
-## Canopy width and tree height model
+### Canopy width and tree height model
 
-<!-- Needs more detail. You should write out the equations of the model and the statistical results. And this was the same model used to identify trees to sample last summer, correct? (to identify trees that were >25’ height, based on known DBH) If so, you should mention that.  -->
+<!--# The statistical model needs to be described here. I think you have some figures that illustrate this? (though they might be in the results section). SUGGESTION: can this be a sub-subsection underneath 2.3? -->
 
 The park tree dataset contains measurements for tree height, canopy
 width, and DBH, but the street tree dataset only contains measurements
@@ -234,9 +242,35 @@ for DBH. Canopy width and tree height are both important factors for
 tree selection and canopy delineation. Using RStudio, I created a
 statistical model to predict tree height and crown width based on tree
 DBH and species, in order to be able to use the same pixel selection
-methods for both the park and street tree inventories.
+methods for both the park and street tree inventories (Section
+\@ref(canopy-model-results)).
 
 ## Satellite Imagery
+
+The multispectral satellite imagery used in this thesis was accessed
+through Planet Labs Education and Research Program, which provides
+limited non-commercial access to PlanetScope satellite imagery for those
+with a college or university email address. The available imagery had a
+pixel resolution of 3 meters, and a 4-band product (RGB-NIR). The bands
+in a satellite product refer to the reflectance wavelength that is
+picked up by the satellite. For a 4-band satellite product, the
+wavelengths are split into red, green, blue, and near-infrared (NIR)
+bands (Table \@ref(tab:wavelength)). In the raw PlanetScope product,
+these 4 bands come compressed in one `.tif` image.
+
+```{r, echo = F}
+wavelengths <- tibble("band" = c("Blue", "Green", "Red", "NIR"),
+                      "wavelength" = c("455 - 515 nm", "500 - 590 nm", "590 - 670 nm", "780 - 860 nm"))
+```
+
+```{r wavelength, results='asis', echo = FALSE}
+knitr::kable(
+  wavelengths, booktabs = TRUE, longtable = TRUE,
+  col.names = c("Band name", "Wavelength range"),
+  caption = 'Wavelength ranges for 4-band Planetscope satellite bands',
+  caption.short = '4-band satellite wavelength ranges'
+)
+```
 
 PlanetScope satellite imagery (Planet Labs, 3m resolution, 4-band
 RGB-NIR) was used for vegetation index calculation. PlanetScope, also
@@ -246,7 +280,12 @@ newest batch of satellites were launched in January 2022. PlanetScope,
 operated by Planet, is a constellation of approximately 130 satellites,
 able to image the entire land surface of the Earth every day (a daily
 collection capacity of 200 million km$^2$/day). PlanetScope images are
-approximately 3 meters per pixel resolution [@planetlabs2022].
+approximately 3 meters per pixel resolution [@planetlabs2022]. A
+downloaded satellite product for an area of interest is comprised of
+multiple scene products. Each scene product is an individual image of a
+swath of land that is at least partially contained within the area of
+interest. (Figures \@ref(fig:2016-swath), \@ref(fig:2019-swath),
+\@ref(fig:2021-swath)).
 
 I downloaded satellite images corresponding to the summers of when the
 data was collected (2016, 2019, and 2021). Images were first filtered
@@ -269,7 +308,8 @@ products <- tibble("date" = c("2016-07-06", "2019-07-31", "2021-07-26"),
 knitr::kable(
   products, booktabs = TRUE, longtable = TRUE,
   col.names = c("Collection date", "Collection time", "Number of scene products", "Satellite ID"),
-  caption = 'Satellite product specifications'
+  caption = 'Satellite product specifications for PlanetScope multispectral satellite image products',
+  caption.short = 'Satellite product specifications'
 )
 ```
 
@@ -279,29 +319,9 @@ orthorectified, calibrated, corrected for terrain distortions, and
 transformed to Top of Atmosphere radiance to ensure accurate geolocation
 and cartographic projection.
 
-The bands in a satellite product refer to the reflectance wavelength
-that is picked up by the satellite. For a 4-band satellite product, the
-wavelengths are split into red, green, blue, and near-infrared (NIR)
-bands (Table \@ref(tab:wavelength)). In the raw PlanetScope product,
-these 4 bands come compressed in one .tif image. In order to extract
-NDVI data from the imagery products, the data requires further
-processing.
+## NDVI calculation {#ndvi-calc-methods}
 
-```{r, echo = F}
-wavelengths <- tibble("band" = c("Blue", "Green", "Red", "NIR"),
-                      "wavelength" = c("455 - 515 nm", "500 - 590 nm", "590 - 670 nm", "780 - 860 nm"))
-```
-
-```{r wavelength, results='asis', echo = FALSE}
-knitr::kable(
-  wavelengths, booktabs = TRUE, longtable = TRUE,
-  col.names = c("Band name", "Wavelength range"),
-  caption = 'Wavelength ranges for 4-band Planetscope satellite bands',
-  caption.short = '4-band satellite wavelength ranges'
-)
-```
-
-## NDVI calculation
+<!--# Modify the text and/or equation to be clear that you calculate this for each PIXEL.  -->
 
 The NDVI calculations were done using Python in PyCharm. Besides minor
 alterations, the processing code came from Planet's instructions on
@@ -401,8 +421,6 @@ understory shrubs or grasses that were included in the raw data
 
 ## Tree Crown Delineation and Pixel Selection
 
-<!-- When introducing the various methods, you should say something about number of pixels for each–make it clear that the “point method” is a single pixel, the others are larger, depending on tree size. That’s important for thinking about the results downstream.  -->
-
 The goal of tree crown delineation is to understand where the foliage of
 a tree is located. This is extremely important because we want to ensure
 that the satellite pixels used for health analysis have measurements
@@ -422,12 +440,12 @@ further reducing the sample size.
 
 In this thesis, I test three different methods of pixel selection for
 NDVI analysis. First, I test a "point method" which uses the NDVI value
-directly below an inventoried trees location point. Second, I use crown
-width measurements and predictions to create a variable radius method,
-and average the NDVI pixels within the created circle. Lastly, I use a
-LiDAR created canopy height model for Portland's urban canopy with
-`ForestTools` canopy delineation algorithm to create canopy polygons for
-NDVI analysis.
+from a single pixel directly below an inventoried trees location point.
+Second, I use crown width measurements and predictions to create a
+variable radius method, and average the NDVI pixels within the created
+circle. Lastly, I use a LiDAR created canopy height model for Portland's
+urban canopy with `ForestTools` canopy delineation algorithm to create
+canopy polygons for NDVI analysis [@R-ForestTools].
 
 For the following examples, I use Berkeley Park, located in SE Portland,
 to demonstrate the different delineation techniques. We sampled 6 CNH
@@ -482,8 +500,6 @@ knitr::include_graphics("figure/point_radius.png")
 ```
 
 ### LiDAR method
-
-<!-- Just curious–what drove the 30m buffer size? It seems to have created some weird artifacts (like the long canopy extension of the 2nd from left tree) and it seems extremely large to me–I think the largest canopies we measured last summer were 12-13m radius. Do you think changing that buffer to 15m would give better results? -->
 
 The LiDAR method is the most complex and involved of the three tree
 crown delineation methods but has the potential to be the most precise.
@@ -580,10 +596,9 @@ more explanatory variables, which can be either categorical or
 continuous. In order to use this type of model, I tested each model for
 the Proportional Odds Assumption, and
 
-I used the CNH data as both my training and testing data. I chose to do
-this because of the limited sample size of CNH trees, and the uneven
-size of the health category ratings. Because of this, it is important to
-note that the model tests are an idealized version of a true model.
+<!--# Finish description of ordinal logistic regression here. -->
+
+<!--# I actually think the choice of training/test is a RESULTS paragarph, not here. Here you want to write out the relevant equations and assessment measures. Save the actual application to real data for the results. (I think just this paragraph moves) -->
 
 For each model, I created a confusion matrix to examine the validity of
 the model. A confusion matrix is a calculated cross-tabulation of
@@ -591,9 +606,12 @@ observed and predicted classes, which in this case is health
 categorization, along with associated statistics. The two main
 statistics I use in my data analysis are overall accuracy and an
 un-weighted Kappa statistic. "Accuracy" refers to the sensitivity
-[$\textrm{Sensitivity}= \frac{\textrm{True positive}}{\textrm{True positive + False negative}}$]
+
+$$\textrm{Sensitivity}= \frac{\textrm{True positive}}{\textrm{True positive + False negative}}$$
+
 and specificity
-[$\textrm{Specificity}= \frac{\textrm{True negative}}{\textrm{True negative + False positive}}$]
+
+$$\textrm{Specificity}= \frac{\textrm{True negative}}{\textrm{True negative + False positive}}$$
 of the prediction.
 
 $$
@@ -603,9 +621,36 @@ $$
 Kappa ($\kappa$) refers to Cohen's Kappa Statistic which is used to
 measure inter and intra-rater reliability for categorical items.
 
+<!--# Cite Cohen’s Kappa Statistic? -->
+
 $$
 \kappa = \frac{p_o - p_e}{1 - p_e} = \frac{1 - p_o}{1 - p_e}
 $$ where $p_o$ is the relative observed agreement between the reference
 and prediction, and $p_e$ is the hypothetical probability of agreement
-by chance. If the two raters (in this case the reference and prediction
+by chance.
+
+For $k$ categories, $N$ observations to categorize and $n_{ki}$ the
+number of times rater $i$ predicted category $k$:
+
+$$
+p_e = \frac{1}{N^2}\sum{n_{k1}n_{k2}}
+$$
+
+$$
+p_e = \sum_{k}\widehat{p_{k12}} = \sum_{k} \widehat{p_{k1}}\widehat{p_{k2}} = \sum_{k}\frac{n_{k1}}{N}\frac{n_{k2}}{N} = \frac{1}{N^2}\sum{n_{k1}n_{k2}}
+$$
+
+Where $\widehat{p_{k12}}$ is the estimated probability that both raters
+1 and 2 will classify the same item as category $k$, while
+$\widehat{p_{k1}}$ is the estimated probabilities that rater 1 will
+classify an item as category $k$. This is based on the assumption that
+the rating of the two raters are independent. $\widehat{p_{k1}}$ is
+estimated from the number of items classified as category $k$ by rater 1
+($n_{k1}$) divided by the total number of items for classification
+($N$):$\widehat{p_{k1}}=\frac{n_{k2}}{N}$. These equations and
+relationships are the same for rater 2.
+
+If the two raters (in this case the reference and prediction
 categorizations) are in complete agreement, then kappa = 1.
+
+<!--# How does one calculate the probability by chance? Be prepared for Q’slike this. -->
