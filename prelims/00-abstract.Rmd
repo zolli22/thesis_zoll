@@ -1,7 +1,2 @@
-Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. 
-Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide. 
-Due to the size of urban forests and the time consuming practice of field health assessments, recent research into tree health has turned to satellite imagery as a tool for evaluating tree health. 
-This thesis tests three different tree canopy delineation techniques to determine which is the most effective for obtaining tree health information on four key species in Portland:  *Acer macrophyllum*, *Acer platanoides*, *Pseudotsuga menziesii*, and *Thuja plicata*. 
-With field data collected in the summer of 2021, I created a predictive model for tree health categorization based on the Normalized Difference Vegetation Index. 
-
+Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide.
 

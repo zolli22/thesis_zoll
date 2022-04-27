@@ -182,8 +182,36 @@ knitr::write_bib(c(.packages(), "ForestTools"), "packages.bib")
 
 
 
-
 Missing a connection between the canopy delineation techniques and the predictive model (you did both, whereas the abstract reads as if you simply tested three techniques on a model you built).
 Missing a take-home sentence about what you found (what were your results?)
 Could use a last sentence about the potential impact of this type of work for assessing urban tree health.
 Again, maybe drop the open source stuff (you can mention this in the intro as part of why you chose the datasets you did, but I wouldn't say this is a "major finding"). Agree with Anna, focus on adding your results and take home message(s).
+
+
+This model is what Agresti (2002) calls a cumulative link model. The basic interpretation is as a coarsened version of a latent variable $Y_i$ which has a logistic or normal or extreme-value or Cauchy distribution with scale parameter one and a linear model for the mean. The ordered factor which is observed is which bin $Y_i$ falls into with breakpoints $$\zeta_0 = -\infty < \zeta_1 < \cdots < \zeta_K = \infty$$ This leads to the model $$\mbox{logit} P(Y \le k | x) = \zeta_k - \eta$$ with logit replaced by probit for a normal latent variable, and $\eta$ being the linear predictor, a linear function of the explanatory variables (with no intercept). Note that it is quite common for other software to use the opposite sign for $\eta$ (and hence the coefficients beta).
+
+In the logistic case, the left-hand side of the last display is the log odds of category $k$ or less, and since these are log odds which differ only by a constant for different $k$, the odds are proportional. Hence the term proportional odds logistic regression.
+
+The log-log and complementary log-log links are the increasing functions $F^{-1}(p) = -log(-log(p))$ and $F^{-1}(p) = log(-log(1-p))$; some call the first the 'negative log-log' link. These correspond to a latent variable with the extreme-value distribution for the maximum and minimum respectively.
+
+A proportional hazards model for grouped survival times can be obtained by using the complementary log-log link with grouping ordered by increasing times.
+
+
+<!--# I second all of Anna's suggestions. I'll add that each of the subsections of your discussion should link directly to a key result or take home message. What is it that you want the reader to learn from all your analyses? Another way to think of Anna's "putting your work in context" is how did your results compare to (1) what you hypothesized and (2) what others doing similar work have found. Did you find anything surprising, unique, interesting given this context? I'll also say that the open source stuff here could take on a full subsection like Anna suggests, which would require you to review alternative approaches and put yours into that context. Alternatively, you could view this more as a methodological choice and not a "finding" that you need to discuss. That would relegate it to the more brief mention in intro and methods. I think this is justified and maybe even necessary so you can fully discuss your actual findings. But, if you feel like you really want the reader to understand the importance of an open source approach, then take Anna's suggestions instead and provide that discussion of the literature. -->
+
+ 
+Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide.
+With over one million trees in Portland's urban forest, conducting field health assessments to understand the dynamics of tree health in Portland is a nearly impossible goal.
+Due to the size of urban forests and the time consuming practice of field health assessments, recent research into tree health has turned to satellite imagery as a tool for evaluating tree health. 
+This thesis looks to examine the health ratings of four key tree species in Portland (Acer macrophyllum, Acer platanoides, Pseudotsuga menziesii, and Thuja plicata) from field data collected in the summer of 2021, and the relationship between health rating and NDVI (Normalized Difference Vegetation Index), which is an index of "greenness" commonly used in remote sensing of vegetation. 
+This thesis tests three different tree canopy delineation and pixel selection techniques for obtaining NDVI to determine which is the most effective for obtaining tree health information and predicting health rating from NDVI.
+I used an ordinal logistic regression model to predict health ratings of poor, fair or good. 
+These predictions were based on 1) NDVI, 2) NDVI and tree functional type, or 3) NDVI and tree species. 
+The impact of including either tree functional type or tree species in the predictive health model was examined. 
+The most effective predictive model differentiated the predictions by species, and used the LiDAR data. 
+This final model was most effective for the two maple species (ACMA and ACPL), categorizing trees in all three health categories for ACMA, and two health categories for ACPL. 
+The model was ineffective for predicting the health ratings for conifer species.
+
+
+
+

@@ -12,7 +12,7 @@ nocite: '@*'
 
 # Supplementary Data {#data}
 
-## Variable types for tree inventories
+## Variable types for tree inventories {-}
 
 ```{r var-type-table, echo = F}
 var_types <- read_csv("data/var-types.csv") %>%
@@ -22,7 +22,7 @@ kable(var_types,
       booktabs = TRUE, longtable = TRUE, caption = "")
 ```
 
-## Scene products and satellite swaths
+## Scene products and satellite swaths {-}
 
 ```{r 2016-swath, out.width = "75%", fig.cap = "Satellite scene product swaths for 2016 PlanetScope data", echo = F}
 include_graphics("figure/2016-bands.png")
@@ -34,7 +34,7 @@ include_graphics("figure/2019-bands.png")
 include_graphics("figure/2021-bands.png")
 ```
 
-## Model Tests
+## Model Tests {-}
 
 ```{r, echo = F, cache=TRUE}
 # graphing
@@ -93,7 +93,9 @@ testmodel_w_1 + testmodel_w_2 + testmodel_w_3 +
   plot_annotation(title = "Model testing for Canopy Width predictions", caption = "x = DBH, y = canopy width")
 ```
 
-## Tree Height and Crown Width Predictive Model Equations {#tree-model-eqs}
+## Tree Height and Crown Width Predictive Model Equations {-}
+
+
 
 \textbf{ACMA equations:} (\textit{x} = DBH) \begin{equation}
 \textrm{Tree Height} = 12.308 + 3.139x -0.032x^{2}  \\
@@ -131,7 +133,7 @@ testmodel_w_1 + testmodel_w_2 + testmodel_w_3 +
 \textrm{Crown Width} = -4.953 - 0.5939x + 0.00512x^2 \\
 \end{equation}
 ```
-## Additional Information on Health Predictive Model
+## Additional Information on Health Predictive Model {-}
 
 ```{r model-table, echo = F, results='asis'}
 model_variations <- read_csv("data/model_variations.csv") %>%
@@ -146,13 +148,13 @@ knitr::kable(model_variations,
   caption.short = 'Summary of results from various predictive models')
 ```
 
-## LiDAR model tests
+## LiDAR model tests {-}
 
 ```{r lidar-model-test, echo = F, out.width = "100%", fig.scap = "Confusion matrixes for LiDAR predictive model tests"}
 knitr::include_graphics("figure/test.png")
 ```
 
-## Predicted Health Rating and Species Counts
+## Predicted Health Rating and Species Counts {-}
 
 ```{r preds-counts, echo = F, out.width = "90%", fig.cap = "Graph of species counts for LiDAR health predictions"}
 ggplot(lidar_final_data_2, aes(x = preds, fill = species))+
@@ -165,7 +167,7 @@ ggplot(lidar_final_data_2, aes(x = preds, fill = species))+
 This second appendix includes all of the R chunks of code that were
 hidden throughout the document to help with readability and/or setup.
 
-## **In Chapter** \@ref(data-methods)**:**
+## **In Chapter** \@ref(data-methods)**:** {-}
 
 ### Portland Tree Inventory counts and calculations {.unnumbered}
 
@@ -188,7 +190,7 @@ hidden throughout the document to help with readability and/or setup.
 ```{r ref.label='lidar-calc', results='hide', echo = TRUE, eval = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ```
 
-## **In Chapter** \@ref(results)**:**
+## **In Chapter** \@ref(results)**:** {-}
 
 ### Model for Tree Height and Canopy Width {.unnumbered}
 

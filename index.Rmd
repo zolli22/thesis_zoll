@@ -35,15 +35,9 @@ output:
 # (e.g., abstract, acknowledgements) below or use code similar to line 25-26 
 # for the .RMD files. If you are NOT producing a PDF, delete or silence
 # lines 25-39 in this YAML header.
-abstract: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-abstract.Rmd")), collapse = "\n  ")`'   
-# If you'd rather include the preliminary content in files instead of inline
-# like below, use a command like that for the abstract above.  Note that a tab 
-# is needed on the line after the `|`.
-acknowledgements: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-acknowledgements.Rmd")), collapse = "\n  ")`'   
-#   I want to thank a few people.
-dedication: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-dedication.Rmd")), collapse = "\n  ")`'   
-#   You can have a dedication here if you wish. 
-# preface: |
+abstract: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-abstract.Rmd")), collapse = "\n  ")`'
+acknowledgements: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-acknowledgements.Rmd")), collapse = "\n  ")`'
+dedication: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-dedication.Rmd")), collapse = "\n  ")`'
 abbreviations: 
   ACMA: Bigleaf Maple (\textit{Acer macrophyllum, Sapindaceae})
   ACPL: Norway Maple (\textit{Acer platanoides, Sapindaceae}) 
@@ -64,7 +58,7 @@ abbreviations:
 # Specify the location of the bibliography below
 bibliography: bib/references.bib
 # Download your specific csl file and refer to it in the line below.
-csl: csl/apa.csl
+csl: csl/chicago.csl
 lot: true
 lof: true
 nocite: '@*'

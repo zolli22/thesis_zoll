@@ -10,44 +10,6 @@ This thesis looks at ...
 
 <!--# Could start with a short paragraph (before the subsections) laying out the thesis. “This thesis looks at…” Something likey your first few slides of the sparkle talk. -->
 
-## The Accessibility of Science
-
-<!--# When you write this section - it might go well near the END of the Introduction. -->
-
-On July 16, 2020, twitter user @reviewer2grumpyreviewer22020 shared a
-screenshot of Nature's posting of an article titled "The growing
-inaccessibility of science." This article, ironically, was behind a pay
-wall (Figure \@ref(fig:twitter-pic)). While this example is ironic and
-humorous, it highlights a much larger and more serious issue: people are
-becoming increasingly disconnected from science. This denial or
-rejection of scientific findings can be seen in the 139 members of the
-117th Congress who deny the reality of global climate change [@climate].
-Beyond the elected officials, many members of the American public are
-skeptical of the scientific claims regarding climate change because in
-some cases, they are not impacted first hand [@markman]. People
-conceptualize things that are psychologically distant from them (in
-time, space, or social distance) more abstractly than things that are
-psychologically close [@trope2010]. Given the relevance of this theory
-to climate change and the public's disconnect with science, it is
-important to increase the applicability and accessibility of science and
-scientific findings. If research remains unattainable for members of the
-general public, it cannot be expected of them to seek out scientific
-information and findings. Additionally, if the science that is being
-done is not relevant to their everyday lives, it may be difficult to
-give them a reason to care. There is nothing more close to home than
-one's own backyard, or directly in front of their house. An aspect of
-science that city residents interact with every day, consciously or not,
-is the urban forest. By promoting research on urban forests, making the
-research accessible and relevant, as well as emphasizing the importance
-of urban forests and urban trees to those who it most directly impacts,
-we have the opportunity to conduct necessary and beneficial research on
-urban tree health as well as work to close the psychological gap between
-people and science.
-
-```{r twitter-pic, echo = F, out.width = "75%", fig.align='center', fig.scap = "The growing inaccessibility of science", fig.cap = "The growing inaccessibility of science. Screenshot of Nature website posted on twitter by user @grumpyreviewer on July 16, 2020"}
-include_graphics("figure/science_inaccessable.jpeg")
-```
-
 ## Urban Forests and Urbanization
 
 <!--# Section seems a little sparse and choppy. Might also be worth including some brief summary discussion of Portland’s urban forest in particular. -->
@@ -388,6 +350,44 @@ eliminating the edges, and it is unclear how overlapping tree crowns
 were dealt with. The impact of these different methods on health
 analysis is unknown.
 
+## The Accessibility of Science
+
+<!--# When you write this section - it might go well near the END of the Introduction. -->
+
+On July 16, 2020, twitter user @reviewer2grumpyreviewer22020 shared a
+screenshot of Nature's posting of an article titled "The growing
+inaccessibility of science." This article, ironically, was behind a pay
+wall (Figure \@ref(fig:twitter-pic)). While this example is ironic and
+humorous, it highlights a much larger and more serious issue: people are
+becoming increasingly disconnected from science. This denial or
+rejection of scientific findings can be seen in the 139 members of the
+117th Congress who deny the reality of global climate change [@climate].
+Beyond the elected officials, many members of the American public are
+skeptical of the scientific claims regarding climate change because in
+some cases, they are not impacted first hand [@markman]. People
+conceptualize things that are psychologically distant from them (in
+time, space, or social distance) more abstractly than things that are
+psychologically close [@trope2010]. Given the relevance of this theory
+to climate change and the public's disconnect with science, it is
+important to increase the applicability and accessibility of science and
+scientific findings. If research remains unattainable for members of the
+general public, it cannot be expected of them to seek out scientific
+information and findings. Additionally, if the science that is being
+done is not relevant to their everyday lives, it may be difficult to
+give them a reason to care. There is nothing more close to home than
+one's own backyard, or directly in front of their house. An aspect of
+science that city residents interact with every day, consciously or not,
+is the urban forest. By promoting research on urban forests, making the
+research accessible and relevant, as well as emphasizing the importance
+of urban forests and urban trees to those who it most directly impacts,
+we have the opportunity to conduct necessary and beneficial research on
+urban tree health as well as work to close the psychological gap between
+people and science.
+
+```{r twitter-pic, echo = F, out.width = "75%", fig.align='center', fig.scap = "The growing inaccessibility of science", fig.cap = "The growing inaccessibility of science. Screenshot of Nature website posted on twitter by user @grumpyreviewer on July 16, 2020"}
+include_graphics("figure/science_inaccessable.jpeg")
+```
+
 ## This Thesis
 
 <!--# Some of what I said about 1.6 could also be here. The other thing that’s not clear to me from these two sections is how the second study handled species? Did they use single NDVI thresholds for all species, or do species-based calculations? You don’t really mention species when discussing their studies (just physiognomic type), but then include it as an important aspect of your thesis. It is important, and if those studies didn’t discuss it, then you should highlight that when discussing those studies.  -->
@@ -396,10 +396,10 @@ analysis is unknown.
 
 Based on the assumptions that tree health can be approximated using
 satellite spectral data, specifically NDVI, this thesis aims to
-replicate the process of @fang2020 and @xiao2005. Additionally, I will
+build on the process and research of @fang2020 and @xiao2005. I will
 investigate the questions of the impact of species differentiation when
-using NDVI to calculate tree health, and if different methods of tree
-crown delineation impact the health rating outcome. Based on these
+using NDVI to calculate tree health, as well as testing three different methods of tree
+crown delineation and pixel selection. Based on these
 questions, I predict that differentiating health rating predictions by
 tree species will improve the accuracy of the model, and differentiating
 by tree type (coniferous evergreen vs broadleaf deciduous trees) will

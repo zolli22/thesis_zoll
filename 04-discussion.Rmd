@@ -6,28 +6,16 @@ nocite: '@*'
 
 # Discussion {#discussion}
 
-<!--# Start with an intro paragraph (before any subsection) summarizing the results.  -->
+<!--# Start with an intro paragraph (before any subsection) summarizing the results. -->
 
-<!--# Move the sentences describing the results (first few sentences of each paragraph) up to the Results section. Then summarize them here in 1-2 sentences and make the connections across subsections here. (Effect of filtering trees <25 ft, crown width model vs. tree height model, etc.) -->
-
-<!--# Perhaps have a section about "limitations of satellite imaging" rather than a subsection of the height model? -->
-
-<!--# "Pixel Selection" should be renamed to something is more focused on the discussion point(s) - "Effect of tree delineation techniques"? -->
-
-<!--# This is where you can put your work in context. Maybe a subsection on "other factors that determine tree health". -->
-
-<!--# You will want a subsection on open source and accessibility here.  -->
-
-## Limitations of Satellite Imaging
-
-While the use of satellite imaging for urban ecology applications
+INTRO PARAGRAPH SUMMARIZING RESULTS
 
 ## Effect of Tree Delineation and Pixel Selection Techniques
 
 The three pixel selection methods (point, radius, and LiDAR) were used
 to help answer the question "which pixels are we using?"
 
-```{r layered-outputs-2, out.width = "90%", fig.cap = "Point, Radius, and LiDAR pixel selection methods for Berkeley Park with numbered trees", fig.scap = "Pixel selection method comparison with numbered trees"}
+```{r layered-outputs-2, out.width = "90%", fig.cap = "Point, Radius, and LiDAR pixel selection methods for Berkeley Park with numbered trees", fig.scap = "Pixel selection method comparison with numbered trees", echo = F}
 include_graphics("figure/layered_outputs_2.png")
 
 ```
@@ -52,21 +40,169 @@ and the central pixel likely contains mostly tree canopy, and ideally
 little to no information on ground cover surrounding the tree. This is
 emphasized in figure \@ref(fig:layered-outputs-2), which highlights the
 large variance in pixel selection extent for the three methods and how
-much data is missed by the point method. The radius method averages the
-NDVI values of pixels within a buffered circle with the size defined by
-the measured or predicted tree canopy width.
+much data is missed by the point method.
 
-The radius method data had a statistically significant difference in
-average NDVI values between **good** and **poor** categorized trees as
-well as **good** and **fair** categorized trees. There is a larger
-difference between **fair** and **good** than **fair** and **poor**,
-which is also seen in the point method data.
+The radius method averages the NDVI values of pixels within a buffered
+circle with the size defined by the measured or predicted tree canopy
+width. This data had a statistically significant difference in average
+NDVI values between **good** and **poor** categorized trees as well as
+**good** and **fair** categorized trees. There is a larger difference
+between **fair** and **good** than **fair** and **poor**, which is also
+seen in the point method data.
+
+Where the scope of the pixel data is too narrow (only using the value of
+a singular pixel) the scope of the radius method can be too broad and
+pixels belonging to other trees will be included.
+
+A large issue that can arise with the radius method data is the
+overlapping of tree crowns, and pixels being used in the NDVI analysis
+for multiple trees (Figure \@ref(fig:overlap-crowns). Overlapping crowns
+is an issue that often arises with tree crown delineation. To deal with
+this, @xiao2005 chose to exclude any trees with overlapping crowns from
+the final analysis. @fang2020 used a version of the radius method where
+they calculated an average canopy width and used that standardized size
+(a radius of 4.55 m) to extract their NDVI averages for each tree. The
+paper does not mention how they dealt with overlapping tree crowns, but
+perhaps their trees were widely distributed enough and the radius of
+interest was small enough that their values did not experience overlap.
+Using LiDAR as a pixel selection method has the benefit of additional
+pixel data like the radius method, but no overlapping crowns.
+
+```{r overlap-crowns, out.width = "50%", fig.scap = "Examples of overlapping park and street tree crowns.", fig.cap = "Examples of tree crown buffers from radius method data with overlapping crowns for park trees (left) and street trees (right). While the frequency of overlapping crowns is much higehr for the park example, it is still apparent in the street trees as well. Given that these figures only include trees of the canary species, the occurance of overlapping tree canopies is likely even higher than this.", echo = F}
+knitr::include_graphics(c("figure/overlapping_park.png", "figure/overlapping_street.png"))
+```
+
+The LiDAR tree crown delineation was by far the most intensive pixel
+selection method tested in this thesis, but was the most effective for
+modeling purposes. In some cases (such as trees 1, 4, and 6 in figure
+\@ref(fig:layered-outputs-2)) the LiDAR delineation appears to be highly
+effective in creating a polygon that is representative of a tree's
+crown, without the inclusion of overlapping areas. However, there are
+cases (such as trees 2, 3, and 5) where the canopy delineation algorithm
+creates canopies for trees that are larger than reality. The LiDAR pixel
+selection method also led to the most statistically significant
+predictive models. Using LiDAR for canopy delineation is complicated,
+but it is also quite effective.
+
+Given the overall results of the three methods, I believe that the
+radius and LiDAR methods are both valid choices for tree crown
+delineation and pixel selection, but can have different intended uses
+that will maximize the benefits of each model. The radius method is
+fairly easy when compared to the LiDAR processing. Especially if the
+data already contains a crown width measurement, the radius method can
+be a decently simple method of selecting pixels for NDVI assessment.
+However, if the goal is maximizing the accuracy of the tree crown
+delineations, the the LiDAR method is the best approach.
 
 ## Evaluation of Tree Health Predictions
 
-## Other Factors for Tree Health
+The final LiDAR model for predicting tree health based on NDVI and
+species had promising results for the two maple species, especially
+ACMA. The ACMA health predictions mirrored the pattern seen in the
+measured health condition and LiDAR calculated NDVI. With ACPL, the
+predictions showed effective separation of **fair** and **good**, but no
+predictions of **poor** trees. A limitation for all of the models is
+sample size. The models were only statistically significant when the
+health rating groups were downsampled to equal sizes, and the level of
+statistical significance and predictions varied depending on the sample
+of trees that was included in the downsampled data. Additionally, the
+distribution of species across health rating with the downsampled data
+is uneven (table \@ref(tab:species-counts-bleh). Due to data loss during
+the LiDAR canopy delineation, the final dataset used for model training
+had no PSME individuals rated as **poor** health. In the predictions, no
+PSME individuals were rated as **poor**, which in context of the
+training dataset makes complete sense. If there is no basis for a
+prediction of a specific health rating, that health rating will not be
+predicted. For all species, an overall larger sample size would likely
+improve the predictions and the model as a whole. This is easier said
+than done, since while collecting field data and health analyses, the
+species sampled can be controlled by selection, but their health cannot
+be. In order to create a predictive model that works for more than just
+ACMA, it is necessary to increase the size of data for model training.
 
-While this thesis presents one picture of
+```{r, include = F}
+test_data_lidar %>%
+  ggplot(aes(x = health_rat, fill = species))+
+  geom_bar()+
+  scale_fill_manual(values = species_pal)
+
+species_counts <- test_data_lidar %>%
+  dplyr::select(species, health_rat) %>%
+  count(species, health_rat) %>%
+  pivot_wider(names_from = "health_rat", values_from = "n") %>%
+  mutate(poor = gtools::na.replace(poor, 0))
+```
+
+```{r species-counts-bleh, results = 'asis', echo = F}
+kable(species_counts,
+      booktabs = TRUE, col.names = c("Species", "Count Poor", "Count Fair", "Count Good"),
+  caption = "Count of Species and Ratings in final dataset used for LiDAR downsampled model training")
+```
+
+### Impact of Functional Tree Type and Species on Tree Health Assessments
+
+In all models and data analysis, very different patterns were seen
+between the broadleaf deciduous trees (ACMA and ACPL) and the coniferous
+evergreen trees (PSME and THPL). This is at least partially due to the
+functional tree type and how these trees respond to environmental
+conditions and declining health. Deciduous trees lose their leaves every
+fall, and grow new ones every spring. Since their vegetation has a
+shorter lifespan of one growing season, it is much more sensitive to
+sudden and extreme environmental impacts. Declining health can be seen
+in broadleaf trees as leaf damage or scorching, discoloration in the
+foliage, or a decrease in the number of leaves grown each year (CITE).
+Conversely, coniferous evergreen trees retain their foliage after each
+growing season, adding new growth on to the end of branches. Since
+evergreen trees cannot regrow all their foliage after a year with harsh
+environmental conditions, their response is often seen in the loss of
+branches and a reduction in overall canopy cover (CITE). Because of
+these variations in response types, the models including functional type
+as a predictor variable had higher levels of accuracy than the method
+only using NDVI.
+
+For each of the three pixel selection method models, the model that
+differentiated the predictions by species was the most accurate. Because
+of the differences in functional type and other species-specific
+characteristics, it makes sense that increasing the specificity of the
+model to species would improve the predictions. This additional
+separation of tree species also highlighted the utility of the final
+predictive model for separating ACMA individuals into distinct health
+categories based on NDVI, but this did not hold true for the ACPL
+predictions.
+
+Separating the predictions by species was consistently more effective
+than separating by functional type. Like with the tree crown
+delineations, the species differentiation was the most effective, but
+functional type specificity can do in a pinch. For the purpose of
+obtaining a rough understanding of NDVI across various functional types
+of trees, then specifying functional type instead of species will paint
+an adequate picture of tree health. However, to maximize accuracy of
+health predictions, species separation
+
+## Limitations of Satellite Imaging
+
+While the use of satellite imaging for urban ecology applications is
+becoming more frequent, there are still numerous avenues that need
+additional research and improvement. The first of those is documentation
+and access.
+
+Another limitation of satellite imaging for tree health assessment is
+seasonality. Especially with deciduous trees, NDVI obtained outside of
+the peak growing season will not be able to get anywhere close to an
+accurate health rating based on greenness. By filtering for satellite
+images collected during the peak on-leaf period, this variability can be
+limited. @fang2020 compared satellite images from June, July, and August
+and found that the July image, which was obtained for the peak on-leaf
+period for Washington D.C., was the most accurate and effective when
+examining tree health.
+
+Tree species also has a large impact on NDVI values due to the natural
+variability in tree vegetation color. Coniferous trees are generally
+much darker in color than deciduous trees. Between deciduous tree
+species, there can be extensive variation in color as well. Some trees
+have vegetation that naturally appears reddish or purple, so these
+species would require a different type of vegetation index for health
+modeling than species that are naturally quite green.
 
 ## Open Source Data and Accessible Science
 
@@ -92,10 +228,45 @@ accessible, throughout this process it became apparent that the
 processing techniques were not. I had to use three different platforms
 (RStudio, QGIS, and Python) to conduct the work for this thesis.
 
-While relative to many context, satellite imagery with a 3m pixel size
-is relatively high resolution. Unfortunately, in the field of urban
-ecology, it is
+Satellite imagery with a 3m pixel size is relatively high resolution,
+but less so in the context of urban ecology. The satellite data used in
+@fang2020 was eight multispectral bands with a resolution of 1.2m, and
+one panchromatic band with a spatial resolution of 0.3m. Satellite
+imagery with this resolution or higher is unavailable to the public or
+even for research purposes without payment or subscription to a data
+hosting site. When I was working with PlanetScope data in the summer of
+2020, I reached out to Planet Labs about gaining access to their higher
+resolution data products and the possibility of purchasing individual
+access to the data if needed. I was told that Planet does minimum
+purchase orders of \$10,000 USD. While the availability of the basic
+satellite imagery through Planet Labs is an incredible resource, it is
+frustrating that the high price tag severely limits the accessibility of
+much of their data.
 
 ## Future Directions
+
+For future work in modeling tree health, a combined pixel selection
+using both the Radius and LiDAR methods could have promising results. By
+calculating the areas of both the radius buffer circles and the LiDAR
+canopies for each tree and using the smaller of the two areas, the
+amount of overlapping tree crowns will be minimized along with the
+overestimated LiDAR delineated crowns. Other studies have used an NDVI
+threshold to exclude non-vegetation pixels, which was unrealistic to do
+given the pixel size of the data I used. However, if this work could be
+repeated with higher resolution NDVI data, masking of pixels based on an
+NDVI threshold may be effective.
+
+Additionally, altering the model to predict two conditions (**healthy**
+vs **unhealthy**) may be more accurate, since all three pixel selection
+methods had statistically significant differences between the **good**
+and **fair** categories. Splitting the trees into two health categories
+instead of three would increase the number of **unhealthy** trees
+predicted, since the trees categorized as **fair** would be split
+between the **healthy** and **unhealthy** ratings.
+
+Given the ineffective nature of my model for predicting the health
+categorizations for coniferous trees, a different direction may be
+needed. One possible method of remote health analysis for coniferous
+trees could be canopy cover.
 
 ## Conclusion

@@ -103,7 +103,7 @@ Street Tree inventories. Any sampled tree points that did not match up
 with an inventoried tree point in a margin of 20 feet, it was removed
 from further analysis. Any tree individual that did not contain a health
 categorization was also removed. The final CNH dataset for my analysis
-contained 112 trees (Table \@ref(tab:cnh-tree-counts)).
+contained 112 trees (Table \@ref(tab:cnh-tree-counts-2)).
 
 ```{r cnh-tree-counts, include = F}
 scientific_names <- c("*Acer macrophyllum*","*Acer platanoides*","*Pseudotsuga menziesii*", "*Thuja plicata*")
@@ -117,7 +117,7 @@ cnh_counts <- read_csv("data/cnh_point.csv") %>%
   dplyr::select(4, 3, 1, 2)
 ```
 
-```{r, echo = F, results = 'asis'}
+```{r  cnh-tree-counts-2, echo = F, results = 'asis'}
 knitr::kable(
   cnh_counts, booktabs = TRUE, 
   col.names = c("Common name", "Scientific name","Species code", "Number collected"),
@@ -593,10 +593,22 @@ model to predict tree health categorization from NDVI values. I chose an
 ordinal logistic regression, which is used to model and predict the
 relationship between an ordinal categorical response variable and one or
 more explanatory variables, which can be either categorical or
-continuous. In order to use this type of model, I tested each model for
-the Proportional Odds Assumption, and
+continuous. An ordinal logistic regression (OLR) is applicable when
+there are three or more categories that have a natural and inherent
+ordering of levels, but the intervals between these levels are not
+necessarily equal. an OLR model is a modified binary logistic regression
+model that incorporates the ordinal nature of the dependent variable by
+defining the probabilities differently. Instead of solely considering
+the probability of an individual event, an OLR considers the
+probabilities of that event and all events that are ordered before it
+[@shi; @MASS2002]. The function `polr()` within the `MASS` R package is
+used to fit a logistic regression model to an ordered factor response
+[@R-MASS].
 
-<!--# Finish description of ordinal logistic regression here. -->
+In order to use this type of model, I tested each model for the
+Proportional Odds Assumption which a necessary prerequisite of running
+an ordinal logistic regression. I used the Brant Test for ordinal logit
+models which is in the `brant` package [@R-brant; @brant1990].
 
 <!--# I actually think the choice of training/test is a RESULTS paragarph, not here. Here you want to write out the relevant equations and assessment measures. Save the actual application to real data for the results. (I think just this paragraph moves) -->
 
@@ -605,41 +617,58 @@ the model. A confusion matrix is a calculated cross-tabulation of
 observed and predicted classes, which in this case is health
 categorization, along with associated statistics. The two main
 statistics I use in my data analysis are overall accuracy and an
-un-weighted Kappa statistic. "Accuracy" refers to the sensitivity
-
-$$\textrm{Sensitivity}= \frac{\textrm{True positive}}{\textrm{True positive + False negative}}$$
-
-and specificity
-
-$$\textrm{Specificity}= \frac{\textrm{True negative}}{\textrm{True negative + False positive}}$$
+un-weighted Kappa statistic. "Accuracy" \@ref(eq:accuracy) refers to the
+sensitivity \@ref(eq:sensitivity) and specificity \@ref(eq:specificity)
 of the prediction.
 
-$$
-\textrm{Accuracy}= \frac{\textrm{Sensitivity + Specificity}}{2}
-$$
-
+```{=tex}
+\begin{equation}
+  \textrm{Sensitivity}= \frac{\textrm{True positive}}{\textrm{True positive + False negative}}
+  (\#eq:sensitivity)
+\end{equation}
+```
+```{=tex}
+\begin{equation}
+  \textrm{Specificity}= \frac{\textrm{True negative}}{\textrm{True negative + False positive}}
+  (\#eq:specificity)
+\end{equation}
+```
+```{=tex}
+\begin{equation}
+  \textrm{Accuracy}= \frac{\textrm{Sensitivity + Specificity}}{2}
+  (\#eq:accuracy)
+\end{equation}
+```
 Kappa ($\kappa$) refers to Cohen's Kappa Statistic which is used to
-measure inter and intra-rater reliability for categorical items.
+measure inter and intra-rater reliability for categorical items
+\@ref(eq:kappa) [@mchugh2012; @cohen1960]. In this case, the "raters"
+are the measured vs predicted health categorizations.
 
 <!--# Cite Cohen’s Kappa Statistic? -->
 
-$$
-\kappa = \frac{p_o - p_e}{1 - p_e} = \frac{1 - p_o}{1 - p_e}
-$$ where $p_o$ is the relative observed agreement between the reference
-and prediction, and $p_e$ is the hypothetical probability of agreement
-by chance.
+```{=tex}
+\begin{equation}
+  \kappa = \frac{p_o - p_e}{1 - p_e} = \frac{1 - p_o}{1 - p_e}
+  (\#eq:kappa)
+\end{equation}
+```
+where $p_o$ is the relative observed agreement between the reference and
+prediction, and $p_e$ is the hypothetical probability of agreement by
+chance.
 
 For $k$ categories, $N$ observations to categorize and $n_{ki}$ the
 number of times rater $i$ predicted category $k$:
 
-$$
-p_e = \frac{1}{N^2}\sum{n_{k1}n_{k2}}
-$$
-
-$$
-p_e = \sum_{k}\widehat{p_{k12}} = \sum_{k} \widehat{p_{k1}}\widehat{p_{k2}} = \sum_{k}\frac{n_{k1}}{N}\frac{n_{k2}}{N} = \frac{1}{N^2}\sum{n_{k1}n_{k2}}
-$$
-
+```{=tex}
+\begin{equation}
+\mathrm{p_e} = \frac{1}{N^2}\sum{n_{k1}n_{k2}}
+\end{equation}
+```
+```{=tex}
+\begin{equation}
+  \mathrm{p_e} = \sum_{k}\widehat{p_{k12}} = \sum_{k} \widehat{p_{k1}}\widehat{p_{k2}} = \sum_{k}\frac{n_{k1}}{N}\frac{n_{k2}}{N} =            \frac{1}{N^2}\sum{n_{k1}n_{k2}}
+\end{equation}
+```
 Where $\widehat{p_{k12}}$ is the estimated probability that both raters
 1 and 2 will classify the same item as category $k$, while
 $\widehat{p_{k1}}$ is the estimated probabilities that rater 1 will
@@ -648,9 +677,6 @@ the rating of the two raters are independent. $\widehat{p_{k1}}$ is
 estimated from the number of items classified as category $k$ by rater 1
 ($n_{k1}$) divided by the total number of items for classification
 ($N$):$\widehat{p_{k1}}=\frac{n_{k2}}{N}$. These equations and
-relationships are the same for rater 2.
-
-If the two raters (in this case the reference and prediction
-categorizations) are in complete agreement, then kappa = 1.
-
-<!--# How does one calculate the probability by chance? Be prepared for Q’slike this. -->
+relationships are the same for rater 2. If the two raters (in this case
+the reference and prediction categorizations) are in complete agreement,
+then kappa = 1.
