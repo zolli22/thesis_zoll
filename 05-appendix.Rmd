@@ -12,6 +12,13 @@ nocite: '@*'
 
 # Supplementary Data {#data}
 
+## CNH Project Neighborhoods and Classification {-}
+
+```{r neighborhoods, echo = F, fig.cap = "CNH sampled neighborhoods with classification", out.width = "100%"}
+include_graphics("figure/neighborhoods_and_trees2.png")
+```
+
+
 ## Variable types for tree inventories {-}
 
 ```{r var-type-table, echo = F}
@@ -36,7 +43,7 @@ include_graphics("figure/2021-bands.png")
 
 ## Model Tests {-}
 
-```{r, echo = F, cache=TRUE}
+```{r, echo = F, cache=TRUE, include = F}
 # graphing
 testmodel_h_1 <- my_park %>% 
   ggplot(aes(x = sqrt(DBH), y = Tree_Height, color = Species)) +
@@ -83,64 +90,82 @@ testmodel_w_3 <- my_park %>%
   scale_color_manual(values = species_pal)+
   geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 3, raw = T))+
   labs(subtitle = "y ~ poly(x, 3)", y = "Canopy Width Measurement")
+
 ```
-```{r test-height-model, fig.cap = "Predicting tree height from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.", fig.scap = "Model tests for tree height predictions"}
+
+```{r test-height-model, fig.cap = "Predicting tree height from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.", fig.scap = "Model tests for tree height predictions", echo = F}
 testmodel_h_1 + testmodel_h_2 + testmodel_h_3 +
   plot_annotation(title = "Model testing for Tree Height predictions", caption = "x = DBH, y = tree height")
 ```
-```{r test-width-model, fig.cap = "Predicting canopy width from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.", fig.scap = "Model tests for tree canopy width predictions"}
+```{r test-width-model, fig.cap = "Predicting canopy width from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.", fig.scap = "Model tests for tree canopy width predictions", echo = F}
 testmodel_w_1 + testmodel_w_2 + testmodel_w_3 +
   plot_annotation(title = "Model testing for Canopy Width predictions", caption = "x = DBH, y = canopy width")
 ```
 
+## Height model results and predictions {-}
+
+```{r height-model, echo = F, fig.scap="Tree height predictive model", out.width= "80%", fig.cap = "Predictive model for tree height from measured DBH. A second order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.7834, P < 2.2e-16)"}
+p_height_model + s_height_preds +
+  plot_annotation(title = "Tree Height Model and Predictions")
+```
+
 ## Tree Height and Crown Width Predictive Model Equations {-}
 
-
-
-\textbf{ACMA equations:} (\textit{x} = DBH) \begin{equation}
+\textbf{ACMA equations:} (\textit{x} = DBH) 
+\begin{equation}
 \textrm{Tree Height} = 12.308 + 3.139x -0.032x^{2}  \\
+(\#eq:a1)
 \end{equation}
 
-```{=tex}
 \begin{equation}
 \textrm{Crown Width} = 12.117 + 1.721x - 0.0122x^{2} \\
-\end{equation}
-```
-\textbf{ACPL equations:} (\textit{x} = DBH) \begin{equation}
-\textrm{Tree Height} = -1.359 - 0.464x + 0.000203x^2 \\
+(\#eq:a2)
 \end{equation}
 
-```{=tex}
+\textbf{ACPL equations:} (\textit{x} = DBH) 
+\begin{equation}
+\textrm{Tree Height} = -1.359 - 0.464x + 0.000203x^2 \\
+(\#eq:a3)
+\end{equation}
+
 \begin{equation}
 \textrm{Crown Width} = -7.155 + 0.894x - 0.0153x^2 \\
-\end{equation}
-```
-\textbf{PSME equations:} (\textit{x} = DBH) \begin{equation}
-\textrm{Tree Height} = 0.2448 + 1.916x - 0.0187x^2 \\
+(\#eq:a4)
 \end{equation}
 
-```{=tex}
+\textbf{PSME equations:} (\textit{x} = DBH) 
+\begin{equation}
+\textrm{Tree Height} = 0.2448 + 1.916x - 0.0187x^2 \\
+(\#eq:a5)
+\end{equation}
+
 \begin{equation}
 \textrm{Crown Width} = -4.640583 - 0.3867x + 0.0046x^2 \\
-\end{equation}
-```
-\textbf{THPL equations:} (\textit{x} = DBH) \begin{equation}
-\textrm{Tree Height} = -3.5146 - 0.0388x + 0.00178x^2 \\
+(\#eq:a6)
 \end{equation}
 
-```{=tex}
+\textbf{THPL equations:} (\textit{x} = DBH) 
+\begin{equation}
+\textrm{Tree Height} = -3.5146 - 0.0388x + 0.00178x^2 \\
+(\#eq:a7)
+\end{equation}
+
 \begin{equation}
 \textrm{Crown Width} = -4.953 - 0.5939x + 0.00512x^2 \\
+(\#eq:a8)
 \end{equation}
-```
+
+
 ## Additional Information on Health Predictive Model {-}
 
-```{r model-table, echo = F, results='asis'}
+```{r, echo = F}
 model_variations <- read_csv("data/model_variations.csv") %>%
     dplyr::select(-6, -7) %>%
     mutate(Predictors = fct_relevel(Predictors, levels = c("NDVI", "NDVI * tree type", "NDVI * species"))) %>%
     arrange(Predictors, by_group = TRUE)
+```
 
+```{r model-table, echo = F, results='asis'}
 knitr::kable(model_variations,
              booktabs = TRUE, longtable = TRUE,
   col.names = c("NDVI pixel method", "Predictors", "Accuracy", "Kappa", "P-value"),
@@ -153,6 +178,23 @@ knitr::kable(model_variations,
 ```{r lidar-model-test, echo = F, out.width = "100%", fig.scap = "Confusion matrixes for LiDAR predictive model tests"}
 knitr::include_graphics("figure/test.png")
 ```
+
+```{r, include = F}
+tests <- c("test 1", "test 2", "test 3", "test 4", "test 5", "test 6")
+accuracy_vals <- c("56%", "54%", "64%", "54%", "67%", "64%")
+kappa_vals <- c("35%", "31%", "46%", "31%", "50%", "46%")
+pvals_tests <- c(0.002546, 0.006579, 0.0000824, 0.006579, 0.00002141, 0.0000824)
+
+model_tests <- data_frame(tests, accuracy_vals, kappa_vals, pvals_tests)
+```
+
+```{r model-test-table, echo = F, results = 'asis'}
+kable(model_tests,
+      booktabs = TRUE,
+      col.names = c("Test", "Accuracy", "Kappa", "P-Value"),
+      caption = "Statistical values for LiDAR predictive model tests")
+```
+
 
 ## Predicted Health Rating and Species Counts {-}
 

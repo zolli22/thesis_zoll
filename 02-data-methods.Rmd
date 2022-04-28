@@ -23,30 +23,26 @@ library(lubridate)
 library(tidyverse)
 ```
 
-<!--# I’m not sure what the Reed standard is for this stuff, but this section reads a little informal in tone to me. I’d probably take most of it out of first person. In the previous section you say “this thesis” and I think that sounds right. I’d also add a bit more detail to the 2nd and 3rd data-type sections and make them separate paragraphs. -->
-
-<!--# Remind us what CNH stands for. -->
-
 For this thesis, the data resources and processing components can be
 split into four main sections (Figure \@ref(fig:methods-overview-fig)).
 First, there is the tree data which is used to answer the question
 "Where are the trees?" This includes the Portland park and street tree
 databases, and the subset of those trees that were selected for health
-data collection and assessment as part of the larger CNH2 project in the
-summer of 2021. In this thesis, the tree data is used for tree location
-points as well as basic tree metrics such as species, height, and crown
-width. In general, I will refer to these data sources as park trees (the
-Portland park tree dataset), street trees (the Portland street tree
-dataset), and CNH trees, which are the trees we collected data on in the
-summer of 2021. A majority of the processing with the tree points
-involved tidying and wrangling the data as well as sub-setting it and
-transforming it into usable data products. Due to the inconsistency in
-the types of variables measured for each tree data product, I created a
-model to predict tree crown width and tree height based on DBH and
-species.
+data collection and assessment as part of the larger CNH (Coupled
+Natural-Human) project in the summer of 2021. In this thesis, the tree
+data is used for tree location points as well as basic tree metrics such
+as species, height, and crown width. In general, I will refer to these
+data sources as park trees (the Portland park tree dataset), street
+trees (the Portland street tree dataset), and CNH trees, which are the
+trees we collected data on in the summer of 2021. A majority of the
+processing with the tree points involved tidying and wrangling the data
+as well as sub-setting it and transforming it into usable data products.
+Due to the inconsistency in the types of variables measured for each
+tree data product, I created a model to predict tree crown width and
+tree height based on DBH and species.
 
 The second aspect of my data and processing is the retrieval and
-processing of Planetscope satellite imagery products to produce usable
+processing of PlanetScope satellite imagery products to produce usable
 NDVI data files, which was done in Python. Third, are the different tree
 delineation methods I examine in this thesis, which include point value,
 radius, and LiDAR methods. This involved the processing of LiDAR and
@@ -61,26 +57,22 @@ knitr::include_graphics("figure/methods-overview.png")
 
 ## Previously Collected Field Data
 
-<!-- You should probably also include the common names of the species when you introduce them. I also have some basic analysis on the abundance of those species in the inventories, if you want to include some summary stats let me know and I’ll dig them up.  -->
+As part of a team of researchers, I collected data tree health during
+the summer of 2021 as part of the CNH2 Project, which is a larger
+collaborative interdisciplinary project examining the relationship
+between various socioeconomic variables and urban tree health
+[@smarttr2022].
 
-<!-- Just a general comment–you go back and forth between “park and street trees” in some places, and just “street trees” in others. I’d anticipate some questions from your committee about this distinction. I haven’t written it up yet, but my discussion would be something about how we initially stratified the study by park & street trees, to investigate weather that might impact health (due to either proximity to cars/pavement or different maintenance regimes…). But our results showed no significant differences in health between park & street trees, so they were batched together for further analysis.  -->
-
-<!--# Perhaps specify who “we” means here. -->
-
-We collected data tree health during the summer of 2021 as part of a
-larger collaborative interdisciplinary project examining the
-relationship between various socioeconomic variables and urban tree
-health. For the purposes of the larger project, we selected trees from
-eight different neighborhoods in Portland, with four different
-categorizations of historic and current investment or disinvestment. The
-four chosen species are *Pseudotsuga menziesii, Pinaceae* (PSME), *Thuja
-plicata, Cupressaceae* (THPL), *Acer macrophyllum, Sapindaceae* (ACMA),
-and *Acer platanoides, Sapindaceae* (ACPL). They are some of the most
-abundant tree species in Portland, and make up a large proportion of
-Portland's urban forest. PSME, THPL, and ACMA are all native to the
-area, whereas Norway Maple is a nonnative tree species that was
-frequently planted in residential areas, and is now the most common
-street tree in Portland.
+For the purposes of the larger project, we selected trees from eight
+different neighborhoods in Portland, with four different categorizations
+of historic and current investment or disinvestment. The four chosen
+species are *Pseudotsuga menziesii, Pinaceae* (PSME), *Thuja plicata,
+Cupressaceae* (THPL), *Acer macrophyllum, Sapindaceae* (ACMA), and *Acer
+platanoides, Sapindaceae* (ACPL). They are some of the most abundant
+tree species in Portland, and make up a large proportion of Portland's
+urban forest. PSME, THPL, and ACMA are all native to the area, whereas
+Norway Maple is a nonnative tree species that was frequently planted in
+residential areas, and is now the most common street tree in Portland.
 
 Individual trees for sampling were selected from the Portland tree
 inventories, with the goal of sampling an equal proportion of street
@@ -117,7 +109,7 @@ cnh_counts <- read_csv("data/cnh_point.csv") %>%
   dplyr::select(4, 3, 1, 2)
 ```
 
-```{r  cnh-tree-counts-2, echo = F, results = 'asis'}
+```{r cnh-tree-counts-2, echo = F, results = 'asis'}
 knitr::kable(
   cnh_counts, booktabs = TRUE, 
   col.names = c("Common name", "Scientific name","Species code", "Number collected"),
@@ -132,8 +124,6 @@ knitr::include_graphics("figure/cnh_trees.png")
 
 ## Portland Tree Inventory
 
-<!-- “I filtered the street and park tree inventories to trees that were sampled in 2016 and 2019, respectively.” I’m not sure what this is in reference to, only the data in those tables? Or did you only look at trees that had both data from our summer work and also inventory data from those years? Or did you do that year filtering just for developing the width/height model? -->
-
 The Portland Tree Inventory Project, managed by the City of Portland's
 Parks & Recreation Urban Forestry Department, cataloged nearly 245,000
 street and park trees in Portland between 2010 to 2019. The street tree
@@ -147,10 +137,12 @@ trees health which was rated as **good**, **fair**, **poor**, or dead
 (Table \@ref(tab:var-type-table)).
 
 To reduce the variability in data due to the time span of data
-collection, I filtered the street and park tree inventories to trees
-that were sampled in 2016 and 2019, respectively. For each dataset, the
-selected year was the year with the highest count of trees sampled
-(Tables \@ref(tab:streettable) and \@ref(tab:parktable)) [@R-pdxTrees].
+collection, I filtered the street inventory to trees collected in 2016,
+and the park tree inventory to trees that were sampled in 2019. For each
+dataset, the selected year was the year with the highest count of trees
+sampled, and the trees from 2016 and 2019 were used in my NDVI analysis
+and final predictions (Tables \@ref(tab:streettable) and
+\@ref(tab:parktable)) [@R-pdxTrees].
 
 ```{r counttables, include=FALSE, tidy = TRUE}
 street_counts<-get_pdxTrees_streets() %>%
@@ -234,15 +226,15 @@ street_health + park_health
 
 ### Canopy width and tree height model
 
-<!--# The statistical model needs to be described here. I think you have some figures that illustrate this? (though they might be in the results section). SUGGESTION: can this be a sub-subsection underneath 2.3? -->
-
 The park tree dataset contains measurements for tree height, canopy
 width, and DBH, but the street tree dataset only contains measurements
-for DBH. Canopy width and tree height are both important factors for
-tree selection and canopy delineation. Using RStudio, I created a
-statistical model to predict tree height and crown width based on tree
-DBH and species, in order to be able to use the same pixel selection
-methods for both the park and street tree inventories (Section
+for DBH. In order to successfully filter out all trees shorter than 25
+feet tall, a height measurement is necessary. Canopy width is an
+essential factor of the radius pixel selection method, which is
+discussed below (section \@ref(radiusmethod)). Using RStudio, I created
+a statistical model to predict tree height and crown width based on tree
+DBH and species in order to be able to use the same pixel selection
+methods for both the park and street tree inventories (section
 \@ref(canopy-model-results)).
 
 ## Satellite Imagery
@@ -321,13 +313,12 @@ and cartographic projection.
 
 ## NDVI calculation {#ndvi-calc-methods}
 
-<!--# Modify the text and/or equation to be clear that you calculate this for each PIXEL.  -->
-
 The NDVI calculations were done using Python in PyCharm. Besides minor
 alterations, the processing code came from Planet's instructions on
 calculating NDVI from 4-band PlanetScope data [@planetndvi]. NDVI is
 calculated from the red and NIR satellite bands, as shown in Equation
-\@ref(eq:ndvi-eq).
+\@ref(eq:ndvi-eq). NDVI is calculated for each individual pixel of the
+satellite image.
 
 ```{=tex}
 \begin{equation}
@@ -471,7 +462,7 @@ not be representative of the tree's greenness, or health.
 knitr::include_graphics("figure/points.png")
 ```
 
-### Radius method
+### Radius method {#radiusmethod}
 
 The first method of tree crown delineation I used is based on the
 individual crown width for each selected tree. In the Portland park tree
@@ -610,8 +601,6 @@ Proportional Odds Assumption which a necessary prerequisite of running
 an ordinal logistic regression. I used the Brant Test for ordinal logit
 models which is in the `brant` package [@R-brant; @brant1990].
 
-<!--# I actually think the choice of training/test is a RESULTS paragarph, not here. Here you want to write out the relevant equations and assessment measures. Save the actual application to real data for the results. (I think just this paragraph moves) -->
-
 For each model, I created a confusion matrix to examine the validity of
 the model. A confusion matrix is a calculated cross-tabulation of
 observed and predicted classes, which in this case is health
@@ -643,8 +632,6 @@ Kappa ($\kappa$) refers to Cohen's Kappa Statistic which is used to
 measure inter and intra-rater reliability for categorical items
 \@ref(eq:kappa) [@mchugh2012; @cohen1960]. In this case, the "raters"
 are the measured vs predicted health categorizations.
-
-<!--# Cite Cohen’s Kappa Statistic? -->
 
 ```{=tex}
 \begin{equation}
@@ -680,3 +667,16 @@ estimated from the number of items classified as category $k$ by rater 1
 relationships are the same for rater 2. If the two raters (in this case
 the reference and prediction categorizations) are in complete agreement,
 then kappa = 1.
+
+For each model, I evaluate the success and ability to predict health
+rating in a few different ways. First, I examine the calculated accuracy
+and kappa values. A higher kappa value is more important than a higher
+accuracy score because kappa takes into account the various sizes of the
+categories and the probability of the prediction occurring by chance,
+whereas accuracy does not. Additionally, I look at the false positives
+(a **poor** tree getting rated **good**) and false negatives (a **good**
+tree being rated **poor**). Both of these values should be as low as
+possible, but in this case reducing the number of false positives is
+most important because if a tree in **poor** health was rated as
+**good**, it may not be included in further health analysis and will be
+missed when examining the spatial distribution of tree health.

@@ -6,13 +6,15 @@ nocite: '@*'
 
 # Introduction {#intro}
 
-This thesis looks at ... 
-
-<!--# Could start with a short paragraph (before the subsections) laying out the thesis. “This thesis looks at…” Something likey your first few slides of the sparkle talk. -->
+This thesis looks at urban tree health in Portland, Oregon with the goal
+of creating a model that predicts tree health rating from NDVI
+(Normalized Difference Vegetation Index). Additionally, this thesis
+examines the impact of differentiating by functional tree type or tree
+species when modeling tree health, as well as the testing and analysis
+of three different methods of NDVI pixel selection and tree crown
+delineation.
 
 ## Urban Forests and Urbanization
-
-<!--# Section seems a little sparse and choppy. Might also be worth including some brief summary discussion of Portland’s urban forest in particular. -->
 
 An urban forest is the total population of trees in an urban area. Urban
 forests are comprised of parks, street trees, landscaped boulevards,
@@ -177,10 +179,6 @@ forest health over time.
 
 ## Urban Forestry in Portland, Oregon
 
-<!--# “Portland’s inventoried park trees have an estimated worth of $128 million (Portland Urban Forestry, 2019).” I’m not sure what this means? Are you using the same terms as the previous sentence, and “worth” is “replacement value”, or is this about ecosystem services? -->
-
-<!--# The transition to RS could be a little more developed–-just kinda pops up out of the blue. Maybe some transition about how the labor-intensive nature of surveys suggests the need for more efficient methods…  -->
-
 Portland is one of many cities to create tree inventories in the last 25
 years, with the goal of better understanding the urban forest. Over a
 period of 9 years, 2,000 volunteers along with members of Portland's
@@ -226,13 +224,7 @@ tree health.
 
 ## Remote Sensing in Urban Landscapes
 
-<!--# Remote Sensing in Urban Landscapes? Or Remote Sensing in Ecology? Could narrow the focus of this section header. Remote Sensing for Vegetation? -->
-
 <!--# Starts abrupt. Need a sentence introducing and defining RS. Also the sentence about soybean chlorophyll is interesting, but seems a little out of place without some discussion of other plants. I’d add a sentence and source about using NDVI for tree monitoring after that one.  -->
-
-<!--# The link between NDVI and tree health could be spelled out a bit more. You cite some studies that NDVI correlates with chlorophyll (what’s that? “more like bore-o-phyll!”).You also cite studies that link NDVI to mortality and drought stress. Your thesis hinges on the idea that NDVI is a proxy for tree health, maybe try to make this connection a bit more clear.  -->
-
-<!--# Maybe too late in the game but I wonder if you might be able to make a cost argument for remote sensing over field surveys too… -->
 
 While the term "remote sensing" was first used in the 1960s, the first
 aerial images were taken in the 1850s from hot air balloons. Later,
@@ -269,9 +261,16 @@ photosynthetically active radiation. A value closer to 1 indicates
 vegetation that is more photo-synthetically active and greener, which
 can be used as a proxy for vegetation health. NDVI is not a diagnostic
 tool of vegetation health, but can be used as an indicator of health for
-further analysis. Studies have shown that NDVI is highly correlated with
-chlorophyll content. Specifically, NDVI has a near-linear relationship
-to the chlorophyll content of soybean crops [@tucker1979; @myneni1995].
+further analysis. NDVI has been shown to be effective as a vegetation
+index to determine total photosynthetic activity, even in moderately to
+sparsely vegetated areas [@myneni1995]. Studies have shown that NDVI is
+highly correlated with chlorophyll content and vegetation
+characteristics that are directly related to the chlorophyll content,
+such as amount of green biomass and leaf water content [@tucker1979;
+@glenn2008]. Leaf chlorophyll content and changes in content are
+indicators of nutrient deficiencies. These nutrient deficiencies may be
+the result of environmental conditions including increased pollution
+concentrations or other health related stresses [@talebzadeh2022].
 
 Especially when the goal is monitoring tree health changes over time,
 remote sensing data eliminates the need for repeated sampling over long
@@ -284,11 +283,13 @@ scale [@xiao2005].
 
 ## Previous work
 
-<!--# Really good discussion. I’d just like a little more at the end, about how your approach is an improvement. I think you’ve correctly identified the drawbacks of their studies, but you just kinda allude to how yours is better–spell it out more directly for readers, and say a little more about what you did here–I know it will be in methods, but without a little more info here it’s kind of unclear. -->
-
-<!--# Previous work section should say more about the different crown delineation methods and also about using species vs. functional types vs ignoring this information. For example, there is not much discussion of the lidar-based methods and the single pixel method. Also, did Fang et al. (2020) consider species or did they treat all trees the same? Where does this idea that species will improve model performance come from? The level of detail of your review of the methods of the first two main papers in this section is good. Maybe just add another couple papers to flesh out the crown delineation approaches and how incorporating species might improve things.  -->
-
-<!--# Specify that you are replicating the methodology HERE in Portland. You can also mention that previous field work (again you can forward-cite) manually classified trees with a health rating. Then, mention where this thesis takes the work. -->
+This thesis was inspired by the work of two previous studies, @xiao2005
+and @fang2020. Both of these studies use NDVI from multispectral remote
+sensing data paired with field collected tree data to examine urban tree
+health. I have based the backbone of my methodology off these studies,
+but have applied the methods to urban trees in Portland, OR.
+Additionally, there are a few areas that I believe have some room for
+improvement that I aim to add to.
 
 @xiao2005 used multispectral remote sensing data paired with field
 collected tree health data with the goal of mapping tree health on the
@@ -302,23 +303,30 @@ resolution multispectral remote sensing data collected in the summers of
 vegetation or non-vegetation. The pixels representing trees and shrubs
 were manually selected and extracted, resulting in NDVI data just for
 trees and shrubs. The remaining data was split into 5 separate layers
-based on physiognomic tree type (broadleaf deciduous, broadleaf
-evergreen, conifer, palm, and mixed). Tree health was evaluated at both
-a pixel scale, and a tree scale, with the pixels or trees being mapped
-as either healthy or unhealthy. A tree was labeled as unhealthy if 30%
-or more of the pixels within the manually delineated tree crown were
-mapped as unhealthy, and if the average NDVI of the pixels were less
-than the NDVI threshold for healthy trees. The accuracy of the tree
-health assessment was checked against the validation dataset of 1,186
-trees. The field health assessment agreed with the remotely sensed
-health classification for 88% of the trees.
+based on physiognomic/functional tree type (broadleaf deciduous,
+broadleaf evergreen, conifer, palm, and mixed). Tree health was
+evaluated at both a pixel scale and a tree scale, with the pixels or
+trees being mapped as either healthy or unhealthy. Different NDVI
+thresholds for healthy and unhealthy trees were used for each functional
+tree type. A tree was labeled as unhealthy if 30% or more of the pixels
+within the manually delineated tree crown were mapped as unhealthy, and
+if the average NDVI of the pixels were less than the NDVI threshold for
+healthy trees. The accuracy of the tree health assessment was checked
+against the validation dataset of 1,186 trees. The field health
+assessment agreed with the remotely sensed health classification for 88%
+of the trees. While @xiao2005 evaluated tree health at both an
+individual pixel scale and a whole tree scale, this study served as the
+basis of my inspiration for the single point method.
 
 @fang2020 used a similar approach to evaluate the health of street trees
 in Washington D.C. using multispectral remote sensing data and D.C.'s
 street tree inventory. The tree inventory contained 18,434 trees, each
 with a tree health classification of excellent, good, fair, poor, or
-dead. The researchers purchased remote sensing images for June 11, July
-30, and August 30, 2017, to compare the sensitivity of tree health at
+dead. While the inventory also contained over 95 unique tree species,
+the researchers limited their focus to the five most common tree species
+in the area: American elm, pin oak, red maple, red oak, and willow oak.
+The researchers purchased remote sensing images for June 11, July 30,
+and August 30, 2017, to compare the sensitivity of tree health at
 different points in the trees' on-leaf period. To extract pixels
 belonging to tree crowns, a radial buffer based on tree crown diameter
 was used, and pixels with low NDVI values were masked. This paper tested
@@ -329,7 +337,10 @@ fair, and poor health conditions were highly statistically different,
 and traditional NDVI was the most sensitive VI for detecting tree health
 conditions. Additionally, it was determined that remote sensing imagery
 taken in the middle of the on-leaf period had the best potential to
-assess the health condition of trees.
+assess the health condition of trees. Their findings state that NDVI is
+the best all-purpose vegetation index for showing the statistical
+differences between tree health condition classes, it does vary by
+species [@fang2020].
 
 These two studies form the basis of the approach and methods for this
 thesis, but there are two main places where I believe I can add new
@@ -348,11 +359,17 @@ on the average DBH of all trees was used to select the tree crown area.
 However, this method will only use the center pixels of large trees
 eliminating the edges, and it is unclear how overlapping tree crowns
 were dealt with. The impact of these different methods on health
-analysis is unknown.
+analysis is unknown. LiDAR delineation is another method of pixel
+selection and crown delineation that is often used in forestry, but is
+not often combined with NDVI health assessments. While vegetation
+indices are not often included, @gulcin2021 assessed above ground carbon
+storage or urban trees with LiDAR data. While the specific methods of
+this study were out of the scope of this thesis, it presents a
+fascinating picture of the different methods of LiDAR tree detection and
+crown segmentation as well as the various metrics that can be predicted
+using LiDAR data.
 
 ## The Accessibility of Science
-
-<!--# When you write this section - it might go well near the END of the Introduction. -->
 
 On July 16, 2020, twitter user @reviewer2grumpyreviewer22020 shared a
 screenshot of Nature's posting of an article titled "The growing
@@ -390,24 +407,25 @@ include_graphics("figure/science_inaccessable.jpeg")
 
 ## This Thesis
 
-<!--# Some of what I said about 1.6 could also be here. The other thing that’s not clear to me from these two sections is how the second study handled species? Did they use single NDVI thresholds for all species, or do species-based calculations? You don’t really mention species when discussing their studies (just physiognomic type), but then include it as an important aspect of your thesis. It is important, and if those studies didn’t discuss it, then you should highlight that when discussing those studies.  -->
-
-<!--# Since you go into some detail about the other studies in 1.6, I’d soften the language about “replicating” their work. You used pretty different methodology in a number of places. I’d say something like “build on” or “an approach inspired by”, or something like that.  -->
-
 Based on the assumptions that tree health can be approximated using
-satellite spectral data, specifically NDVI, this thesis aims to
-build on the process and research of @fang2020 and @xiao2005. I will
-investigate the questions of the impact of species differentiation when
-using NDVI to calculate tree health, as well as testing three different methods of tree
-crown delineation and pixel selection. Based on these
-questions, I predict that differentiating health rating predictions by
-tree species will improve the accuracy of the model, and differentiating
-by tree type (coniferous evergreen vs broadleaf deciduous trees) will
-also improve the accuracy, but less than species. Additionally, I
-predict that using more in-depth tree crown delineation approaches will
-allow for more trees to be analyzed, and will also improve the accuracy
-of the health rating.
-
-Finally, this thesis only uses data sources, tools, and processes that
-are either publicly accessible or free, in order to keep this type of
-research accessible to all.
+satellite spectral data, specifically NDVI, this thesis aims to build on
+the process and research of @fang2020 and @xiao2005. I will investigate
+the effectiveness of predicting tree health solely based on NDVI, in
+contrast to NDVI and functional tree type or NDVI and tree species. I
+predict that models using tree species as a predictor variable will be
+more effective than models using functional tree type, and models with
+functional tree type will be more effective than models without any
+model specification. I will also test three different methods of tree
+crown delineation and pixel selection: using a single point for pixel
+selection, variable circle buffers based on tree crown radius, and tree
+crowns delineated with LiDAR data. I predict that increasing the
+specificity of the model, with both predictor specification and pixel
+selection, will improve the results of the model. The least effective
+model will be with point method data and just NDVI, and the most
+effective model will be with LiDAR delineated crowns and species
+specificity. However, depending on the goals of future modeling, I
+believe that choosing one method of increasing precision in the model
+will improve the results when another method of increasing precision is
+unavailable. Finally, this thesis only uses data sources, tools, and
+processes that are either publicly accessible or free, in order to keep
+this type of research accessible to all.

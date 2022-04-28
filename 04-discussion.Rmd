@@ -8,17 +8,22 @@ nocite: '@*'
 
 <!--# Start with an intro paragraph (before any subsection) summarizing the results. -->
 
+<!--# Page 47: don’t forget to add “intro paragraph summarizing results”. Suggested alternative title for 4.1: “Strengths and limitations of different delineation techniques”. While some method performed better than others in terms of the strength of the relationship with health categories, there were clear limitations of each method too—e.g., while lidar method was “best”, it included many pixels that were obviously not associated with the tree of interest, a unique limitation relative to the other methods.  -->
+
 INTRO PARAGRAPH SUMMARIZING RESULTS
 
-## Effect of Tree Delineation and Pixel Selection Techniques
+## Strengths and limitations of different delineation techniques
+
+<!-- Expand this sentence to first motivate the problem (we needed to choose pixels to use) and then go on to say that you tested three different methods. -->
 
 The three pixel selection methods (point, radius, and LiDAR) were used
 to help answer the question "which pixels are we using?"
 
 ```{r layered-outputs-2, out.width = "90%", fig.cap = "Point, Radius, and LiDAR pixel selection methods for Berkeley Park with numbered trees", fig.scap = "Pixel selection method comparison with numbered trees", echo = F}
 include_graphics("figure/layered_outputs_2.png")
-
 ```
+
+<!-- Page 48: Is the single-pixel method likely to give you less “noise” from edge effects and non-canopy pixels. While your results suggest the additional info you get from the other methods is sufficient to overcome this “noise”, it might help to point out this strength of the method. Also, are there particular types of tree problems this method might be well suited for? Smaller trees for example or trees that have a certain pattern of dieback? Also, revisit the paragraph structure on this page. Make sure paragraphs have a topic sentence with several supporting sentence and transition.  -->
 
 The point method is the simplest method, obtaining a single NDVI value
 from the individual pixel that spatially contains an individual tree
@@ -42,6 +47,8 @@ emphasized in figure \@ref(fig:layered-outputs-2), which highlights the
 large variance in pixel selection extent for the three methods and how
 much data is missed by the point method.
 
+<!-- Pages 48-50: It seems like your radius and lidar methods have different limitations. The radius method has more overlapping crowns but perhaps fewer non-canopy pixels, while the lidar method is less prone to overlapping crowns but maybe more prone to including non-canopy pixels. Are there ways to combine the methods to get a “best of both worlds” method? What if you used the lidar method to select crowns and then overlaid the radius buffers and “trimmed” any pixels extending beyond the radius buffers? I think you read a paper early on that did something similar where they used lidar crown delineation and then refined it using ground-based crown width data. Lastly, its not clear why you are including figures 4.2 and 4.3. You don’t refer to them in the text. The first one seems to do a good job of showing the overlapping crowns problem. If that’s why your including it, refer to it when discussion this limitation in the text.  -->
+
 The radius method averages the NDVI values of pixels within a buffered
 circle with the size defined by the measured or predicted tree canopy
 width. This data had a statistically significant difference in average
@@ -49,6 +56,8 @@ NDVI values between **good** and **poor** categorized trees as well as
 **good** and **fair** categorized trees. There is a larger difference
 between **fair** and **good** than **fair** and **poor**, which is also
 seen in the point method data.
+
+<!-- Reference the figure/table that contains this information in the REsults. -->
 
 Where the scope of the pixel data is too narrow (only using the value of
 a singular pixel) the scope of the radius method can be too broad and
@@ -68,7 +77,7 @@ interest was small enough that their values did not experience overlap.
 Using LiDAR as a pixel selection method has the benefit of additional
 pixel data like the radius method, but no overlapping crowns.
 
-```{r overlap-crowns, out.width = "50%", fig.scap = "Examples of overlapping park and street tree crowns.", fig.cap = "Examples of tree crown buffers from radius method data with overlapping crowns for park trees (left) and street trees (right). While the frequency of overlapping crowns is much higehr for the park example, it is still apparent in the street trees as well. Given that these figures only include trees of the canary species, the occurance of overlapping tree canopies is likely even higher than this.", echo = F}
+```{r overlap-crowns, out.width = "45%", fig.scap = "Examples of overlapping park and street tree crowns.", fig.cap = "Examples of tree crown buffers from radius method data with overlapping crowns for park trees (left) and street trees (right). While the frequency of overlapping crowns is much higehr for the park example, it is still apparent in the street trees as well. Given that these figures only include trees of the canary species, the occurance of overlapping tree canopies is likely even higher than this.", echo = F}
 knitr::include_graphics(c("figure/overlapping_park.png", "figure/overlapping_street.png"))
 ```
 
@@ -95,6 +104,8 @@ However, if the goal is maximizing the accuracy of the tree crown
 delineations, the the LiDAR method is the best approach.
 
 ## Evaluation of Tree Health Predictions
+
+<!-- Page 50: Here you say “the level of statistical significance…varied depending on the sample of trees that was included in the downsampled dataset” but I thought you said earlier all 6 tests produced statistically significant results?  -->
 
 The final LiDAR model for predicting tree health based on NDVI and
 species had promising results for the two maple species, especially
@@ -139,7 +150,11 @@ kable(species_counts,
   caption = "Count of Species and Ratings in final dataset used for LiDAR downsampled model training")
 ```
 
-### Impact of Functional Tree Type and Species on Tree Health Assessments
+## Impact of Functional Tree Type and Species on Tree Health Assessments
+
+<!-- Page 51: Here’s where you want to come back and attempt to explain the weird pattern of higher NDVI for poor health conifers. I think you’re trying to get at that with the sentences about how these different function groups exhibit stress, but its not clear that this is an explanation you’re offering for this pattern (if that is what its supposed to be). Beyond biological reasons for this pattern, what are some methodological ones? I can think of a couple hypotheses for what might be going on there. See if you can pose some possible explanations, this will also help with the “next steps” section where you can come back to these hypotheses and offer to test them as next steps… -->
+
+<!-- Remmeber to add citations here. -->
 
 In all models and data analysis, very different patterns were seen
 between the broadleaf deciduous trees (ACMA and ACPL) and the coniferous
@@ -170,6 +185,8 @@ predictive model for separating ACMA individuals into distinct health
 categories based on NDVI, but this did not hold true for the ACPL
 predictions.
 
+<!-- Is there any danger of overfitting the model when you separate the predictions by species? -->
+
 Separating the predictions by species was consistently more effective
 than separating by functional type. Like with the tree crown
 delineations, the species differentiation was the most effective, but
@@ -180,6 +197,12 @@ an adequate picture of tree health. However, to maximize accuracy of
 health predictions, species separation
 
 ## Limitations of Satellite Imaging
+
+<!-- Page 52: The limitations of satellite imaging section could use some fleshing out. First, wouldn’t the seasonality limitation—I.e. need to use imagery from growing season, be the same for ground-based surveys? Can you get reliable health data in the winter from the ground but not from the air? Second, are the limitations of NDVI a limit of satellite data or a limit of the fact that you only used NDVI? Are there other satellite datasets that can be used to derive other indices? Can your data be processed differently to examine things other than NDVI? In other words, is the solution to this limitation using different data that exists or building satellite platforms that collect different data? Lastly, what do these limitations say about this approach? Do they outweigh the “strengths”? While there are limitations, you were able to get a first pass health prediction for ~200 trees. How does this compare to a ground based survey of 200 trees? If you build on this start, do you think its still worthwhile to use satellite data for this purpose? -->
+
+<!-- Expand on this paragraph. Documentation and acceess - write a bit about your experience with the datasets, etc. -->
+
+<!-- Or maybe forward-references (“documentation and access, which I will outline in the next section.”) -->
 
 While the use of satellite imaging for urban ecology applications is
 becoming more frequent, there are still numerous avenues that need
@@ -196,6 +219,8 @@ and found that the July image, which was obtained for the peak on-leaf
 period for Washington D.C., was the most accurate and effective when
 examining tree health.
 
+<!-- Anything special about Portland being where it is, geographically?  E.g., how relevant is a study omparing Washington D.C. seasons to here? -->
+
 Tree species also has a large impact on NDVI values due to the natural
 variability in tree vegetation color. Coniferous trees are generally
 much darker in color than deciduous trees. Between deciduous tree
@@ -205,6 +230,10 @@ species would require a different type of vegetation index for health
 modeling than species that are naturally quite green.
 
 ## Open Source Data and Accessible Science
+
+<!-- Page 52-53: If Planet data access requires an academic affiliation, is it really “open source” and “accessible”? The lidar CHM does require proprietary software but it IS publiclly-available. I think you don’t say otherwise, but it is a little unclear.  -->
+
+<!-- CHM? Ah Canopy Height MOdel! Do you consistently use CHM throughout? If not, then remind the reader what this is. -->
 
 When beginning this thesis, a large goal of mine was to use only open
 source and freely accessible data sources and programs. For the most
@@ -244,6 +273,10 @@ frustrating that the high price tag severely limits the accessibility of
 much of their data.
 
 ## Future Directions
+
+<!-- Page 53-54: Organize future directions around addressing limitations you identified in earlier sections.  -->
+
+<!-- In addition to what’s here, think a bit more broadly about future directions.  What could you do if you had another year (or for a future thesis student)?  Is there anything that you didn’t have enough time to do that you wish you could have done? -->
 
 For future work in modeling tree health, a combined pixel selection
 using both the Radius and LiDAR methods could have promising results. By
