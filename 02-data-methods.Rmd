@@ -13,8 +13,9 @@ MathJax.Hub.Config({
 });
 </script>
 ```
+
 ```{r setup-1, include=FALSE}
-knitr::opts_chunk$set(message = F, warning = F, fig.align='center')
+knitr::opts_chunk$set(message = F, warning = F, fig.align='center', fig.pos = "H", out.extra = "")
 ```
 
 ```{r packages, include = F}
@@ -50,6 +51,9 @@ tree crown radius data, as well as obtaining and computing associated
 NDVI values. Lastly, with the combined data from the previous three
 parts, I created a predictive model for predicting tree health rating
 based on NDVI values.
+
+All code for this thesis can be found in my GitHub repository:
+https://github.com/zolli22/thesis_zoll 
 
 ```{r methods-overview-fig, echo = F, fig.cap = "Overview of methods and data process", out.width = "95%"}
 knitr::include_graphics("figure/methods-overview.png")
@@ -98,7 +102,7 @@ categorization was also removed. The final CNH dataset for my analysis
 contained 112 trees (Table \@ref(tab:cnh-tree-counts-2)).
 
 ```{r cnh-tree-counts, include = F}
-scientific_names <- c("*Acer macrophyllum*","*Acer platanoides*","*Pseudotsuga menziesii*", "*Thuja plicata*")
+scientific_names <- c("Acer macrophyllum","Acer platanoides","Pseudotsuga menziesii", "Thuja plicata")
 common_names <- c("Bigleaf Maple", "Norway Maple", "Douglas Fir", "Western Redcedar")
 
 cnh_counts <- read_csv("data/cnh_point.csv") %>%
@@ -449,7 +453,7 @@ knitr::include_graphics("figure/berkeley_park.png")
 
 ### Point method
 
-Point Method: For the point method, I extracted the NDVI value from the
+For the point method, I extracted the NDVI value from the
 pixel directly underneath the tree location point. This is the simplest
 of the three methods, since it obtains one NDVI value for one singular
 pixel. The tree location points were sourced from the street and park
@@ -557,7 +561,7 @@ knitr::include_graphics("figure/buffer_all_points.png")
 knitr::include_graphics("figure/selected_lidar.png")
 ```
 
-```{r layered-outputs, out.width = "90%", fig.cap = "Point, Radius, and LiDAR pixel selection methods for Berkeley Park", fig.scap = "Pixel selection method comparison"}
+```{r layered-outputs, out.width = "90%", fig.cap = "Point, Radius, and LiDAR pixel selection methods for Berkeley Park", fig.scap = "Pixel selection method comparison", echo = F}
 include_graphics("figure/layered_outputs.png")
 
 ```
@@ -616,12 +620,14 @@ of the prediction.
   (\#eq:sensitivity)
 \end{equation}
 ```
+
 ```{=tex}
 \begin{equation}
   \textrm{Specificity}= \frac{\textrm{True negative}}{\textrm{True negative + False positive}}
   (\#eq:specificity)
 \end{equation}
 ```
+
 ```{=tex}
 \begin{equation}
   \textrm{Accuracy}= \frac{\textrm{Sensitivity + Specificity}}{2}
@@ -651,6 +657,7 @@ number of times rater $i$ predicted category $k$:
 \mathrm{p_e} = \frac{1}{N^2}\sum{n_{k1}n_{k2}}
 \end{equation}
 ```
+
 ```{=tex}
 \begin{equation}
   \mathrm{p_e} = \sum_{k}\widehat{p_{k12}} = \sum_{k} \widehat{p_{k1}}\widehat{p_{k2}} = \sum_{k}\frac{n_{k1}}{N}\frac{n_{k2}}{N} =            \frac{1}{N^2}\sum{n_{k1}n_{k2}}

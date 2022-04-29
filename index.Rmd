@@ -126,6 +126,7 @@ library(broom)
 # visualization packages
 library(scales)
 library(patchwork)
+#library(kableExtra)
 
 # Set how wide the R output will go
 options(width = 70)

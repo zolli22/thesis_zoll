@@ -37,8 +37,6 @@ and protect the numerous benefits they provide.
 
 ## The Benefits of Urban Forests
 
-<!--# Section on urban heat reducing effects of trees should be more prominent and developed. That’s one of most important ecosystem services, via impacts on both building energy use and human health.  -->
-
 Urban forests and urban trees have numerous benefits, which range from
 environmental to economic. The environmental benefits of urban trees
 include numerous forms of pollution removal from both water and air. In
@@ -64,16 +62,17 @@ to benefiting the land, urban trees can also provide benefits to the
 atmosphere.
 
 Urban trees also remove pollutants from the air. Numerous studies have
-shown that trees can remove many different pollutants (O3, PM10, NO2,
-SO2, CO) by uptake via leaf stomata. Pollutant particles can also be
-collected and stored on a tree's surface. Urban trees provide a total
-annual air pollution removal of 711,000 tons, which is valued at \$3.8
-billion [@nowak2006]. Cities with higher levels of tree canopy cover
-have higher rates of pollution removal by trees, and longer on-leaf
-growing periods of trees lead to more pollution removal as well. While
-the removal of air pollution by urban trees results in the improvement
-of air quality, trees also help mitigate climate change, improve
-atmospheric conditions and air quality through carbon sequestration.
+shown that trees can remove many different pollutants (O$_3$, PM$_{10}$,
+NO$_2$, SO$_2$, CO) by uptake via leaf stomata. Pollutant particles can
+also be collected and stored on a tree's surface. Urban trees provide a
+total annual air pollution removal of 711,000 tons, which is valued at
+\$3.8 billion [@nowak2006]. Cities with higher levels of tree canopy
+cover have higher rates of pollution removal by trees, and longer
+on-leaf growing periods of trees lead to more pollution removal as well.
+While the removal of air pollution by urban trees results in the
+improvement of air quality, trees also help mitigate climate change,
+improve atmospheric conditions and air quality through carbon
+sequestration.
 
 The increase of atmospheric carbon dioxide from human sources is one of
 the primary drivers of global climate change. In 2019, U.S. greenhouse
@@ -142,10 +141,6 @@ that a healthy tree can.
 
 ## Environmental Challenges for Urban Trees
 
-<!--# The way I tend to frame this discussion is via the “long life, and stuck in one place” nature of trees–even in the pre-industrial era trees had to endure ~100 years of conditions, which would presumably include some some drought/temp stress events, herbivory, disease, etc. In the Anthropocene, trees also have to deal with a steadily changing climate, including increasing CO2 (which is directly relevant to their metabolism, not just air temp), changing weather patterns, etc. And then in cities trees are additionally exposed to a third level of stress, via land use change and point-source air toxics. Aaron describes this as “nested levels of stressors”, and I like that language.  -->
-
-<!--# I think it’s also worth mentioning in this section that all these stressors are somewhat beneficial from a scientific point of view–in that they create natural experiments that mimic the conditions future wild trees will face. So, cities are good places to study tree health.  -->
-
 Human activities have impacted and altered the Earth's climate and land
 surface at a fundamental level. Some outcomes of these fundamental
 changes include elevated temperatures and prolonged droughts
@@ -166,7 +161,11 @@ generally more stressed than those in rural areas due to the adverse
 growing conditions they face. This includes higher temperatures,
 additional soil compaction, root zone restrictions, and extreme
 variations in environmental conditions such as wind speed and sunlight
-level [@flint1985; @ward2007]. Monitoring and tracking tree health over
+level [@flint1985; @ward2007]. Many mature trees, even those from the
+pre-industrial era, had to endure more than 100 years of stressful
+health conditions while stuck in the same place. These stressors include
+drought and temperature stress events, effects of herbivory and disease,
+among numerous other impacts. Monitoring and tracking tree health over
 time is an essential component for the ability to model and predict the
 future changes that will occur. Research into the remote sensing of
 health indicators of forest die-off has shown that vegetation greenness
@@ -175,7 +174,17 @@ metrics, such as NDVI, reflect the changes that occur with tree die-off
 these changes and how to mitigate the impacts of forest die-off, it is
 extremely important to understand the current health dynamics of urban
 forests at a city-wide level, and carefully track changes in urban
-forest health over time.
+forest health over time. While biotic and abiotic factors that
+negatively impact tree heath are not a good thing, in a strange way they
+are somewhat beneficial from a scientific point of view. Urbanization
+and urban areas present an unintentional model of global climate change
+and the impacts it can have on trees and other vegetation. Urban areas
+have experienced increases in temperature as well as carbon dioxide
+concentrations which will be seen in even more areas as global climate
+change continues. By studying urban trees, we can begin to understand
+how different species of trees will react to these conditions, and
+create a model for predictions of urban tree health outcomes in the
+future [@lahr2018].
 
 ## Urban Forestry in Portland, Oregon
 
@@ -223,8 +232,6 @@ locate and map trees in both urban and rural areas, as well as monitor
 tree health.
 
 ## Remote Sensing in Urban Landscapes
-
-<!--# Starts abrupt. Need a sentence introducing and defining RS. Also the sentence about soybean chlorophyll is interesting, but seems a little out of place without some discussion of other plants. I’d add a sentence and source about using NDVI for tree monitoring after that one.  -->
 
 While the term "remote sensing" was first used in the 1960s, the first
 aerial images were taken in the 1850s from hot air balloons. Later,

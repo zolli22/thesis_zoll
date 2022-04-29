@@ -5,7 +5,7 @@ nocite: '@*'
 ---
 
 ```{r setup-2, include=FALSE}
-knitr::opts_chunk$set(message = F, warning = F, fig.align='center')
+knitr::opts_chunk$set(message = F, warning = F, fig.align='center', fig.pos = "H", out.extra = "")
 ```
 
 ```{r, echo = F}
@@ -51,14 +51,12 @@ cnh_long <- cnh_point %>%
 
 ## Canopy Width and Tree Height Model {#canopy-model-results}
 
-<!-- Page 29: How much better did the polynomial function represent the data than the linear model? Adding parameters to the model usually improves the fit but you should also use the simplest model possible. Plus, the polynomial gives you the weird decrease in height at high DBH. Depending on how much of an improvement it is over the linear model, this tradeoff may not be worth it. I don’t think it would change much, since both models probably predict similar values for most of your data range. Also, why did you put all the species in a single model? Is that why the model is not a good fit for two of your species? -->
-
 I used a second order polynomial regression to predict both tree height
 and crown width from tree DBH. The tree height predictions were used to
 filter out trees below 25 feet in height, and the crown width
 predictions were used in the radius method of pixel selection for NDVI
 analysis. There are numerous expected differences between the species
-due to functional tree type. For example, the average DBJ for ACMA and
+due to functional tree type. For example, the average DBH for ACMA and
 PSME are relatively close, but the average height for a PSME individual
 is nearly twice as tall as an ACMA (Table \@ref(tab:tree-stats-table)).
 Because of this, DBH would have a very different effect on the outcome
@@ -89,7 +87,8 @@ kable(my_park %>%
   summarise(mean(DBH), mean(Tree_Height), mean(crown_width)),
   booktabs = TRUE, col.names = c("Species", "Avg. DBH", "Avg. Tree Height", "Avg. Crown Width"),
   caption = "Average physiological measurements for selected species in the Park Trees database.",
-  caption.short = "Physiological Tree Measurements", digits = 2)
+  caption.short = "Physiological Tree Measurements", digits = 2) %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 ```
 
 The tree height model has an adjusted R-squared value of 0.7834, and a
@@ -97,7 +96,7 @@ P-value of \< 2.2e-16 (Figure \@ref(fig:height-model), Appendix
 equations \@ref(eq:a1), \@ref(eq:a3), \@ref(eq:a5), \@ref(eq:a7)). This
 model was most effective for ACMA and PSME, but was not statistically
 significant for ACPL or THPL. This is likely due to the similar average
-DBH and tree height values between ACPL and PSME. While the average DBH
+DBH and tree height values between ACMA and PSME. While the average DBH
 values for ACMA and PSME are very similar, the average height values are
 extremely different, with the average PSME individual standing twice as
 tall as the average ACMA individual (Table \@ref(tab:tree-stats-table)).
@@ -149,7 +148,7 @@ p_height_model <- my_park %>%
   geom_point(alpha = .1)+
   scale_color_manual(values = species_pal)+
   geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 2, raw = T))+
-  labs(subtitle = "Measurements from park trees data", y = "Tree Height Measurement", title = "Model")+
+  labs(subtitle = "Measurements from park trees", y = "Tree Height Measurement", title = "Model")+
   guides(color = "none")
 
 p_width_model <- my_park %>% 
@@ -157,20 +156,20 @@ p_width_model <- my_park %>%
   geom_point(alpha = .1)+
   scale_color_manual(values = species_pal)+
   geom_smooth(method = "lm", se = F, formula = y ~ poly(x, degree = 2, raw = T))+
-  labs(subtitle = "Measurements from park trees data", y = "Canopy Width Measurement", title = "Model")+
+  labs(subtitle = "Measurements from park trees", y = "Canopy Width Measurement", title = "Model")+
   guides(color = "none")
 
 s_height_preds <- my_street_2 %>% 
   ggplot(aes(x = sqrt(DBH), y = height_preds, color = Species)) +
   geom_point(alpha = .3)+
   scale_color_manual(values = species_pal)+
-  labs(subtitle = "Predictions for street trees data", y = "Tree Height Prediction", title = "Predictions")
+  labs(subtitle = "Predictions for street trees", y = "Tree Height Prediction", title = "Predictions")
 
 s_width_preds <- my_street_2 %>% 
   ggplot(aes(x = sqrt(DBH), y = width_preds, color = Species)) +
   geom_point(alpha = .3)+
   scale_color_manual(values = species_pal)+
-  labs(subtitle = "Predictions for street trees data", y = "Canopy Width Prediction", title = "Predictions")
+  labs(subtitle = "Predictions for street trees", y = "Canopy Width Prediction", title = "Predictions")
 ```
 
 ```{r width-model-g, echo = F, fig.scap="Crown width predictive model", out.width = "80%", fig.cap = "Second order polynomial model for predicting tree crown width based on measured DBH and species, with predictions for street trees. (R-squared = 0.7269,  P < 2.2e-16)"}
@@ -200,36 +199,55 @@ relationship between the two variables ($X^2$(2, N=112) = 10.184, p =
 0.00615). Within functional tree type, both conifers and broadleaf trees
 were most likely to be rated as **fair**, but within health category a
 **good** or a **poor** tree were most likely a broadleaf tree, and a
-**fair** tree was most likely a conifer (Table
-\@ref(tab:table-freq-test-1)). A Chi-Square Test of Independence was
-performed to assess the relationship between health rating and tree
-species. There was a significant relationship between the two variables
-($X^2$(6, N=112) = 22.368, p = 0.00104). Within tree species, ACMA,
-PSME, and THPL were all most likely to be rated as **fair**, but ACPL
-was most likely to be rated as **good**. Within health category, a
-**poor** tree was most likely an ACMA individual, a **fair** tree was
-equally likely to be a PSME or THPL individual, and a **good** tree was
-most likely an ACPL individual (Table \@ref(tab:table-freq-test-2)).
+**fair** tree was most likely a conifer (Tables
+\@ref(tab:table-freq-test-1), \@ref(tab:table-freq-test-2)). A
+Chi-Square Test of Independence was performed to assess the relationship
+between health rating and tree species. There was a significant
+relationship between the two variables ($X^2$(6, N=112) = 22.368, p =
+0.00104). Within tree species, ACMA, PSME, and THPL were all most likely
+to be rated as **fair**, but ACPL was most likely to be rated as
+**good**. Within health category, a **poor** tree was most likely an
+ACMA individual, a **fair** tree was equally likely to be a PSME or THPL
+individual, and a **good** tree was most likely an ACPL individual
+(Tables \@ref(tab:table-freq-test-3), \@ref(tab:table-freq-test-4)).
 
 ```{r table-freq-test-1, echo = F, results = 'asis'}
-kable(list(tree_type_table, (tree_type_table/112)), 
+kable(tree_type_table, 
       booktabs = TRUE, longtable = TRUE,
-      caption = 'Frequency and probability tables of functional tree type and health rating for CNH trees. There is a statistically significant relationship between the two variables ($X^2$(2, N=112) = 10.184, p = 0.00615)', 
-      caption.short = 'Frequency and probability tables of functional tree type and health rating for CNH trees'
-)
+      caption = 'Frequency table of functional tree type and health rating for CNH trees. There is a statistically significant relationship between the two variables ($X^2$(2, N=112) = 10.184, p = 0.00615)', 
+      caption.short = 'Frequency table of functional tree type and health rating for CNH trees'
+) %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 ```
 
 ```{r table-freq-test-2, echo = F, results = 'asis'}
-kable(list(tree_species_table, (tree_species_table/112)), 
+kable(tree_type_table/112, 
       booktabs = TRUE, longtable = TRUE,
-      caption = 'Frequency and probability tables of functional tree type and health rating for CNH trees. There is a statistically significant relationship between the two variables ($X^2$(2, N=112) = 10.184, p = 0.00615)', 
-      caption.short = 'Frequency and probability tables of functional tree type and health rating for CNH trees'
-)
+      caption = 'Probability table of functional tree type and health rating for CNH trees. ', 
+      caption.short = 'Probability table of functional tree type and health rating for CNH trees'
+) %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
+```
+
+```{r table-freq-test-3, echo = F, results = 'asis'}
+kable(tree_species_table, 
+      booktabs = TRUE, longtable = TRUE,
+      caption = 'Frequency table of functional tree type and health rating for CNH trees. There is a statistically significant relationship between the two variables ($X^2$(2, N=112) = 10.184, p = 0.00615)', 
+      caption.short = 'Frequency table of functional tree type and health rating for CNH trees'
+) %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
+```
+
+```{r table-freq-test-4, echo = F, results = 'asis'}
+kable(tree_species_table/112, 
+      booktabs = TRUE, longtable = TRUE,
+      caption = 'Probability table of functional tree type and health rating for CNH trees.', 
+      caption.short = 'Probability table of functional tree type and health rating for CNH trees'
+) %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 ```
 
 ## Health Rating vs. NDVI: Point Method Obtained Data
-
-<!-- You also might want to look at the good-fair-poor relationships within species in your post-hoc analysis. What’s with the outliers in the ACPL-good category? It looks like you have them colored differently in your plots. Did you remove these from analysis? Why are you indicating them here. Do you know what’s going on with those points? Why are they so low? -->
 
 With the selection of CNH trees and 2021 NDVI data, a statistical
 analysis of the point value method shows that there is a statistically
@@ -361,19 +379,21 @@ NDVI value for a **poor** rated tree is higher than the mean average
 NDVI value for point method trees. For the radius and LiDAR data, the
 average z-score for **poor** rated trees is below the mean average NDVI
 value for each method. Interestingly, the mean z-score for **poor**
-LiDAR trees is higher than for **fair** trees.
+LiDAR trees is higher than for **fair** trees (Figure
+\@ref(fig:methods-all-species)).
 
-When the species are clumped, the three methods show very similar
-patterns, though the NDVI values are higher for the point method than
-either of the other two methods (Figure \@ref(fig:methods-species)).
-When all three methods are compared along with species, we can see that
-the general trend of health rating and NDVI is consistent within each
-species. The pattern between health rating and NDVI is also very similar
-between trees of the same functional type (Figure
-\@ref(fig:methods-species)). Because of these similarities in health
-rating and NDVI values for trees belonging to the same functional type,
-I included additional testing examining the difference in species
-specificity addition versus functional type separation.
+When the species are clumped with raw NDVI measurements, the three
+methods show very similar patterns, though the NDVI values are higher
+for the point method than either of the other two methods (Figure
+\@ref(fig:methods-species)). When all three methods are compared along
+with species, we can see that the general trend of health rating and
+NDVI is consistent within each species. The pattern between health
+rating and NDVI is also very similar between trees of the same
+functional type (Figure \@ref(fig:methods-species)). Because of these
+similarities in health rating and NDVI values for trees belonging to the
+same functional type, I included additional testing examining the
+difference in species specificity addition versus functional type
+separation.
 
 ```{r, include = F}
 summary(aov(z_ndvi ~ method, data = cnh_long))
@@ -404,8 +424,7 @@ the point method, each NDVI value is based off one singular point. For
 both LiDAR and Radius methods, the NDVI used in prediction is an average
 of all NDVI values captured within the pixel selection method, but the
 number of pixels used varies between methods and species (Figure
-\@ref(fig:ndvi-counts-graph)). Each successive model reduced the number
-of points that are statistical outliers
+\@ref(fig:ndvi-counts-graph)).
 
 ```{r ndvi-counts-code, include = F}
 radius_sample_data <- read_csv("data/radius_sample_data.csv") %>%
@@ -432,7 +451,7 @@ ndvi_count_point <- ggplot(data = count_sample_data, aes(x = ndvi_mean, y=ndvi_c
   labs(x = "Average NDVI", y = "Pixel count", color = "Tree species")
 ```
 
-```{r ndvi-counts-graph, echo = F, fig.scap = "Pixel counts for NDVI calculation, by method, and for sample NDVI.", fig.cap = "Comparison of pixel counts used in NDVI calculations. (a) Boxplot of pixel counts used for each species in the LiDAR and radius methods. For both methods, the maples had more outliers than the conifers, and THPL had the lowest average number of pixels used. (b) Pixel count and average NDVI per tree. There does not seem to be any strong statistical relationship between the number of pixels used and the sample NDVI, though this does not include any data from the point method.", out.width = "90%"}
+```{r ndvi-counts-graph, echo = F, fig.scap = "Pixel counts for NDVI calculation, by method, and for sample NDVI.", fig.cap = "Comparison of pixel counts used in NDVI calculations. (a) Boxplot of pixel counts used for each species in the LiDAR and radius methods. For both methods, the maples had more outliers than the conifers, and THPL had the lowest average number of pixels used. (b) Pixel count and average NDVI per tree.", out.width = "90%"}
 ndvi_count_box + ndvi_count_point + 
   plot_annotation(tag_levels = "a", tag_suffix = ")")
 ```
@@ -500,8 +519,6 @@ category ratings. Because of this, it is important to note that the
 model tests are an idealized version of a true model. However, it is
 important to note that they are idealized version of how model testing
 and training would work in reality.
-
-<!-- Page 37: Can you defend your decision to train and test the model on the same dataset? You say you did this due to sample size and imbalance. Is there a citation you can use to support this decision under these constraints? -->
 
 With the point method data, the first model using only NDVI as a
 predictor (health rating \~ point NDVI) led to all tree points being
@@ -668,7 +685,7 @@ remained the same where with the other two methods, that count had
 increased as well. However, this model also included a **good** tree
 being predicted as **poor** which no other variations of the models did
 (Figure \@ref(fig:lidar-model-split)b). The last model with species as
-an interaction term (health rating \~ lLiDAR NDVI \* species) was the
+an interaction term (health rating \~ LiDAR NDVI \* species) was the
 most effective of all 9 models, with the highest accuracy and kappa, as
 well as the smallest p-value (Figure \@ref(fig:lidar-model-split)c).
 
@@ -685,11 +702,11 @@ well as the smallest p-value (Figure \@ref(fig:lidar-model-split)c).
 
 ```{r, include = F, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 probability_data <- probs_point_species %>%
-  mutate(method = "health rating ~ point NDVI * species") %>%
+  mutate(method = "health ~ point NDVI * species") %>%
   bind_rows(probs_radius_species %>%
-  mutate(method = "health rating ~ radius NDVI * species")) %>%
+  mutate(method = "health ~ radius NDVI * species")) %>%
   bind_rows(probs_lidar_species %>%
-  mutate(method = "health rating ~ LiDAR NDVI * species")) %>%
+  mutate(method = "health ~ LiDAR NDVI * species")) %>%
   mutate(method = fct_relevel(method, levels = c("point", "radius", "lidar")))
 
 prob_graph_1 <- ggplot(probability_data, aes(x = rating, y = p))+
@@ -713,10 +730,6 @@ being predicted as **good** stays fairly consistent across the three
 methods, but the most interesting aspect is the probability of a
 **poor** rating, which increases across models. This is consistent with
 the confusion matrixes created for each model.
-
-```{r preds-head, include = F, fig.cap = "Selection of rows for LiDAR prediction probabilities"}
-kable(head(as_tibble(round(predict(lidar_species, cnh_lidar, type = "p"), 3))))
-```
 
 Given the uneven number of data points available for the varying health
 conditions, I down-sampled each health rating to the smallest number of
@@ -788,11 +801,11 @@ gg_lidar <- ggplotConfusionMatrix(cfm_lidar)  +
 
 ```{r, include = F}
 probability_data_2 <- probs_point_small %>%
-  mutate(method = "health rating ~ point NDVI * species") %>%
+  mutate(method = "health ~ point NDVI * species") %>%
   bind_rows(probs_radius_small %>%
-  mutate(method = "health rating ~ radius NDVI * species")) %>%
+  mutate(method = "health ~ radius NDVI * species")) %>%
   bind_rows(probs_lidar_small %>%
-  mutate(method = "health rating ~ LiDAR NDVI * species")) %>%
+  mutate(method = "health ~ LiDAR NDVI * species")) %>%
   mutate(method = fct_relevel(method, levels = c("point", "radius", "lidar")))
 
 prob_graph_2 <- ggplot(probability_data_2, aes(x = rating, y = p))+
@@ -801,12 +814,8 @@ prob_graph_2 <- ggplot(probability_data_2, aes(x = rating, y = p))+
   labs(title = "Probability of Health Rating Categorization for downsampled models", subtitle = "health rating ~ NDVI * Species")
 ```
 
-```{r downsample-probs, echo = F, fig.cap = "Probability of Assignment Analysis with Downsampled Data"}
-prob_graph_2
-```
-
 I repeated the probability of assignment analysis with the downsampled
-models (figure \@ref(fig:downsample-probs)). The probabilities of
+models (Figure \@ref(fig:downsample-probs)). The probabilities of
 assignment to each health category are much more even now, though the
 average probability for a **fair** prediction is still higher than the
 average probability of a **poor** or **good** rating prediction.
@@ -827,10 +836,13 @@ gg_point + gg_radius + gg_lidar +
   plot_layout(ncol = 2)
 ```
 
+```{r downsample-probs, echo = F, fig.cap = "Probability of Assignment Analysis with Downsampled Data"}
+prob_graph_2
+```
+
 ```{r final-lidar-model, include = F, cache = T}
 lidar_final_data <- lidar_sample_data %>%
   rename(sample_ndvi = ndvi_mean)
-
 
 final_lidar_preds <- predict(test_lidar, lidar_final_data)
 
@@ -853,14 +865,6 @@ lidar_final_data_2 %>%
   count(species, preds) 
 ```
 
-```{r final-lidar-counts, echo = F}
-kable(lidar_final_data %>% count(species),
-             booktabs = TRUE, longtable = TRUE,
-  col.names = c("Species", "Count"),
-  caption = 'Counts of each species in stratified random sample of park and street trees after LiDAR processing and NDVI calculation.',
-  caption.short = 'Species counts post LiDAR processing')
-```
-
 <!-- Page 44: Also, did you only run the model for random sample of additional trees once or is this a consensus result from multiple model runs? What about showing a map of your modeled outputs? Maybe a two-panel figure with points colored by species and a second with points colored by health category? -->
 
 To ensure that the results of the downsampled LiDAR data model were not
@@ -869,7 +873,11 @@ different random samples each time (Appendix
 \@ref(fig:lidar-model-test)). While the values of each predicted
 category did differ, the p-value for the model was significant for each
 test. The accuracy values ranged from 54% to 67%, and the kappa values
-ranged from 31% to 50% (Table \@ref(tab:model-test-table)). I used the
+ranged from 31% to 50% (Table \@ref(tab:model-test-table)). 
+
+## Health Predictions for Portland Trees
+
+I used the
 final downsampled LiDAR model to predict health rating for a random
 sample of 100 park and 100 street trees, with LiDAR calculated NDVI
 values. Due to the data loss in the LiDAR processing, the final data set
@@ -877,14 +885,14 @@ contains 175 trees (85 street trees, 90 park trees) (Table
 \@ref(tab:final-lidar-counts)). This data was input into the final LiDAR
 model, created with the downsampled data. A health rating was predicted
 based on NDVI and tree species. The resulting health predictions were
-graphed along with sample NDVI (Figure \@ref(fig: final-lidar-plot)).
+graphed along with sample NDVI (Figure \@ref(fig:final-lidar-plot)).
 For ACMA, there is a clear relationship between sample NDVI and health
 prediction which matches that seen in earlier data analysis. For ACPL,
 there is a large difference between the NDVI of **fair** and **good**
 trees, which also appears for PSME. for the THPL predictions, the
 average NDVI for **poor** trees is higher than those for **fair** trees.
 
-```{r final-lidar-plot, echo = F, out.width = "90%"}
+```{r final-lidar-plot, echo = F, out.width = "90%", fig.cap = "Health rating predictions for random sample of Portland trees", fig.align='center'}
 lidar_final_data_2 %>%
   ggplot(aes(x = preds, y = sample_ndvi, color = species))+
   geom_boxplot(outlier.shape=NA)+

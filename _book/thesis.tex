@@ -40,6 +40,7 @@
 \usepackage{hyperref}
 \usepackage{lmodern}
 \usepackage{float}
+\usepackage{float}
 \floatplacement{figure}{H}
 % Thanks, @Xyv
 \usepackage{calc}
@@ -189,22 +190,7 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \Acknowledgements{
-Aaron and Anna
-
-Mama and Nic
-
-Papa and Katherine
-To my siblings: Forest, thank you for being the coolest big brother I could ever want. Anna, I am so glad that you have become part of my life - the strawberry earrings you made me have become my good luck charm this year. Sabina, thank you for the facetime calls and the junior high drama updates. Wren, thank you for the funny faces and your constant sweet encouragement. Vivian, thank you for the beanie babies and the drawings you sent me.
-
-Mr.~Sirovy and Mr.~Ruff
-
-KBott
-
-Elin and Victoria, Cayden and Brendan
-
-Mila
-
-Myself!
+This thesis would never have been completed without the constant guidance and mentorship from Aaron Ramirez and Anna Ritz. Having the two of you as my advisers for this process was such a gift. I have learned so much from both of you, and will forever be grateful to you for keeping my head on straight this year. To my parents- Thank you for all of your support. I truly could not have done this without you. Your constant support has been priceless throughout my entire Reed career, especially this past semester. In the most stressful moments, I knew I could depend on you for the words of motivation and encouragement I needed. I love you all very much, and I would not be where I am today without having you in my corner. To my siblings: Forrest, thank you for being the coolest big brother a girl could ever have. Anna, I am so glad that you have become part of my life - the strawberry earrings you made me have become my good luck charm this year. Sabina, thank you for the Facetime calls and the junior high drama updates. Wren, thank you for the funny faces and your constant sweet encouragement. Vivian, thank you for the beanie babies and the drawings you sent me. To my friends: Elin - As many cursed memories as we have from hum conference freshman year, I will always appreciate them because I also met you. Little did we know that making spaghetti in FSM fall break of freshman year would lead us to this. Victoria - Cayden - It is a little ridiculous how irresponsible the two of us can be when left alone together. Regardless, I am so grateful and lucky to have you as one of my best friends. Brendan - Mila - I hope you know how much I appreciated our weekly lunches.
 }
 
 \Dedication{
@@ -217,10 +203,26 @@ To those who speak for the trees
 
 
 \Abstract{
-Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide. With over one million trees in Portland's urban forest, conducting field health assessments to understand the dynamics of tree health in Portland is a nearly impossible goal. Due to the size of urban forests and the time consuming practice of field health assessments, recent research into tree health has turned to satellite imagery as a tool for evaluating tree health. This thesis looks to examine the health ratings of four key tree species in Portland (Acer macrophyllum, Acer platanoides, Pseudotsuga menziesii, and Thuja plicata) from field data collected in the summer of 2021, and the relationship between health rating and NDVI (Normalized Difference Vegetation Index), which is an index of ``greenness'' commonly used in remote sensing of vegetation. This thesis tests three different tree canopy delineation and pixel selection techniques for obtaining NDVI to determine which is the most effective for obtaining tree health information and predicting health rating from NDVI. I used an ordinal logistic regression model to predict health ratings of poor, fair or good. These predictions were based on 1) NDVI, 2) NDVI and tree functional type, or 3) NDVI and tree species. The impact of including either tree functional type or tree species in the predictive health model was examined. The most effective predictive model differentiated the predictions by species, and used the LiDAR data. This final model was most effective for the two maple species (ACMA and ACPL), categorizing trees in all three health categories for ACMA, and two health categories for ACPL. The model was ineffective for predicting the health ratings for conifer species.
+Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide. With over one million trees in Portland's urban forest, conducting field health assessments to understand the dynamics of tree health in Portland is a nearly impossible goal. Due to the size of urban forests and the time consuming practice of field health assessments, recent approaches have turned to satellite imagery as a tool for evaluating tree health. This thesis looks to examine the health ratings of four key tree species in Portland (\emph{Acer macrophyllum} {[}ACMA{]}, \emph{Acer platanoides} {[}ACPL{]}, \emph{Pseudotsuga menziesii} {[}PSME{]}, and \emph{Thuja plicata} {[}THPL{]}) from field data collected in the summer of 2021, and the relationship between health rating and NDVI (Normalized Difference Vegetation Index), which is an index of ``greenness'' commonly used in remote sensing of vegetation.
+This thesis tests three different tree canopy delineation and pixel selection techniques, which are a single point method based on tree location, a circular buffer based on tree crown radius, and LiDAR (Light Detection and Ranging) tree crown delineation, for obtaining NDVI to determine which is the most effective for examining tree health information and predicting health rating from NDVI.
+I used an ordinal logistic regression model to predict health ratings of poor, fair or good, considering both tree functional type (deciduous or broad leaf) and tree species as confounding variables, and including them as predictor variables in some of the models. The most effective predictive model differentiated the predictions by species, and used the LiDAR data. This final model was most effective for the two maple species (ACMA and ACPL), categorizing trees in all three health categories for ACMA, and two health categories for ACPL. These results show that while it may be time consuming and quite involved, using the most specific method of tree specification and crown delineation for pixel selection will provide the best results. The ability to accurately predict health of urban trees is an important step towards efficient and effective modeling and understanding of urban forest health dynamics.
 }
 
 	\usepackage{setspace}\onehalfspacing
+	\usepackage{booktabs}
+ \usepackage{longtable}
+ \usepackage{array}
+ \usepackage{multirow}
+ \usepackage{wrapfig}
+ \usepackage{float}
+ \usepackage{colortbl}
+ \usepackage{pdflscape}
+ \usepackage{tabu}
+ \usepackage{threeparttable}
+ \usepackage{threeparttablex}
+ \usepackage[normalem]{ulem}
+ \usepackage{makecell}
+ \usepackage{xcolor}
 % End of CII addition
 %%
 %% End Preamble
@@ -234,22 +236,7 @@ Urban trees provide numerous benefits, ranging from aesthetic and environmental 
 \frontmatter % this stuff will be roman-numbered
 \pagestyle{empty} % this removes page numbers from the frontmatter
   \begin{acknowledgements}
-    Aaron and Anna
-
-    Mama and Nic
-
-    Papa and Katherine
-    To my siblings: Forest, thank you for being the coolest big brother I could ever want. Anna, I am so glad that you have become part of my life - the strawberry earrings you made me have become my good luck charm this year. Sabina, thank you for the facetime calls and the junior high drama updates. Wren, thank you for the funny faces and your constant sweet encouragement. Vivian, thank you for the beanie babies and the drawings you sent me.
-
-    Mr.~Sirovy and Mr.~Ruff
-
-    KBott
-
-    Elin and Victoria, Cayden and Brendan
-
-    Mila
-
-    Myself!
+    This thesis would never have been completed without the constant guidance and mentorship from Aaron Ramirez and Anna Ritz. Having the two of you as my advisers for this process was such a gift. I have learned so much from both of you, and will forever be grateful to you for keeping my head on straight this year. To my parents- Thank you for all of your support. I truly could not have done this without you. Your constant support has been priceless throughout my entire Reed career, especially this past semester. In the most stressful moments, I knew I could depend on you for the words of motivation and encouragement I needed. I love you all very much, and I would not be where I am today without having you in my corner. To my siblings: Forrest, thank you for being the coolest big brother a girl could ever have. Anna, I am so glad that you have become part of my life - the strawberry earrings you made me have become my good luck charm this year. Sabina, thank you for the Facetime calls and the junior high drama updates. Wren, thank you for the funny faces and your constant sweet encouragement. Vivian, thank you for the beanie babies and the drawings you sent me. To my friends: Elin - As many cursed memories as we have from hum conference freshman year, I will always appreciate them because I also met you. Little did we know that making spaghetti in FSM fall break of freshman year would lead us to this. Victoria - Cayden - It is a little ridiculous how irresponsible the two of us can be when left alone together. Regardless, I am so grateful and lucky to have you as one of my best friends. Brendan - Mila - I hope you know how much I appreciated our weekly lunches.
   \end{acknowledgements}
 
 \chapter*{List of Abbreviations}
@@ -279,7 +266,9 @@ Urban trees provide numerous benefits, ranging from aesthetic and environmental 
 
   \listoffigures
   \begin{abstract}
-    Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide. With over one million trees in Portland's urban forest, conducting field health assessments to understand the dynamics of tree health in Portland is a nearly impossible goal. Due to the size of urban forests and the time consuming practice of field health assessments, recent research into tree health has turned to satellite imagery as a tool for evaluating tree health. This thesis looks to examine the health ratings of four key tree species in Portland (Acer macrophyllum, Acer platanoides, Pseudotsuga menziesii, and Thuja plicata) from field data collected in the summer of 2021, and the relationship between health rating and NDVI (Normalized Difference Vegetation Index), which is an index of ``greenness'' commonly used in remote sensing of vegetation. This thesis tests three different tree canopy delineation and pixel selection techniques for obtaining NDVI to determine which is the most effective for obtaining tree health information and predicting health rating from NDVI. I used an ordinal logistic regression model to predict health ratings of poor, fair or good. These predictions were based on 1) NDVI, 2) NDVI and tree functional type, or 3) NDVI and tree species. The impact of including either tree functional type or tree species in the predictive health model was examined. The most effective predictive model differentiated the predictions by species, and used the LiDAR data. This final model was most effective for the two maple species (ACMA and ACPL), categorizing trees in all three health categories for ACMA, and two health categories for ACPL. The model was ineffective for predicting the health ratings for conifer species.
+    Urban trees provide numerous benefits, ranging from aesthetic and environmental to psychological and economical. Tree health is a critical part of urban ecosystem function, and is closely tied to the benefits or lack thereof that urban trees can provide. With over one million trees in Portland's urban forest, conducting field health assessments to understand the dynamics of tree health in Portland is a nearly impossible goal. Due to the size of urban forests and the time consuming practice of field health assessments, recent approaches have turned to satellite imagery as a tool for evaluating tree health. This thesis looks to examine the health ratings of four key tree species in Portland (\emph{Acer macrophyllum} {[}ACMA{]}, \emph{Acer platanoides} {[}ACPL{]}, \emph{Pseudotsuga menziesii} {[}PSME{]}, and \emph{Thuja plicata} {[}THPL{]}) from field data collected in the summer of 2021, and the relationship between health rating and NDVI (Normalized Difference Vegetation Index), which is an index of ``greenness'' commonly used in remote sensing of vegetation.
+    This thesis tests three different tree canopy delineation and pixel selection techniques, which are a single point method based on tree location, a circular buffer based on tree crown radius, and LiDAR (Light Detection and Ranging) tree crown delineation, for obtaining NDVI to determine which is the most effective for examining tree health information and predicting health rating from NDVI.
+    I used an ordinal logistic regression model to predict health ratings of poor, fair or good, considering both tree functional type (deciduous or broad leaf) and tree species as confounding variables, and including them as predictor variables in some of the models. The most effective predictive model differentiated the predictions by species, and used the LiDAR data. This final model was most effective for the two maple species (ACMA and ACPL), categorizing trees in all three health categories for ACMA, and two health categories for ACPL. These results show that while it may be time consuming and quite involved, using the most specific method of tree specification and crown delineation for pixel selection will provide the best results. The ability to accurately predict health of urban trees is an important step towards efficient and effective modeling and understanding of urban forest health dynamics.
   \end{abstract}
   \begin{dedication}
     To those who speak for the trees
@@ -348,16 +337,17 @@ to benefiting the land, urban trees can also provide benefits to the
 atmosphere.
 
 Urban trees also remove pollutants from the air. Numerous studies have
-shown that trees can remove many different pollutants (O3, PM10, NO2,
-SO2, CO) by uptake via leaf stomata. Pollutant particles can also be
-collected and stored on a tree's surface. Urban trees provide a total
-annual air pollution removal of 711,000 tons, which is valued at \$3.8
-billion (David J. Nowak et al. 2006). Cities with higher levels of tree canopy cover
-have higher rates of pollution removal by trees, and longer on-leaf
-growing periods of trees lead to more pollution removal as well. While
-the removal of air pollution by urban trees results in the improvement
-of air quality, trees also help mitigate climate change, improve
-atmospheric conditions and air quality through carbon sequestration.
+shown that trees can remove many different pollutants (O\(_3\), PM\(_{10}\),
+NO\(_2\), SO\(_2\), CO) by uptake via leaf stomata. Pollutant particles can
+also be collected and stored on a tree's surface. Urban trees provide a
+total annual air pollution removal of 711,000 tons, which is valued at
+\$3.8 billion (David J. Nowak et al. 2006). Cities with higher levels of tree canopy
+cover have higher rates of pollution removal by trees, and longer
+on-leaf growing periods of trees lead to more pollution removal as well.
+While the removal of air pollution by urban trees results in the
+improvement of air quality, trees also help mitigate climate change,
+improve atmospheric conditions and air quality through carbon
+sequestration.
 
 The increase of atmospheric carbon dioxide from human sources is one of
 the primary drivers of global climate change. In 2019, U.S. greenhouse
@@ -447,7 +437,11 @@ generally more stressed than those in rural areas due to the adverse
 growing conditions they face. This includes higher temperatures,
 additional soil compaction, root zone restrictions, and extreme
 variations in environmental conditions such as wind speed and sunlight
-level (Flint 1985; Ward et al. 2007). Monitoring and tracking tree health over
+level (Flint 1985; Ward et al. 2007). Many mature trees, even those from the
+pre-industrial era, had to endure more than 100 years of stressful
+health conditions while stuck in the same place. These stressors include
+drought and temperature stress events, effects of herbivory and disease,
+among numerous other impacts. Monitoring and tracking tree health over
 time is an essential component for the ability to model and predict the
 future changes that will occur. Research into the remote sensing of
 health indicators of forest die-off has shown that vegetation greenness
@@ -456,7 +450,17 @@ metrics, such as NDVI, reflect the changes that occur with tree die-off
 these changes and how to mitigate the impacts of forest die-off, it is
 extremely important to understand the current health dynamics of urban
 forests at a city-wide level, and carefully track changes in urban
-forest health over time.
+forest health over time. While biotic and abiotic factors that
+negatively impact tree heath are not a good thing, in a strange way they
+are somewhat beneficial from a scientific point of view. Urbanization
+and urban areas present an unintentional model of global climate change
+and the impacts it can have on trees and other vegetation. Urban areas
+have experienced increases in temperature as well as carbon dioxide
+concentrations which will be seen in even more areas as global climate
+change continues. By studying urban trees, we can begin to understand
+how different species of trees will react to these conditions, and
+create a model for predictions of urban tree health outcomes in the
+future (Lahr et al. 2018).
 
 \hypertarget{urban-forestry-in-portland-oregon}{%
 \section{Urban Forestry in Portland, Oregon}\label{urban-forestry-in-portland-oregon}}
@@ -746,9 +750,12 @@ tree crown radius data, as well as obtaining and computing associated
 NDVI values. Lastly, with the combined data from the previous three
 parts, I created a predictive model for predicting tree health rating
 based on NDVI values.
-\begin{figure}
 
-{\centering \includegraphics[width=0.95\linewidth]{figure/methods-overview} 
+All code for this thesis can be found in my GitHub repository:
+\url{https://github.com/zolli22/thesis_zoll}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.95\linewidth,]{figure/methods-overview} 
 
 }
 
@@ -804,16 +811,16 @@ contained 112 trees (Table \ref{tab:cnh-tree-counts-2}).
 \toprule
 Common name & Scientific name & Species code & Number collected\\
 \midrule
-Bigleaf Maple & *Acer macrophyllum* & ACMA & 29\\
-Norway Maple & *Acer platanoides* & ACPL & 30\\
-Douglas Fir & *Pseudotsuga menziesii* & PSME & 25\\
-Western Redcedar & *Thuja plicata* & THPL & 28\\
+Bigleaf Maple & Acer macrophyllum & ACMA & 29\\
+Norway Maple & Acer platanoides & ACPL & 30\\
+Douglas Fir & Pseudotsuga menziesii & PSME & 25\\
+Western Redcedar & Thuja plicata & THPL & 28\\
 \bottomrule
 \end{tabular}
 \end{table}
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth]{figure/cnh_trees} 
+{\centering \includegraphics[width=1\linewidth,]{figure/cnh_trees} 
 
 }
 
@@ -879,7 +886,7 @@ it is very easy to categorize its health as \textbf{fair}, which is what we
 see in both the street and park tree databases. The proportion of trees
 rated \textbf{fair} is extremely high, especially in the park trees inventory
 (Figure \ref{fig:rating-ratios}).
-\begin{figure}
+\begin{figure}[H]
 
 {\centering \includegraphics{thesis_files/figure-latex/rating-ratios-1} 
 
@@ -978,9 +985,9 @@ satellite image.
   \mathrm{NDVI} = \frac{(NIR - Red)}{(NIR + Red)} 
   \label{eq:ndvi-eq}
 \end{equation}
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.32\linewidth]{figure/2016_ndvi} \includegraphics[width=0.32\linewidth]{figure/2019_ndvi} \includegraphics[width=0.32\linewidth]{figure/2021_ndvi} 
+{\centering \includegraphics[width=0.32\linewidth,]{figure/2016_ndvi} \includegraphics[width=0.32\linewidth,]{figure/2019_ndvi} \includegraphics[width=0.32\linewidth,]{figure/2021_ndvi} 
 
 }
 
@@ -1034,9 +1041,9 @@ For the following examples, I use Berkeley Park, located in SE Portland,
 to demonstrate the different delineation techniques. We sampled 6 CNH
 trees in Berkeley Park: 2 Bigleaf Maple, 1 Norway Maple, 2 Douglas Fir,
 and 1 Western Redcedar (Figure \ref{fig:berkeley-park}).
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth]{figure/berkeley_park} 
+{\centering \includegraphics[width=1\linewidth,]{figure/berkeley_park} 
 
 }
 
@@ -1045,7 +1052,7 @@ and 1 Western Redcedar (Figure \ref{fig:berkeley-park}).
 \hypertarget{point-method}{%
 \subsection{Point method}\label{point-method}}
 
-Point Method: For the point method, I extracted the NDVI value from the
+For the point method, I extracted the NDVI value from the
 pixel directly underneath the tree location point. This is the simplest
 of the three methods, since it obtains one NDVI value for one singular
 pixel. The tree location points were sourced from the street and park
@@ -1053,9 +1060,9 @@ tree inventories and processed in QGIS (Figure \ref{fig:point-method}).
 The main source of potential error with this technique is with the tree
 point location. If the point was placed incorrectly, the NDVI value will
 not be representative of the tree's greenness, or health.
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{figure/points} 
+{\centering \includegraphics[width=0.8\linewidth,]{figure/points} 
 
 }
 
@@ -1085,9 +1092,9 @@ belong to other trees. Previous studies have removed all overlapping
 tree crowns when using a radius technique, but that can severely limit
 sample size of available data for analysis, since especially in urban
 areas and on streets, most of the trees will have overlapping crowns.
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{figure/point_radius} 
+{\centering \includegraphics[width=0.8\linewidth,]{figure/point_radius} 
 
 }
 
@@ -1126,38 +1133,33 @@ in addition to the trees of interest (Figure \ref{fig:buffer-points}).
 A minimum tree height of 20 feet was included in the algorithm options
 but since all sampled trees were already filtered for height
 requirements, this may not be necessary.
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{figure/lidar_buffer_scale} 
+{\centering \includegraphics[width=0.8\linewidth,]{figure/lidar_buffer_scale} 
 
 }
 
 \caption{LiDAR data clipped to 30m tree buffer}\label{fig:lidar-buffer}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{figure/buffer_all_points} 
+{\centering \includegraphics[width=0.8\linewidth,]{figure/buffer_all_points} 
 
 }
 
 \caption{All inventoried trees within the 30m buffer}\label{fig:buffer-points}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{figure/selected_lidar} 
+{\centering \includegraphics[width=0.8\linewidth,]{figure/selected_lidar} 
 
 }
 
 \caption{LiDAR tree crown delineations with selected CNH crowns}\label{fig:unnamed-chunk-4}
 \end{figure}
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{include\_graphics}\NormalTok{(}\StringTok{"figure/layered\_outputs.png"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.9\linewidth]{figure/layered_outputs} 
+{\centering \includegraphics[width=0.9\linewidth,]{figure/layered_outputs} 
 
 }
 
@@ -1169,17 +1171,17 @@ in file size for LiDAR processing, the sampling had to be constrained to
 an area of East Portland (Figure \ref{fig:clip-extent}). This extent
 was chosen to align with the sampling region of the CNH data, though it
 had to be shrunk slightly.
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{figure/extent_and_samples} 
+{\centering \includegraphics[width=0.8\linewidth,]{figure/extent_and_samples} 
 
 }
 
 \caption{Geographic extent and random sampling}\label{fig:clip-extent}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{figure/layered_outputs} 
+{\centering \includegraphics[width=0.8\linewidth,]{figure/layered_outputs} 
 
 }
 
@@ -1286,7 +1288,7 @@ and crown width from tree DBH. The tree height predictions were used to
 filter out trees below 25 feet in height, and the crown width
 predictions were used in the radius method of pixel selection for NDVI
 analysis. There are numerous expected differences between the species
-due to functional tree type. For example, the average DBJ for ACMA and
+due to functional tree type. For example, the average DBH for ACMA and
 PSME are relatively close, but the average height for a PSME individual
 is nearly twice as tall as an ACMA (Table \ref{tab:tree-stats-table}).
 Because of this, DBH would have a very different effect on the outcome
@@ -1303,7 +1305,7 @@ modeling the individual species. When I modeled each species
 individually for both tree height and canopy width, I got the same
 results as if I created one model and included species as an interaction
 term.
-\begin{table}
+\begin{table}[H]
 
 \caption[Physiological Tree Measurements]{\label{tab:tree-stats-table}Average physiological measurements for selected species in the Park Trees database.}
 \centering
@@ -1323,7 +1325,7 @@ P-value of \textless{} 2.2e-16 (Figure \ref{fig:height-model}, Appendix
 equations \eqref{eq:a1}, \eqref{eq:a3}, \eqref{eq:a5}, \eqref{eq:a7}). This
 model was most effective for ACMA and PSME, but was not statistically
 significant for ACPL or THPL. This is likely due to the similar average
-DBH and tree height values between ACPL and PSME. While the average DBH
+DBH and tree height values between ACMA and PSME. While the average DBH
 values for ACMA and PSME are very similar, the average height values are
 extremely different, with the average PSME individual standing twice as
 tall as the average ACMA individual (Table \ref{tab:tree-stats-table}).
@@ -1347,9 +1349,9 @@ inflection point is seen in the ACPL predictions. The canopy width model
 played a larger role in this thesis than the tree height model because
 it was essential for the radius method of pixel selection for all street
 trees.
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/width-model-g-1} 
+{\centering \includegraphics[width=0.8\linewidth,]{thesis_files/figure-latex/width-model-g-1} 
 
 }
 
@@ -1367,19 +1369,19 @@ relationship between the two variables (\(X^2\)(2, N=112) = 10.184, p =
 0.00615). Within functional tree type, both conifers and broadleaf trees
 were most likely to be rated as \textbf{fair}, but within health category a
 \textbf{good} or a \textbf{poor} tree were most likely a broadleaf tree, and a
-\textbf{fair} tree was most likely a conifer (Table
-\ref{tab:table-freq-test-1}). A Chi-Square Test of Independence was
-performed to assess the relationship between health rating and tree
-species. There was a significant relationship between the two variables
-(\(X^2\)(6, N=112) = 22.368, p = 0.00104). Within tree species, ACMA,
-PSME, and THPL were all most likely to be rated as \textbf{fair}, but ACPL
-was most likely to be rated as \textbf{good}. Within health category, a
-\textbf{poor} tree was most likely an ACMA individual, a \textbf{fair} tree was
-equally likely to be a PSME or THPL individual, and a \textbf{good} tree was
-most likely an ACPL individual (Table \ref{tab:table-freq-test-2}).
-\begin{table}
-\caption{\label{tab:table-freq-test-1}Frequency and probability tables of functional tree type and health rating for CNH trees. There is a statistically significant relationship between the two variables ($X^2$(2, N=112) = 10.184, p = 0.00615)}
+\textbf{fair} tree was most likely a conifer (Tables
+\ref{tab:table-freq-test-1}, \ref{tab:table-freq-test-2}). A
+Chi-Square Test of Independence was performed to assess the relationship
+between health rating and tree species. There was a significant
+relationship between the two variables (\(X^2\)(6, N=112) = 22.368, p =
+0.00104). Within tree species, ACMA, PSME, and THPL were all most likely
+to be rated as \textbf{fair}, but ACPL was most likely to be rated as
+\textbf{good}. Within health category, a \textbf{poor} tree was most likely an
+ACMA individual, a \textbf{fair} tree was equally likely to be a PSME or THPL
+individual, and a \textbf{good} tree was most likely an ACPL individual
+(Tables \ref{tab:table-freq-test-3}, \ref{tab:table-freq-test-4}).
 \begin{longtable}[t]{lrr}
+\caption[Frequency table of functional tree type and health rating for CNH trees]{\label{tab:table-freq-test-1}Frequency table of functional tree type and health rating for CNH trees. There is a statistically significant relationship between the two variables ($X^2$(2, N=112) = 10.184, p = 0.00615)}\\
 \toprule
   & broadleaf & conifer\\
 \midrule
@@ -1389,6 +1391,7 @@ good & 22 & 7\\
 \bottomrule
 \end{longtable}
 \begin{longtable}[t]{lrr}
+\caption[Probability table of functional tree type and health rating for CNH trees]{\label{tab:table-freq-test-2}Probability table of functional tree type and health rating for CNH trees. }\\
 \toprule
   & broadleaf & conifer\\
 \midrule
@@ -1397,10 +1400,8 @@ fair & 0.2500000 & 0.3571429\\
 good & 0.1964286 & 0.0625000\\
 \bottomrule
 \end{longtable}
-\end{table}
-\begin{table}
-\caption{\label{tab:table-freq-test-2}Frequency and probability tables of functional tree type and health rating for CNH trees. There is a statistically significant relationship between the two variables ($X^2$(2, N=112) = 10.184, p = 0.00615)}
 \begin{longtable}[t]{lrrrr}
+\caption[Frequency table of functional tree type and health rating for CNH trees]{\label{tab:table-freq-test-3}Frequency table of functional tree type and health rating for CNH trees. There is a statistically significant relationship between the two variables ($X^2$(2, N=112) = 10.184, p = 0.00615)}\\
 \toprule
   & ACMA & ACPL & PSME & THPL\\
 \midrule
@@ -1410,6 +1411,7 @@ good & 6 & 16 & 4 & 3\\
 \bottomrule
 \end{longtable}
 \begin{longtable}[t]{lrrrr}
+\caption[Probability table of functional tree type and health rating for CNH trees]{\label{tab:table-freq-test-4}Probability table of functional tree type and health rating for CNH trees.}\\
 \toprule
   & ACMA & ACPL & PSME & THPL\\
 \midrule
@@ -1418,7 +1420,6 @@ fair & 0.1428571 & 0.1071429 & 0.1785714 & 0.1785714\\
 good & 0.0535714 & 0.1428571 & 0.0357143 & 0.0267857\\
 \bottomrule
 \end{longtable}
-\end{table}
 \hypertarget{health-rating-vs.-ndvi-point-method-obtained-data}{%
 \section{Health Rating vs.~NDVI: Point Method Obtained Data}\label{health-rating-vs.-ndvi-point-method-obtained-data}}
 
@@ -1444,9 +1445,9 @@ statistical significance when split by functional tree type.
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/point-species-1} 
+{\centering \includegraphics[width=1\linewidth,]{thesis_files/figure-latex/point-species-1} 
 
 }
 
@@ -1470,9 +1471,9 @@ tree species, there is no statistical significance. When split by
 functional tree type, there is a statistcally significant difference in
 the NDVI values between \textbf{good} and \textbf{poor} health ratings for
 broadleaf trees (ANOVA, \(F_{2,56}=3.976\), \(P = 0.0243\), TukeyHSD).
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/radius-species-1} 
+{\centering \includegraphics[width=1\linewidth,]{thesis_files/figure-latex/radius-species-1} 
 
 }
 
@@ -1498,9 +1499,9 @@ values for \textbf{good} and \textbf{poor} health categories for broadleaf trees
 
 
 
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/lidar-species-1} 
+{\centering \includegraphics[width=1\linewidth,]{thesis_files/figure-latex/lidar-species-1} 
 
 }
 
@@ -1530,30 +1531,32 @@ NDVI value for a \textbf{poor} rated tree is higher than the mean average
 NDVI value for point method trees. For the radius and LiDAR data, the
 average z-score for \textbf{poor} rated trees is below the mean average NDVI
 value for each method. Interestingly, the mean z-score for \textbf{poor}
-LiDAR trees is higher than for \textbf{fair} trees.
+LiDAR trees is higher than for \textbf{fair} trees (Figure
+\ref{fig:methods-all-species}).
 
-When the species are clumped, the three methods show very similar
-patterns, though the NDVI values are higher for the point method than
-either of the other two methods (Figure \ref{fig:methods-species}).
-When all three methods are compared along with species, we can see that
-the general trend of health rating and NDVI is consistent within each
-species. The pattern between health rating and NDVI is also very similar
-between trees of the same functional type (Figure
-\ref{fig:methods-species}). Because of these similarities in health
-rating and NDVI values for trees belonging to the same functional type,
-I included additional testing examining the difference in species
-specificity addition versus functional type separation.
-\begin{figure}
+When the species are clumped with raw NDVI measurements, the three
+methods show very similar patterns, though the NDVI values are higher
+for the point method than either of the other two methods (Figure
+\ref{fig:methods-species}). When all three methods are compared along
+with species, we can see that the general trend of health rating and
+NDVI is consistent within each species. The pattern between health
+rating and NDVI is also very similar between trees of the same
+functional type (Figure \ref{fig:methods-species}). Because of these
+similarities in health rating and NDVI values for trees belonging to the
+same functional type, I included additional testing examining the
+difference in species specificity addition versus functional type
+separation.
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/methods-all-species-1} 
+{\centering \includegraphics[width=0.8\linewidth,]{thesis_files/figure-latex/methods-all-species-1} 
 
 }
 
 \caption[Z-score of NDVI and health rating comparison across methods]{Z-score of NDVI values from all three pixel selection methods with CNH health rating. There is no statistically significant difference in NDVI trends between pixel selection methods. (ANOVA, $F_{2, 325}=0$, $P = 1$)}\label{fig:methods-all-species}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/methods-species-1} 
+{\centering \includegraphics[width=0.9\linewidth,]{thesis_files/figure-latex/methods-species-1} 
 
 }
 
@@ -1565,15 +1568,14 @@ the point method, each NDVI value is based off one singular point. For
 both LiDAR and Radius methods, the NDVI used in prediction is an average
 of all NDVI values captured within the pixel selection method, but the
 number of pixels used varies between methods and species (Figure
-\ref{fig:ndvi-counts-graph}). Each successive model reduced the number
-of points that are statistical outliers
-\begin{figure}
+\ref{fig:ndvi-counts-graph}).
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/ndvi-counts-graph-1} 
+{\centering \includegraphics[width=0.9\linewidth,]{thesis_files/figure-latex/ndvi-counts-graph-1} 
 
 }
 
-\caption[Pixel counts for NDVI calculation, by method, and for sample NDVI.]{Comparison of pixel counts used in NDVI calculations. (a) Boxplot of pixel counts used for each species in the LiDAR and radius methods. For both methods, the maples had more outliers than the conifers, and THPL had the lowest average number of pixels used. (b) Pixel count and average NDVI per tree. There does not seem to be any strong statistical relationship between the number of pixels used and the sample NDVI, though this does not include any data from the point method.}\label{fig:ndvi-counts-graph}
+\caption[Pixel counts for NDVI calculation, by method, and for sample NDVI.]{Comparison of pixel counts used in NDVI calculations. (a) Boxplot of pixel counts used for each species in the LiDAR and radius methods. For both methods, the maples had more outliers than the conifers, and THPL had the lowest average number of pixels used. (b) Pixel count and average NDVI per tree.}\label{fig:ndvi-counts-graph}
 \end{figure}
 \hypertarget{predictive-model}{%
 \section{Predictive Model}\label{predictive-model}}
@@ -1630,9 +1632,9 @@ predicted dropped from 64 to 59, with the new predictions as \textbf{good}
 point method obtained data were able to correctly predict any trees with
 \textbf{poor} health categorization, and in models b and c, each had one
 \textbf{poor} tree that was incorrectly predicted as \textbf{good}.
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/point-model-split-1} 
+{\centering \includegraphics[width=0.9\linewidth,]{thesis_files/figure-latex/point-model-split-1} 
 
 }
 
@@ -1663,9 +1665,9 @@ point method it makes sense that there is an increase in \textbf{poor} rated
 trees. However, out of the 15 reference trees with health ratings of
 \textbf{poor}, only one was correctly predicted as such (Figure
 \ref{fig:radius-model-split}c).
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/radius-model-split-1} 
+{\centering \includegraphics[width=0.9\linewidth,]{thesis_files/figure-latex/radius-model-split-1} 
 
 }
 
@@ -1683,18 +1685,18 @@ remained the same where with the other two methods, that count had
 increased as well. However, this model also included a \textbf{good} tree
 being predicted as \textbf{poor} which no other variations of the models did
 (Figure \ref{fig:lidar-model-split}b). The last model with species as
-an interaction term (health rating \textasciitilde{} lLiDAR NDVI * species) was the
+an interaction term (health rating \textasciitilde{} LiDAR NDVI * species) was the
 most effective of all 9 models, with the highest accuracy and kappa, as
 well as the smallest p-value (Figure \ref{fig:lidar-model-split}c).
-\begin{figure}
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/lidar-model-split-1} 
+{\centering \includegraphics[width=0.9\linewidth,]{thesis_files/figure-latex/lidar-model-split-1} 
 
 }
 
 \caption[Confusion matrixes for LiDAR method predictive models]{Confusion matrixes for each species predictions with LiDAR method obtained NDVI values. (a) Model using NDVI to predict tree health category. (b) Model using functional tree type in addition to NDVI for health prediction. (c) Model with species as a predictor variable for NDVI based tree health category.}\label{fig:lidar-model-split}
 \end{figure}
-\begin{figure}
+\begin{figure}[H]
 
 {\centering \includegraphics{thesis_files/figure-latex/prob-graph-1-1} 
 
@@ -1725,7 +1727,21 @@ rated trees, which is the opposite of what we saw with the previous
 models. The LiDAR model had the highest proportion of correctly
 predicted health ratings across all three health categories (Figure
 \ref{fig:final-model-small}).
-\begin{figure}
+
+I repeated the probability of assignment analysis with the downsampled
+models (Figure \ref{fig:downsample-probs}). The probabilities of
+assignment to each health category are much more even now, though the
+average probability for a \textbf{fair} prediction is still higher than the
+average probability of a \textbf{poor} or \textbf{good} rating prediction.
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\linewidth,]{thesis_files/figure-latex/final-model-small-1} 
+
+}
+
+\caption{Confusion matrixes for downsampled predictive models}\label{fig:final-model-small}
+\end{figure}
+\begin{figure}[H]
 
 {\centering \includegraphics{thesis_files/figure-latex/downsample-probs-1} 
 
@@ -1733,37 +1749,18 @@ predicted health ratings across all three health categories (Figure
 
 \caption{Probability of Assignment Analysis with Downsampled Data}\label{fig:downsample-probs}
 \end{figure}
-I repeated the probability of assignment analysis with the downsampled
-models (figure \ref{fig:downsample-probs}). The probabilities of
-assignment to each health category are much more even now, though the
-average probability for a \textbf{fair} prediction is still higher than the
-average probability of a \textbf{poor} or \textbf{good} rating prediction.
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/final-model-small-1} 
-
-}
-
-\caption{Confusion matrixes for downsampled predictive models}\label{fig:final-model-small}
-\end{figure}
-\begin{longtable}[t]{lr}
-\caption[Species counts post LiDAR processing]{\label{tab:final-lidar-counts}Counts of each species in stratified random sample of park and street trees after LiDAR processing and NDVI calculation.}\\
-\toprule
-Species & Count\\
-\midrule
-ACMA & 46\\
-ACPL & 41\\
-PSME & 49\\
-THPL & 39\\
-\bottomrule
-\end{longtable}
 To ensure that the results of the downsampled LiDAR data model were not
 caused by the random downsampling, I ran the model 6 times with
 different random samples each time (Appendix
 \ref{fig:lidar-model-test}). While the values of each predicted
 category did differ, the p-value for the model was significant for each
 test. The accuracy values ranged from 54\% to 67\%, and the kappa values
-ranged from 31\% to 50\% (Table \ref{tab:model-test-table}). I used the
+ranged from 31\% to 50\% (Table \ref{tab:model-test-table}).
+
+\hypertarget{health-predictions-for-portland-trees}{%
+\section{Health Predictions for Portland Trees}\label{health-predictions-for-portland-trees}}
+
+I used the
 final downsampled LiDAR model to predict health rating for a random
 sample of 100 park and 100 street trees, with LiDAR calculated NDVI
 values. Due to the data loss in the LiDAR processing, the final data set
@@ -1771,94 +1768,119 @@ contains 175 trees (85 street trees, 90 park trees) (Table
 \ref{tab:final-lidar-counts}). This data was input into the final LiDAR
 model, created with the downsampled data. A health rating was predicted
 based on NDVI and tree species. The resulting health predictions were
-graphed along with sample NDVI (Figure @ref(fig: final-lidar-plot)).
+graphed along with sample NDVI (Figure \ref{fig:final-lidar-plot}).
 For ACMA, there is a clear relationship between sample NDVI and health
 prediction which matches that seen in earlier data analysis. For ACPL,
 there is a large difference between the NDVI of \textbf{fair} and \textbf{good}
 trees, which also appears for PSME. for the THPL predictions, the
 average NDVI for \textbf{poor} trees is higher than those for \textbf{fair} trees.
-\begin{center}\includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/final-lidar-plot-1} \end{center}
+\begin{figure}[H]
 
+{\centering \includegraphics[width=0.9\linewidth,]{thesis_files/figure-latex/final-lidar-plot-1} 
+
+}
+
+\caption{Health rating predictions for random sample of Portland trees}\label{fig:final-lidar-plot}
+\end{figure}
 \hypertarget{discussion}{%
 \chapter{Discussion}\label{discussion}}
 
-INTRO PARAGRAPH SUMMARIZING RESULTS
+The primary goals of this thesis were to investigate the impact of
+functional type or species specification in predictive health models, as
+well as an investigation of the impacts and outcomes of three different
+pixel selection and tree crown delineation models. In summary, the
+predictive models with species specificity as well as the models that
+used NDVI data obtained through the LiDAR tree crown delineation had the
+best results. However, each method had limitations despite their
+effectiveness which will be discussed in further detail below.
 
 \hypertarget{strengths-and-limitations-of-different-delineation-techniques}{%
 \section{Strengths and limitations of different delineation techniques}\label{strengths-and-limitations-of-different-delineation-techniques}}
 
 The three pixel selection methods (point, radius, and LiDAR) were used
-to help answer the question ``which pixels are we using?''
-\begin{figure}
+to help answer the question \emph{which pixels are we using?} This was a
+necessary part of this thesis methodology because in order to utilize
+NDVI as a health metric, it was essential to select specific NDVI pixels
+from satellite imagery for analysis. Three different methods of pixel
+selection and tree crown delineation were tested: a point method which
+used the single NDVI value from directly below a tree location point; a
+radius method which averaged the NDVI values of all pixels contained
+within a buffer circle defined by the measured or predicted tree crown
+width; and a LiDAR method which used a modified watershed delineation
+algorithm in conjunction with LiDAR canopy height model data to
+delineate tree crowns into predicted polygon shapes (Figure
+\ref{fig:layered-outputs-2}).
+\begin{figure}[H]
 
-{\centering \includegraphics[width=0.9\linewidth]{figure/layered_outputs_2} 
+{\centering \includegraphics[width=0.9\linewidth,]{figure/layered_outputs_2} 
 
 }
 
 \caption[Pixel selection method comparison with numbered trees]{Point, Radius, and LiDAR pixel selection methods for Berkeley Park with numbered trees}\label{fig:layered-outputs-2}
 \end{figure}
-The point method is the simplest method, obtaining a single NDVI value
-from the individual pixel that spatially contains an individual tree
-location point. The statistically significant difference in the NDVI
-values for trees categorized as \textbf{fair} and \textbf{good} seems to be
-primarily driven by the THPL data.
-
-Given that only one pixel value is used to represent the NDVI of an
-entire tree in the point method, that single pixel likely misrepresents
-the health of the tree. If the location point is incorrect, the NDVI
-value may not belong to the tree of interest. The pixel method NDVI
-values statistically significantly higher than the NDVI values obtained
-through the other two pixel selection methods. This can be attributed to
-the use of a single pixel rather than an average of pixel NDVI values.
-The approximated center of the tree represented by the tree location
-point will generally be greener than pixels on the edge because the NDVI
-value for a pixel is the average NDVI for all data within that pixel,
-and the central pixel likely contains mostly tree canopy, and ideally
-little to no information on ground cover surrounding the tree. This is
-emphasized in figure \ref{fig:layered-outputs-2}, which highlights the
-large variance in pixel selection extent for the three methods and how
-much data is missed by the point method.
+The single pixel point method results in an NDVI value representative
+for the center-most section of a tree crown which may be effective for
+small trees, but overlooks much of the data from the tree crown as a
+whole, leading to this method being a poor representation of NDVI and
+tree health for trees with larger canopies. The point method is the
+simplest method, obtaining a single NDVI value from the individual pixel
+that spatially contains an individual tree location point. The
+statistically significant difference in the NDVI values for trees
+categorized as \textbf{fair} and \textbf{good} seems to be primarily driven by the
+THPL data (\ref{fig:point-species}). Given that only one pixel value is
+used to represent the NDVI of an entire tree in the point method, that
+single pixel likely misrepresents the health of the tree. If the
+location point is incorrect, the NDVI value may not belong to the tree
+of interest. The pixel method NDVI values statistically significantly
+higher than the NDVI values obtained through the other two pixel
+selection methods. This can be attributed to the use of a single pixel
+rather than an average of pixel NDVI values. The approximated center of
+the tree represented by the tree location point will generally be
+greener than pixels on the edge because the NDVI value for a pixel is
+the average NDVI for all data within that pixel, and the central pixel
+likely contains mostly tree canopy, and ideally little to no information
+on ground cover surrounding the tree. Because of this, the single pixel
+point method is more likely to produce less ``noise'' within the data from
+edge effects and non-canopy pixels. This is emphasized in figure
+\ref{fig:layered-outputs-2}, which highlights the large variance in
+pixel selection extent for the three methods and how much data is missed
+by the point method. This model may be best for small trees or trees
+that experience patterns of dieback positioned around their center and
+trunk in contrast to the edges of the canopy. One of the main
+limitations of the point method is the limited scope of data used in
+analysis. However, this limitation does not exist for the radius method.
 
 The radius method averages the NDVI values of pixels within a buffered
 circle with the size defined by the measured or predicted tree canopy
 width. This data had a statistically significant difference in average
 NDVI values between \textbf{good} and \textbf{poor} categorized trees as well as
-\textbf{good} and \textbf{fair} categorized trees. There is a larger difference
-between \textbf{fair} and \textbf{good} than \textbf{fair} and \textbf{poor}, which is also
-seen in the point method data.
+\textbf{good} and \textbf{fair} categorized trees (figure
+\ref{fig:radius-species}). There is a larger difference between
+\textbf{fair} and \textbf{good} than \textbf{fair} and \textbf{poor}, which is also seen in
+the point method data. Where the scope of the pixel data is too narrow
+(only using the value of a singular pixel) the scope of the radius
+method can be too broad and pixels belonging to other trees will be
+included. A large issue that can arise with the radius method data is
+the overlapping of tree crowns, and pixels being used in the NDVI
+analysis for multiple trees (Figure \ref{fig:overlap-crowns}).
+Overlapping crowns is an issue that often arises with tree crown
+delineation. To deal with this, Xiao et al. (2005) chose to exclude any trees
+with overlapping crowns from the final analysis. Fang et al. (2020) used a
+version of the radius method where they calculated an average canopy
+width and used that standardized size (a radius of 4.55 m) to extract
+their NDVI averages for each tree. The paper does not mention how they
+dealt with overlapping tree crowns, but perhaps their trees were widely
+distributed enough and the radius of interest was small enough that
+their values did not experience overlap. Using LiDAR as a pixel
+selection method has the benefit of additional pixel data like the
+radius method, but no overlapping crowns.
+\begin{figure}[H]
 
-Where the scope of the pixel data is too narrow (only using the value of
-a singular pixel) the scope of the radius method can be too broad and
-pixels belonging to other trees will be included.
-
-A large issue that can arise with the radius method data is the
-overlapping of tree crowns, and pixels being used in the NDVI analysis
-for multiple trees (Figure \ref{fig:overlap-crowns}. Overlapping crowns
-is an issue that often arises with tree crown delineation. To deal with
-this, Xiao et al. (2005) chose to exclude any trees with overlapping crowns from
-the final analysis. Fang et al. (2020) used a version of the radius method where
-they calculated an average canopy width and used that standardized size
-(a radius of 4.55 m) to extract their NDVI averages for each tree. The
-paper does not mention how they dealt with overlapping tree crowns, but
-perhaps their trees were widely distributed enough and the radius of
-interest was small enough that their values did not experience overlap.
-Using LiDAR as a pixel selection method has the benefit of additional
-pixel data like the radius method, but no overlapping crowns.
-\begin{figure}
-
-{\centering \includegraphics[width=0.45\linewidth]{figure/overlapping_park} 
-
-}
-
-\caption[Examples of overlapping park and street tree crowns.]{Examples of tree crown buffers from radius method data with overlapping crowns for park trees (left) and street trees (right). While the frequency of overlapping crowns is much higehr for the park example, it is still apparent in the street trees as well. Given that these figures only include trees of the canary species, the occurance of overlapping tree canopies is likely even higher than this.}\label{fig:overlap-crowns-1}
-\end{figure}
-\begin{figure}
-
-{\centering \includegraphics[width=0.45\linewidth]{figure/overlapping_street} 
+{\centering \includegraphics[width=1\linewidth,]{figure/overlapping-crowns} 
 
 }
 
-\caption[Examples of overlapping park and street tree crowns.]{Examples of tree crown buffers from radius method data with overlapping crowns for park trees (left) and street trees (right). While the frequency of overlapping crowns is much higehr for the park example, it is still apparent in the street trees as well. Given that these figures only include trees of the canary species, the occurance of overlapping tree canopies is likely even higher than this.}\label{fig:overlap-crowns-2}
+\caption[Examples of overlapping park and street tree crowns.]{Examples of tree crown buffers from radius method data with overlapping crowns for park trees (left) and street trees (right). While the frequency of overlapping crowns is much higehr for the park example, it is still apparent in the street trees as well. Given that these figures only include trees of the canary species, the occurance of overlapping tree canopies is likely even higher than this.}\label{fig:overlap-crowns}
 \end{figure}
 The LiDAR tree crown delineation was by far the most intensive pixel
 selection method tested in this thesis, but was the most effective for
@@ -1869,18 +1891,23 @@ crown, without the inclusion of overlapping areas. However, there are
 cases (such as trees 2, 3, and 5) where the canopy delineation algorithm
 creates canopies for trees that are larger than reality. The LiDAR pixel
 selection method also led to the most statistically significant
-predictive models. Using LiDAR for canopy delineation is complicated,
-but it is also quite effective.
+predictive models (\ref{fig:lidar-species}). Using LiDAR for canopy
+delineation is complicated, but it is also quite effective.
 
 Given the overall results of the three methods, I believe that the
 radius and LiDAR methods are both valid choices for tree crown
 delineation and pixel selection, but can have different intended uses
 that will maximize the benefits of each model. The radius method is
-fairly easy when compared to the LiDAR processing. Especially if the
-data already contains a crown width measurement, the radius method can
-be a decently simple method of selecting pixels for NDVI assessment.
-However, if the goal is maximizing the accuracy of the tree crown
-delineations, the the LiDAR method is the best approach.
+fairly easy when compared to the LiDAR processing. It does have more
+overlapping crowns, but fewer non-canopy pixels. Especially if the data
+already contains a crown width measurement, the radius method can be a
+decently simple method of selecting pixels for NDVI assessment. The
+LiDAR method will not produce overlapping crowns but may include more
+non-canopy pixels. If the goal is maximizing the accuracy of the tree
+crown delineations, the the LiDAR method may be the best approach. A
+future approach may be to use the LiDAR method to delineate tree crowns,
+then trim the polygons based on the radius buffer to eliminate both
+overlapping tree crowns as well as a majority of non-canopy pixels.
 
 \hypertarget{evaluation-of-tree-health-predictions}{%
 \section{Evaluation of Tree Health Predictions}\label{evaluation-of-tree-health-predictions}}
@@ -1892,22 +1919,23 @@ measured health condition and LiDAR calculated NDVI. With ACPL, the
 predictions showed effective separation of \textbf{fair} and \textbf{good}, but no
 predictions of \textbf{poor} trees. A limitation for all of the models is
 sample size. The models were only statistically significant when the
-health rating groups were downsampled to equal sizes, and the level of
-statistical significance and predictions varied depending on the sample
-of trees that was included in the downsampled data. Additionally, the
-distribution of species across health rating with the downsampled data
-is uneven (table \ref{tab:species-counts-bleh}. Due to data loss during
-the LiDAR canopy delineation, the final dataset used for model training
-had no PSME individuals rated as \textbf{poor} health. In the predictions, no
-PSME individuals were rated as \textbf{poor}, which in context of the
-training dataset makes complete sense. If there is no basis for a
-prediction of a specific health rating, that health rating will not be
-predicted. For all species, an overall larger sample size would likely
-improve the predictions and the model as a whole. This is easier said
-than done, since while collecting field data and health analyses, the
-species sampled can be controlled by selection, but their health cannot
-be. In order to create a predictive model that works for more than just
-ACMA, it is necessary to increase the size of data for model training.
+health rating groups were downsampled to equal sizes, and the accuracy
+and kappa values varied depending on the sample of trees that was
+included in the downsampled data (table \ref{tab:model-test-table}).
+Additionally, the distribution of species across health rating with the
+downsampled data is uneven (Table \ref{tab:species-counts-bleh}). Due
+to data loss during the LiDAR canopy delineation, the final dataset used
+for model training had no PSME individuals rated as \textbf{poor} health. In
+the predictions, no PSME individuals were rated as \textbf{poor}, which in
+context of the training dataset makes complete sense (Figure
+\ref{fig:preds-counts}). If there is no basis for a prediction of a
+specific health rating, that health rating will not be predicted. For
+all species, an overall larger sample size would likely improve the
+predictions and the model as a whole. This is easier said than done,
+since while collecting field data and health analyses, the species
+sampled can be controlled by selection, but their health cannot be. In
+order to create a predictive model that works for more than just ACMA,
+it is necessary to increase the size of data for model training.
 \begin{table}
 
 \caption{\label{tab:species-counts-bleh}Count of Species and Ratings in final dataset used for LiDAR downsampled model training}
@@ -1935,15 +1963,15 @@ fall, and grow new ones every spring. Since their vegetation has a
 shorter lifespan of one growing season, it is much more sensitive to
 sudden and extreme environmental impacts. Declining health can be seen
 in broadleaf trees as leaf damage or scorching, discoloration in the
-foliage, or a decrease in the number of leaves grown each year (CITE).
+foliage, or a decrease in the number of leaves grown each year.
 Conversely, coniferous evergreen trees retain their foliage after each
 growing season, adding new growth on to the end of branches. Since
 evergreen trees cannot regrow all their foliage after a year with harsh
 environmental conditions, their response is often seen in the loss of
-branches and a reduction in overall canopy cover (CITE). Because of
-these variations in response types, the models including functional type
-as a predictor variable had higher levels of accuracy than the method
-only using NDVI.
+branches and a reduction in overall canopy cover. Because of these
+variations in response types, the models including functional type as a
+predictor variable had higher levels of accuracy than the method only
+using NDVI.
 
 For each of the three pixel selection method models, the model that
 differentiated the predictions by species was the most accurate. Because
@@ -1970,17 +1998,18 @@ health predictions, species separation
 While the use of satellite imaging for urban ecology applications is
 becoming more frequent, there are still numerous avenues that need
 additional research and improvement. The first of those is documentation
-and access.
+and access, which I will discuss further in the next section.
 
 Another limitation of satellite imaging for tree health assessment is
-seasonality. Especially with deciduous trees, NDVI obtained outside of
-the peak growing season will not be able to get anywhere close to an
-accurate health rating based on greenness. By filtering for satellite
-images collected during the peak on-leaf period, this variability can be
-limited. Fang et al. (2020) compared satellite images from June, July, and August
-and found that the July image, which was obtained for the peak on-leaf
-period for Washington D.C., was the most accurate and effective when
-examining tree health.
+seasonality. This limitation exists for field sampling as well, but must
+be noted for remote sensing analysis. Especially with deciduous trees,
+NDVI obtained outside of the peak growing season will not be able to get
+anywhere close to an accurate health rating based on greenness. By
+filtering for satellite images collected during the peak on-leaf period,
+this variability can be limited. Fang et al. (2020) compared satellite images
+from June, July, and August and found that the July image, which was
+obtained for the peak on-leaf period for Washington D.C., was the most
+accurate and effective when examining tree health.
 
 Tree species also has a large impact on NDVI values due to the natural
 variability in tree vegetation color. Coniferous trees are generally
@@ -1988,32 +2017,55 @@ much darker in color than deciduous trees. Between deciduous tree
 species, there can be extensive variation in color as well. Some trees
 have vegetation that naturally appears reddish or purple, so these
 species would require a different type of vegetation index for health
-modeling than species that are naturally quite green.
+modeling than species that are naturally quite green. Other vegetation
+indices could be tested for their potential to better model the tree
+health for coniferous trees.
+
+While some of these limitations, such as seasonality, are inherent,
+others that I experienced in this work were due to the type and
+resolution of data that I was able to access. With higher resolution
+satellite data, the NDVI values would be more specific to smaller areas
+of the tree canopy, and could be used as part of the tree canopy
+delineation as well. While there are numerous limitations of using
+satellite imaging, the benefits do outweigh the limitations. The ability
+to access and view data from past dates is invaluable. I hope that as
+satellite data becomes more readily available to academics in the
+future, it is also able to become more accessible to others in the
+public sphere.
 
 \hypertarget{open-source-data-and-accessible-science}{%
 \section{Open Source Data and Accessible Science}\label{open-source-data-and-accessible-science}}
 
 When beginning this thesis, a large goal of mine was to use only open
-source and freely accessible data sources and programs. For the most
-part, I was able to meet this goal. The satellite data I used was
-accessed through PlanetScope's Education and Research Program, which
-provided me with limited, non-commercial access to PlanetScope satellite
-imagery. This is accessible after a short application, provided that the
-applicant has a college or university email address. Both the street and
-park tree inventories were publicly available through Portland's GIS
-opendata site, and the LiDAR canopy height model was available through
-Portland's Regional Land Information System (RLIS). The one processing
-task I was not able to do on an open source software was the file
-conversion of the LiDAR CHM. It is only available for download as a File
-Geodatabase, which is a proprietary ArcGIS file type. In order to be
-able to utilize it in QGIS, which is an opensource GIS software, I had
-to open the CHM file in ArcGIS through Reed's institutional access, and
-export it as a \texttt{.tif} file type. This is unfortunate, because it is very
-possible for Portland's RLIS site to host the canopy height model in a
-different format. While many of the data sources I used were openly
-accessible, throughout this process it became apparent that the
-processing techniques were not. I had to use three different platforms
-(RStudio, QGIS, and Python) to conduct the work for this thesis.
+source and freely accessible data sources and programs. For much of the
+thesis process, I thought I was meeting this goal. The satellite data I
+used was accessed through PlanetScope's Education and Research Program,
+which provided me with limited, non-commercial access to PlanetScope
+satellite imagery. This is accessible after a short application,
+provided that the applicant has a college or university email address.
+This raises the question, is this truly an accessible data source? It
+was free for me to use for this thesis, but I am able to do this thesis
+and access the data because of the tuition I am playing to Reed College.
+
+Both the street and park tree inventories were publicly available
+through Portland's GIS opendata site, and the LiDAR canopy height model
+was available through Portland's Regional Land Information System
+(RLIS). The one processing task I was not able to do on an open source
+software was the file conversion of the LiDAR CHM (canopy height model).
+It is only available for download as a File Geodatabase, which is a
+proprietary ArcGIS file type. In order to be able to utilize it in QGIS,
+which is an opensource GIS software, I had to open the CHM file in
+ArcGIS through Reed's institutional access, and export it as a \texttt{.tif}
+file type. This is unfortunate, because it is very possible for
+Portland's RLIS site to host the canopy height model in a different
+format. However, in some ways the CHM may be more ``accessible'' than the
+satellite data because even though it requires a proprietary software to
+be able to use it, it is publicly accessible and anyone can download it.
+While many of the data sources I used were openly accessible, throughout
+this process it became apparent that the processing techniques were not.
+I had to use three different platforms (RStudio, QGIS, and Python) to
+conduct the work for this thesis for data analysis, mapping, and NDVI
+processing of satellite data.
 
 Satellite imagery with a 3m pixel size is relatively high resolution,
 but less so in the context of urban ecology. The satellite data used in
@@ -2029,6 +2081,13 @@ purchase orders of \$10,000 USD. While the availability of the basic
 satellite imagery through Planet Labs is an incredible resource, it is
 frustrating that the high price tag severely limits the accessibility of
 much of their data.
+
+While my goal was to use only publicly accessible data and open source
+software for this thesis, in retrospect I realize that I was not
+accessible. Many of the data sources I used had limitations or
+restrictions that prevented them from being fully accessible. However,
+that was out of my hands. I needed to use data for my thesis, and I was
+lucky enough to have access to the data and software I needed.
 
 \hypertarget{future-directions}{%
 \section{Future Directions}\label{future-directions}}
@@ -2047,40 +2106,139 @@ NDVI threshold may be effective.
 Additionally, altering the model to predict two conditions (\textbf{healthy}
 vs \textbf{unhealthy}) may be more accurate, since all three pixel selection
 methods had statistically significant differences between the \textbf{good}
-and \textbf{fair} categories. Splitting the trees into two health categories
-instead of three would increase the number of \textbf{unhealthy} trees
-predicted, since the trees categorized as \textbf{fair} would be split
-between the \textbf{healthy} and \textbf{unhealthy} ratings.
+and \textbf{fair} categories. This two condition model was used in Xiao et al. (2005).
+Splitting the trees into two health categories instead of three would
+increase the number of \textbf{unhealthy} trees predicted, since the trees
+categorized as \textbf{fair} would be split between the \textbf{healthy} and
+\textbf{unhealthy} ratings.
 
-Given the ineffective nature of my model for predicting the health
-categorizations for coniferous trees, a different direction may be
-needed. One possible method of remote health analysis for coniferous
-trees could be canopy cover.
+If I were able to continue this work, I would begin by conducting more
+rigorous training and statistical testing on my predictive models. While
+the polynomial models for tree height and crown width did have a
+statistically better fit than the linear models, that was likely due to
+over-fitting. I now believe that a linear model would have been a better
+representation of the relationship seen in nature. A limitation of my
+own work was the decision to train and test on the same dataset. While
+the low sample size would still be an issue, bootstrapping or
+cross-validation testing could be used to better fit the models without
+over-fitting.
 
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
+While there are many places that I know this thesis can be improved
+upon, it still shows extremely promising results for the modeling of
+urban maple species health in Portland, OR. While the species
+specification and LiDAR delineation of may be time consuming and quite
+involved, using the most specific method of tree specification and crown
+delineation for pixel selection does provide the best results. The
+ability to accurately predict health of urban trees from remotely sensed
+data is an extremely important step towards understanding of urban
+forest health dynamics so we can protect and maintain our urban forests.
 
 \appendix
 
 \hypertarget{data}{%
 \chapter{Supplementary Data}\label{data}}
 
-\hypertarget{cnh-project-neighborhoods-and-classification}{%
-\section*{CNH Project Neighborhoods and Classification}\label{cnh-project-neighborhoods-and-classification}}
-\addcontentsline{toc}{section}{CNH Project Neighborhoods and Classification}
-\begin{figure}
+\hypertarget{additional-figures}{%
+\section{Additional Figures}\label{additional-figures}}
 
-{\centering \includegraphics[width=1\linewidth]{figure/neighborhoods_and_trees2} 
+\hypertarget{cnh-project-neighborhoods-and-classification}{%
+\subsection*{CNH Project Neighborhoods and Classification}\label{cnh-project-neighborhoods-and-classification}}
+\addcontentsline{toc}{subsection}{CNH Project Neighborhoods and Classification}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,]{figure/neighborhoods_and_trees2} 
 
 }
 
 \caption{CNH sampled neighborhoods with classification}\label{fig:neighborhoods}
 \end{figure}
+\hypertarget{scene-products-and-satellite-swaths}{%
+\subsection*{Scene products and satellite swaths}\label{scene-products-and-satellite-swaths}}
+\addcontentsline{toc}{subsection}{Scene products and satellite swaths}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,]{figure/2016-bands} 
+
+}
+
+\caption{Satellite scene product swaths for 2016 PlanetScope data}\label{fig:2016-swath}
+\end{figure}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,]{figure/2019-bands} 
+
+}
+
+\caption{Satellite scene product swaths for 2019 PlanetScope data}\label{fig:2019-swath}
+\end{figure}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.75\linewidth,]{figure/2021-bands} 
+
+}
+
+\caption{Satellite scene product swaths for 2021 PlanetScope data}\label{fig:2021-swath}
+\end{figure}
+\hypertarget{model-tests}{%
+\subsection*{Model Tests}\label{model-tests}}
+\addcontentsline{toc}{subsection}{Model Tests}
+\begin{figure}[H]
+
+{\centering \includegraphics{thesis_files/figure-latex/test-height-model-1} 
+
+}
+
+\caption[Model tests for tree height predictions]{Predicting tree height from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.}\label{fig:test-height-model}
+\end{figure}
+\begin{figure}[H]
+
+{\centering \includegraphics{thesis_files/figure-latex/test-width-model-1} 
+
+}
+
+\caption[Model tests for tree canopy width predictions]{Predicting canopy width from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.}\label{fig:test-width-model}
+\end{figure}
+\hypertarget{height-model-results-and-predictions}{%
+\subsection*{Height model results and predictions}\label{height-model-results-and-predictions}}
+\addcontentsline{toc}{subsection}{Height model results and predictions}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth,]{thesis_files/figure-latex/height-model-1} 
+
+}
+
+\caption[Tree height predictive model]{Predictive model for tree height from measured DBH. A second order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.7834, P < 2.2e-16)}\label{fig:height-model}
+\end{figure}
+\hypertarget{lidar-model-tests}{%
+\subsection*{LiDAR model tests}\label{lidar-model-tests}}
+\addcontentsline{toc}{subsection}{LiDAR model tests}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\linewidth,]{figure/test} 
+
+}
+
+\caption{Confusion matrixes for LiDAR predictive model tests}\label{fig:lidar-model-test}
+\end{figure}
+\hypertarget{predicted-health-rating-and-species-counts}{%
+\subsection*{Predicted Health Rating and Species Counts}\label{predicted-health-rating-and-species-counts}}
+\addcontentsline{toc}{subsection}{Predicted Health Rating and Species Counts}
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.9\linewidth,]{thesis_files/figure-latex/preds-counts-1} 
+
+}
+
+\caption{Graph of species counts for LiDAR health predictions}\label{fig:preds-counts}
+\end{figure}
+\hypertarget{additional-tables}{%
+\section{Additional tables}\label{additional-tables}}
+
 \hypertarget{variable-types-for-tree-inventories}{%
-\section*{Variable types for tree inventories}\label{variable-types-for-tree-inventories}}
-\addcontentsline{toc}{section}{Variable types for tree inventories}
+\subsection*{Variable types for tree inventories}\label{variable-types-for-tree-inventories}}
+\addcontentsline{toc}{subsection}{Variable types for tree inventories}
 \begin{longtable}[t]{llll}
-\caption{\label{tab:var-type-table}}\\
+\caption[Table of variables from tree inventory data]{\label{tab:var-type-table}Table of variables from the Portland park and street tree inventories, as well as sampled CNH variables.}\\
 \toprule
 Variable name & Street trees & Park trees & CNH2 trees\\
 \midrule
@@ -2148,66 +2306,86 @@ Wind speed & - & - & x\\
 Wires (Y/N) & x & - & -\\
 \bottomrule
 \end{longtable}
-\hypertarget{scene-products-and-satellite-swaths}{%
-\section*{Scene products and satellite swaths}\label{scene-products-and-satellite-swaths}}
-\addcontentsline{toc}{section}{Scene products and satellite swaths}
-\begin{figure}
+\hypertarget{additional-information-on-health-predictive-model}{%
+\subsection*{Additional Information on Health Predictive Model}\label{additional-information-on-health-predictive-model}}
+\addcontentsline{toc}{subsection}{Additional Information on Health Predictive Model}
+\begin{longtable}[t]{llllr}
+\caption[Summary of results from various predictive models]{\label{tab:model-table}For each predictive model for tree health, this table contains the pixel selection method and predictors used, as well as the resulting accuracy, kappa, and p-value calculated in the confusion matrixes.}\\
+\toprule
+NDVI pixel method & Predictors & Accuracy & Kappa & P-value\\
+\midrule
+Point method & NDVI & 61\% & 0\% & 0.54120\\
+Radius method & NDVI & 61\% & 3\% & 0.54120\\
+LiDAR method & NDVI & 63\% & 10\% & 0.38400\\
+Point method & NDVI * tree type & 63\% & 15\% & 0.31630\\
+Radius method & NDVI * tree type & 63\% & 16\% & 0.31630\\
+\addlinespace
+LiDAR method & NDVI * tree type & 67\% & 23\% & 0.13340\\
+Point method & NDVI * species & 64\% & 23\% & 0.25040\\
+Radius method & NDVI * species & 64\% & 24\% & 0.25040\\
+LiDAR method & NDVI * species & 68\% & 33\% & 0.09396\\
+\bottomrule
+\end{longtable}
+\hypertarget{lidar-model-tests-1}{%
+\subsection*{LiDAR model tests}\label{lidar-model-tests-1}}
+\addcontentsline{toc}{subsection}{LiDAR model tests}
+\begin{table}
 
-{\centering \includegraphics[width=0.75\linewidth]{figure/2016-bands} 
+\caption{\label{tab:model-test-table}Statistical values for LiDAR predictive model tests}
+\centering
+\begin{tabular}[t]{lllr}
+\toprule
+Test & Accuracy & Kappa & P-Value\\
+\midrule
+test 1 & 56\% & 35\% & 0.0025460\\
+test 2 & 54\% & 31\% & 0.0065790\\
+test 3 & 64\% & 46\% & 0.0000824\\
+test 4 & 54\% & 31\% & 0.0065790\\
+test 5 & 67\% & 50\% & 0.0000214\\
+\addlinespace
+test 6 & 64\% & 46\% & 0.0000824\\
+\bottomrule
+\end{tabular}
+\end{table}
+\hypertarget{prediction-probability-output-example}{%
+\subsection*{Prediction Probability Output Example}\label{prediction-probability-output-example}}
+\addcontentsline{toc}{subsection}{Prediction Probability Output Example}
+\begin{table}[H]
 
-}
+\caption{\label{tab:preds-head}Selection of rows for LiDAR prediction probabilities}
+\centering
+\begin{tabular}[t]{rrr}
+\toprule
+poor & fair & good\\
+\midrule
+0.026 & 0.482 & 0.492\\
+0.023 & 0.452 & 0.525\\
+0.166 & 0.719 & 0.116\\
+0.012 & 0.308 & 0.680\\
+0.144 & 0.722 & 0.134\\
+\bottomrule
+\end{tabular}
+\end{table}
+\hypertarget{final-lidar-model-species-counts}{%
+\subsection*{Final LiDAR Model Species Counts}\label{final-lidar-model-species-counts}}
+\addcontentsline{toc}{subsection}{Final LiDAR Model Species Counts}
+\begin{longtable}[t]{lr}
+\caption[Species counts post LiDAR processing]{\label{tab:final-lidar-counts}Counts of each species in stratified random sample of park and street trees after LiDAR processing and NDVI calculation.}\\
+\toprule
+Species & Count\\
+\midrule
+ACMA & 46\\
+ACPL & 41\\
+PSME & 49\\
+THPL & 39\\
+\bottomrule
+\end{longtable}
+\hypertarget{additional-equations}{%
+\section{Additional equations}\label{additional-equations}}
 
-\caption{Satellite scene product swaths for 2016 PlanetScope data}\label{fig:2016-swath}
-\end{figure}
-\begin{figure}
-
-{\centering \includegraphics[width=0.75\linewidth]{figure/2019-bands} 
-
-}
-
-\caption{Satellite scene product swaths for 2019 PlanetScope data}\label{fig:2019-swath}
-\end{figure}
-\begin{figure}
-
-{\centering \includegraphics[width=0.75\linewidth]{figure/2021-bands} 
-
-}
-
-\caption{Satellite scene product swaths for 2021 PlanetScope data}\label{fig:2021-swath}
-\end{figure}
-\hypertarget{model-tests}{%
-\section*{Model Tests}\label{model-tests}}
-\addcontentsline{toc}{section}{Model Tests}
-\begin{figure}
-
-{\centering \includegraphics{thesis_files/figure-latex/test-height-model-1} 
-
-}
-
-\caption[Model tests for tree height predictions]{Predicting tree height from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.}\label{fig:test-height-model}
-\end{figure}
-\begin{figure}
-
-{\centering \includegraphics{thesis_files/figure-latex/test-width-model-1} 
-
-}
-
-\caption[Model tests for tree canopy width predictions]{Predicting canopy width from tree species and DBH. A linear, second degree, and third degree polynomial were tested, and raw polynomials were used.}\label{fig:test-width-model}
-\end{figure}
-\hypertarget{height-model-results-and-predictions}{%
-\section*{Height model results and predictions}\label{height-model-results-and-predictions}}
-\addcontentsline{toc}{section}{Height model results and predictions}
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/height-model-1} 
-
-}
-
-\caption[Tree height predictive model]{Predictive model for tree height from measured DBH. A second order polynomial regression was used in order to account for the variation between species. (Adjusted R-squared = 0.7834, P < 2.2e-16)}\label{fig:height-model}
-\end{figure}
 \hypertarget{tree-height-and-crown-width-predictive-model-equations}{%
-\section*{Tree Height and Crown Width Predictive Model Equations}\label{tree-height-and-crown-width-predictive-model-equations}}
-\addcontentsline{toc}{section}{Tree Height and Crown Width Predictive Model Equations}
+\subsection*{Tree Height and Crown Width Predictive Model Equations}\label{tree-height-and-crown-width-predictive-model-equations}}
+\addcontentsline{toc}{subsection}{Tree Height and Crown Width Predictive Model Equations}
 
 \textbf{ACMA equations:} (\textit{x} = DBH)
 \begin{equation}
@@ -2245,64 +2423,14 @@ Wires (Y/N) & x & - & -\\
 \textrm{Crown Width} = -4.953 - 0.5939x + 0.00512x^2 \\
 \label{eq:a8}
 \end{equation}
-\hypertarget{additional-information-on-health-predictive-model}{%
-\section*{Additional Information on Health Predictive Model}\label{additional-information-on-health-predictive-model}}
-\addcontentsline{toc}{section}{Additional Information on Health Predictive Model}
-\begin{longtable}[t]{llllr}
-\caption[Summary of results from various predictive models]{\label{tab:model-table}For each predictive model for tree health, this table contains the pixel selection method and predictors used, as well as the resulting accuracy, kappa, and p-value calculated in the confusion matrixes.}\\
-\toprule
-NDVI pixel method & Predictors & Accuracy & Kappa & P-value\\
-\midrule
-Point method & NDVI & 61\% & 0\% & 0.54120\\
-Radius method & NDVI & 61\% & 3\% & 0.54120\\
-LiDAR method & NDVI & 63\% & 10\% & 0.38400\\
-Point method & NDVI * tree type & 63\% & 15\% & 0.31630\\
-Radius method & NDVI * tree type & 63\% & 16\% & 0.31630\\
-\addlinespace
-LiDAR method & NDVI * tree type & 67\% & 23\% & 0.13340\\
-Point method & NDVI * species & 64\% & 23\% & 0.25040\\
-Radius method & NDVI * species & 64\% & 24\% & 0.25040\\
-LiDAR method & NDVI * species & 68\% & 33\% & 0.09396\\
-\bottomrule
-\end{longtable}
-\hypertarget{lidar-model-tests}{%
-\section*{LiDAR model tests}\label{lidar-model-tests}}
-\addcontentsline{toc}{section}{LiDAR model tests}
-\begin{center}\includegraphics[width=1\linewidth]{figure/test} \end{center}
-\begin{table}
-
-\caption{\label{tab:model-test-table}Statistical values for LiDAR predictive model tests}
-\centering
-\begin{tabular}[t]{lllr}
-\toprule
-Test & Accuracy & Kappa & P-Value\\
-\midrule
-test 1 & 56\% & 35\% & 0.0025460\\
-test 2 & 54\% & 31\% & 0.0065790\\
-test 3 & 64\% & 46\% & 0.0000824\\
-test 4 & 54\% & 31\% & 0.0065790\\
-test 5 & 67\% & 50\% & 0.0000214\\
-\addlinespace
-test 6 & 64\% & 46\% & 0.0000824\\
-\bottomrule
-\end{tabular}
-\end{table}
-\hypertarget{predicted-health-rating-and-species-counts}{%
-\section*{Predicted Health Rating and Species Counts}\label{predicted-health-rating-and-species-counts}}
-\addcontentsline{toc}{section}{Predicted Health Rating and Species Counts}
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/preds-counts-1} 
-
-}
-
-\caption{Graph of species counts for LiDAR health predictions}\label{fig:preds-counts}
-\end{figure}
 \hypertarget{code-chunks}{%
 \chapter{Code}\label{code-chunks}}
 
 This second appendix includes all of the R chunks of code that were
 hidden throughout the document to help with readability and/or setup.
+
+All code for this thesis can be found in my GitHub repository:
+\url{https://github.com/zolli22/thesis_zoll}
 
 \hypertarget{in-chapter-refdata-methods}{%
 \section*{\texorpdfstring{\textbf{In Chapter} \ref{data-methods}\textbf{:}}{In Chapter \ref{data-methods}:}}\label{in-chapter-refdata-methods}}
@@ -2477,26 +2605,26 @@ hidden throughout the document to help with readability and/or setup.
     \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(DBH), }\AttributeTok{y =}\NormalTok{ Tree\_Height, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
     \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
     \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =}\NormalTok{ F, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(x,}
-        \AttributeTok{degree =} \DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Measurements from park trees data"}\NormalTok{,}
+        \AttributeTok{degree =} \DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Measurements from park trees"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"Tree Height Measurement"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Model"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{color =} \StringTok{"none"}\NormalTok{)}
 
 \NormalTok{p\_width\_model }\OtherTok{\textless{}{-}}\NormalTok{ my\_park }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(DBH), }\AttributeTok{y =}\NormalTok{ crown\_width, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
     \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
     \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =}\NormalTok{ F, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(x,}
-        \AttributeTok{degree =} \DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Measurements from park trees data"}\NormalTok{,}
+        \AttributeTok{degree =} \DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Measurements from park trees"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"Canopy Width Measurement"}\NormalTok{, }\AttributeTok{title =} \StringTok{"Model"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{guides}\NormalTok{(}\AttributeTok{color =} \StringTok{"none"}\NormalTok{)}
 
 \NormalTok{s\_height\_preds }\OtherTok{\textless{}{-}}\NormalTok{ my\_street\_2 }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(DBH), }\AttributeTok{y =}\NormalTok{ height\_preds, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
     \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
-    \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Predictions for street trees data"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Tree Height Prediction"}\NormalTok{,}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Predictions for street trees"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Tree Height Prediction"}\NormalTok{,}
         \AttributeTok{title =} \StringTok{"Predictions"}\NormalTok{)}
 
 \NormalTok{s\_width\_preds }\OtherTok{\textless{}{-}}\NormalTok{ my\_street\_2 }\SpecialCharTok{\%\textgreater{}\%}
     \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{sqrt}\NormalTok{(DBH), }\AttributeTok{y =}\NormalTok{ width\_preds, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
     \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =}\NormalTok{ species\_pal) }\SpecialCharTok{+}
-    \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Predictions for street trees data"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Canopy Width Prediction"}\NormalTok{,}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Predictions for street trees"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Canopy Width Prediction"}\NormalTok{,}
         \AttributeTok{title =} \StringTok{"Predictions"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -2730,6 +2858,9 @@ James, Peter, Rachel F. Banay, Jaime E. Hart, and Francine Laden. 2015. {``A Rev
 
 \leavevmode\vadjust pre{\hypertarget{ref-khorram2012}{}}%
 Khorram, Siamak. 2012. \emph{Remote Sensing}. 1st ed. 2012. SpringerBriefs in Space Development. New York, NY: Springer New York : Imprint: Springer.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lahr2018}{}}%
+Lahr, Eleanor C., Robert R. Dunn, and Steven D. Frank. 2018. {``Getting Ahead of the Curve: Cities as Surrogates for Global Change.''} \emph{Proceedings of the Royal Society B: Biological Sciences} 285 (1882): 20180643. \url{https://doi.org/10.1098/rspb.2018.0643}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-lazarus2013}{}}%
 Lazarus, Michael, Chelsea Chandler, and Peter Erickson. 2013. {``A Core Framework and Scenario for Deep GHG Reductions at the City Scale.''} \emph{Energy Policy} 57 (June): 563--74. \url{https://doi.org/10.1016/j.enpol.2013.02.031}.
